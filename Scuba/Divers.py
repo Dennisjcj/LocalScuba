@@ -6,6 +6,7 @@ Created on Mar 29, 2013
 import pygame
 import csv#from PIL import GIFImage
 import random
+import math
 
 def load(savefile):
     with open(savefile, 'rt') as f:
@@ -506,7 +507,8 @@ def multifish(pic, number):
         pic[a] = rowmovebackground(pic, a)
         pic[a] = rowmove(pic, a)
         rowdraw(pic, a)
-    
+
+
 def Level0():
     global level
     global Islandbutton
@@ -524,6 +526,7 @@ def Level0():
         level = 2
         pygame.mouse.set_visible(0)
 
+angle = 0
 def Level1():
     global level_1_initialized
     global Coral1
@@ -542,6 +545,7 @@ def Level1():
     global y_max
     global Bubbles
     global bubblecycles
+    global angle
 
     if level_1_initialized == False:
         level_1_initialized = True
@@ -582,7 +586,10 @@ def Level1():
     multifish(Clownfish, 4)
     multifish(Dolphin, 4)
     
-
+    draw(Depthguage)
+    
+    draw(Needle)
+    
     binddiver()
     animatedorange()
     
@@ -697,7 +704,9 @@ Bottomsea = [pygame.image.load("Bottomsea.png"), 0, 0, 1024, 768, 0, 0, True]
 Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
 Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 10, 10, True]
 Pressureguage = [pygame.image.load("Pressureguage.png"), 200, 200, 100, 100, 10, 10, True]
-Depthguage = [pygame.image.load("Depthguage.png"), 200, 200, 100, 100, 10, 10, True]
+Depthguage = [pygame.image.load("Depthguage.png"), 0, 0, 200, 200, 0, 0, True]
+Needle = [pygame.image.load("Needle.png"), 93, 93, 14, 100, 0, 0, True]
+
 Islandbutton = [pygame.image.load("Islandbutton.png"), 200, 200, 100, 100, 10, 10, True]
 Menubutton = [pygame.image.load("Menubutton.png"), 200, 200, 100, 100, 10, 10, True]
 #### Surface Variables ###################################################################
@@ -734,6 +743,7 @@ scroll = 0
 myfont = pygame.font.SysFont("monospace", 40, "bold")
 #ocean = [135, 206, 250] 
 ocean = [0, 100, 255] 
+red = [255, 0, 0]
 
 bubblecycles = [0, 0, 0, 0, 0, 0, 0, 0] # for more bubbles, add more zeros
 
