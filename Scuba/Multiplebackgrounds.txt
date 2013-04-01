@@ -1,0 +1,438 @@
+'''
+Created on Mar 29, 2013
+
+@author: Dennis
+'''
+import pygame
+import csv#from PIL import GIFImage
+
+def load(savefile):
+    with open(savefile, 'rt') as f:
+        reader = csv.reader(f)
+        save = list(reader)
+        loadsavetext = save[0], save[2], save[4]
+        return loadsavetext
+
+def save(newsavearray):
+    writer = csv.writer(open('Save1.csv', 'w'), delimiter=' ')
+    writer.writerow([newsavearray[0]])
+    writer.writerow([newsavearray[1]])
+    writer.writerow([newsavearray[2]])
+
+
+# pic = [image, x, y, x size, y size, x speed, y speed, direction]
+# direction right = True, left = false
+
+def draw(pic):
+    if pic[7] == True:
+        screen.blit(pygame.transform.scale(pic[0], (pic[3], pic[4])), (pic[1], pic[2]))
+    else:
+        screen.blit(pygame.transform.scale(pygame.transform.flip(pic[0], True, False), (pic[3], pic[4])), (pic[1], pic[2]))
+    
+def collision(object1, object2):
+    x1 = object1[1]
+    y1 = object1[2]
+    dimx1 = object1[3]
+    dimy1 = object1[4]
+    x2 = object2[1]
+    y2 = object2[2]
+    dimx2 = object2[3]
+    dimy2 = object2[4]
+    if (x1 > x2 and x1 < x2 + dimx2 and y1 > y2 and y1 < y2 + dimy2) or (x1 + dimx1 > x2 and x1 + dimx1 < x2 + dimx2 and y1 > y2 and y1 < y2 + dimy2) or (x1 + dimx1 > x2 and x1 + dimx1 < x2 + dimx2 and y1 + dimy1 > y2 and y1 + dimy1 < y2 + dimy2) or (x1 > x2 and x1 < x2 + dimx2 and y1 + dimy1 > y2 and y1 + dimy1 < y2 + dimy2) or (x2 > x1 and x2 < x1 + dimx1 and y2 > y1 and y2 < y1 + dimx1) or (x2 + dimx2 > x1 and x2 + dimx2 < x1 + dimx1 and y2 > y1 and y2 < y1 + dimy1) or (x2 + dimx2 > x1 and x2 + dimx2 < x1 + dimx1 and y2 + dimy2 > y1 and y2 + dimy2 < y1 + dimy1) or (x2 > x1 and x2 < x1 + dimx1 and y2 + dimy2 > y1 and y2 + dimy2 < y1 + dimy1):
+        return True
+    else:
+        return False
+    
+def clicked(pic): # must go under a for event in pygame.event.get
+        x = pic[1]
+        y = pic[2]
+        dim_x = pic[3]
+        dim_y = pic[4]
+        mouse_pos = pygame.mouse.get_pos()
+        x_mouse = mouse_pos[0]
+        y_mouse = mouse_pos[1]
+        if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
+            if x_mouse > x and x_mouse < x + dim_x and y_mouse > y and y_mouse < y + dim_y:
+                return True
+            else:
+                return False
+
+def keys():
+    global done
+    global level
+    global level_1_initialized
+    global level_2_initialized
+    global left
+    global right
+    global up
+    global down
+    global lr_just_pressed
+    global ud_just_pressed
+    global event
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                done = True
+            if event.key == pygame.K_BACKSPACE:
+                level = 0
+                level_1_initialized = False
+                level_2_initialized = False
+            if event.key == pygame.K_a:
+                
+                left = True
+                lr_just_pressed = 1
+            if event.key == pygame.K_d:
+                right = True
+                lr_just_pressed = 2
+            if event.key == pygame.K_w:
+                up = True
+                ud_just_pressed = 3
+            if event.key == pygame.K_s:
+                down = True
+                ud_just_pressed = 4
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_a:
+                left = False
+            if event.key == pygame.K_d:
+                right = False
+            if event.key == pygame.K_w:
+                up = False
+            if event.key == pygame.K_s:
+                down = False
+  
+def move(pic):
+    start_x = pic[1]
+    start_y = pic[2]
+    x_speed = pic[5]
+    y_speed = pic[6]
+    move_direction = pic[7]
+    start_x = start_x + x_speed
+    start_y = start_y + y_speed
+    if x_speed < 0:
+        move_direction = False
+    else:
+        move_direction = True
+    return [pic[0], start_x, start_y, pic[3], pic[4], x_speed, y_speed, move_direction]
+
+def keymove(pic): # 0 is move direction left
+    # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]  
+    global depth
+    start_x = pic[1]
+    start_y = pic[2]
+    x_move_speed = pic[5]
+    y_move_speed = pic[6]
+    move_direction = pic[7]
+    
+    if left == True and right == False:
+        start_x = start_x - x_move_speed
+        move_direction = False
+    elif right == True and left == False:
+        start_x = start_x + x_move_speed
+        move_direction = True
+    if up == True and down == False:
+        start_y = start_y - y_move_speed
+        depth = depth - y_move_speed
+    elif down == True and up == False:
+        start_y = start_y + y_move_speed
+        depth = depth + y_move_speed
+        
+    if left == True and right == True:
+        if lr_just_pressed == 1:
+            start_x = start_x - x_move_speed
+            move_direction = False
+        elif lr_just_pressed == 2:
+            start_x = start_x + x_move_speed
+            move_direction = True
+        
+    if up == True and down == True:
+        if ud_just_pressed == 3:
+            start_y = start_y - y_move_speed
+            depth = depth - y_move_speed
+
+        elif ud_just_pressed == 4:
+            start_y = start_y + y_move_speed
+            depth = depth + y_move_speed
+       
+    if left == False and right == False:
+        start_x = start_x
+    if up == False and down == False:
+        start_y = start_y
+        depth = depth
+
+    return [pic[0], start_x, start_y, pic[3], pic[4], pic[5], pic[6], move_direction]
+
+def animatedorange():
+        global orangekicking
+        global orangecycles
+        global orangelength
+        global Orangediver
+        global Orangediverkick
+        if orangekicking:
+            draw(Orangediver)
+            if orangecycles > orangelength:
+                orangekicking = False
+                orangecycles = 0
+        else:
+            draw(Orangediverkick)
+            if orangecycles > orangelength:
+                orangekicking = True
+                orangecycles = 0
+        orangecycles = orangecycles + 1
+        
+def nothing():
+    cool = True
+    return cool
+
+
+#### Surface Variables #######################################################################
+# list = [image, x, y, x size, y size, x speed, y speed, right]
+Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
+Orangediverkick = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
+
+Greendiver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
+Eel = [pygame.image.load("Eel.png"), 200, 200, 100, 100, 10, 10, True]
+Clownfish = [pygame.image.load("Clownfish.png"), 200, 200, 100, 100, 10, 10, True]
+Dolphin = [pygame.image.load("Dolphin.png"), 200, 200, 100, 100, 10, 10, True]
+Lanturnfish = [pygame.image.load("Lanturnfish.png"), 200, 200, 100, 100, 10, 10, True]
+Jellyfish = [pygame.image.load("Jellyfish.png"), 200, 200, 100, 100, 10, 10, True]
+Bubble = [pygame.image.load("Bubble.png"), 200, 200, 100, 100, 10, 10, True]
+Bubbles = [pygame.image.load("Bubbles.png"), 200, 200, 100, 100, 10, 10, True]
+Coral1 = [pygame.image.load("Coral1.png"), 200, 200, 300, 200, 10, 10, True]
+Coral2 = [pygame.image.load("Coral2.png"), 200, 200, 100, 100, 10, 10, True]
+Coral3 = [pygame.image.load("Coral3.png"), 200, 200, 100, 100, 10, 10, True]
+Rock1 = [pygame.image.load("Rock1.png"), 200, 200, 100, 100, 10, 10, True]
+Rock2 = [pygame.image.load("Rock2.png"), 200, 200, 100, 100, 10, 10, True]
+Rock3 = [pygame.image.load("Rock3.png"), 200, 200, 100, 100, 10, 10, True]
+Rock4 = [pygame.image.load("Rock4.png"), 200, 200, 100, 100, 10, 10, True]
+Rock5 = [pygame.image.load("Rock5.png"), 200, 200, 100, 100, 10, 10, True]
+Treasurechest = [pygame.image.load("Treasurechest.png"), 200, 200, 100, 100, 10, 10, True]
+Sandcastle = [pygame.image.load("Sandcastle.png"), 0, 0, 6000, 768, 10, 0, True]
+Seafloor = [pygame.image.load("Seafloor.png"), 0, 0, 6000, 768, 10, 0, True]
+Undersea = [pygame.image.load("Undersea.png"), 0, 0, 1024, 768, 0, 0, True]
+Bottomsea = [pygame.image.load("Bottomsea.png"), 0, 0, 1024, 768, 0, 0, True]
+
+Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
+Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 10, 10, True]
+Pressureguage = [pygame.image.load("Pressureguage.png"), 200, 200, 100, 100, 10, 10, True]
+Depthguage = [pygame.image.load("Depthguage.png"), 200, 200, 100, 100, 10, 10, True]
+Islandbutton = [pygame.image.load("Islandbutton.png"), 200, 200, 100, 100, 10, 10, True]
+Menubutton = [pygame.image.load("Menubutton.png"), 200, 200, 100, 100, 10, 10, True]
+#### Surface Variables ###################################################################
+
+pygame.init()
+size=[1024,768]
+screen=pygame.display.set_mode(size)
+pygame.display.set_caption("Diver Test")
+clock=pygame.time.Clock()
+pygame.mouse.set_visible(1)
+
+### Level 1 Variables ###########################################
+level_1_initialized = False
+#################################################################
+### Level 2 Variables ###########################################
+level_2_initialized = False
+#################################################################
+### Key Variables #########################################
+Background1 = Treasuremap
+Background2 = Treasuremap
+Background3 = Treasuremap
+Background4 = Treasuremap
+
+level = 0
+done=False
+left = False
+right = False
+up = False
+down = False
+lr_just_pressed = 0
+ud_just_pressed = 0
+
+orangekicking = True
+orangecycles = 0
+orangelength = 20
+orangemoving = False
+
+depth = 0
+myfont = pygame.font.SysFont("monospace", 40, "bold")
+
+#################################################################
+# -------- Main Program Loop -----------
+while done == False:
+    keys()
+################# Map Level 0 ###########################
+    if level == 0:
+        pygame.mouse.set_visible(1)
+
+        draw(Treasuremap)
+        
+        Outerbanks = [Islandbutton[0], 220, 280, 50, 50, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+        draw(Outerbanks)
+        if clicked(Outerbanks):
+            level = 1
+            
+        Singapore = [Islandbutton[0], 750, 385, 50, 50, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+        draw(Singapore)
+        if clicked(Singapore):
+            level = 2
+            
+##################################################################
+################# Seafloor Level 1 ###############################
+    if level == 1:
+        if level_1_initialized == False:
+            pygame.mouse.set_visible(0)
+
+            level_1_initialized = True
+            Background1 = Seafloor
+            
+            Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
+            Orangediverkick = [pygame.image.load("Orangediverkick.png"), 200, 200, 224, 188, 10, 10, True]
+            orangekicking = True
+            orangecycles = 0
+            orangelength = 20
+
+        Orangediver = keymove(Orangediver)
+        Orangediverkick = keymove(Orangediverkick)
+        
+        if Orangediver[1] > 1023 - Orangediver[3] - 100:
+            Orangediver[1] = 1023 - Orangediver[3] - 100
+            Orangediverkick[1] = 1023 - Orangediverkick[3] - 100
+            Background1[1] = Background1[1] - Orangediver[5]
+        if Orangediver[1] < 0 + 100:
+            Orangediver[1] = 0 + 100
+            Orangediverkick[1] = 0 + 100
+            Background1[1] = Background1[1] + Orangediver[5]
+        if Orangediver[2] > 767 - Orangediver[4]:
+            Orangediver[2] = 767 - Orangediver[4]
+            Orangediverkick[2] = 767 - Orangediverkick[4]
+        if Orangediver[2] < 0:
+            Orangediver[2] = 0
+            Orangediverkick[2] = 0
+        
+        if Background1[1] < -Background1[3] + 1024:
+            Background1[1] = -Background1[3] + 1024           
+        if Background1[1] > 0:
+            Background1[1] = 0
+
+        draw(Background1)  
+        
+        animatedorange()
+        
+####################################################################
+################# Sandcastle Level 2 ###############################
+    if level == 2:
+        if level_2_initialized == False:
+            pygame.mouse.set_visible(0)
+
+            level_2_initialized = True
+            
+            Background1  = [Undersea[0], 0, 0, 1024, 768, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+            Background2  = [Undersea[0], 1024, 0, 1024, 768, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+            Background3  = [Undersea[0], 0,768, 1024, 768, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+            Background4  = [Undersea[0], 1024, 768, 1024, 768, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+            Coral1[1] = 100
+            Coral1[2] = 1000
+            
+            Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
+            Orangediverkick = [pygame.image.load("Orangediverkick.png"), 200, 200, 224, 188, 10, 10, True]
+            orangekicking = True
+            orangecycles = 0
+            orangelength = 20   
+            
+            depth = 200         
+        
+        Orangediver = keymove(Orangediver)
+        Orangediverkick = keymove(Orangediverkick)
+        
+        if Orangediver[1] > 1023 - Orangediver[3] - 100:
+            Orangediver[1] = 1023 - Orangediver[3] - 100
+            Orangediverkick[1] = 1023 - Orangediverkick[3] - 100
+            Background1[1] = Background1[1] - Orangediver[5]
+            Background2[1] = Background2[1] - Orangediver[5]
+            Background3[1] = Background3[1] - Orangediver[5]
+            Background4[1] = Background4[1] - Orangediver[5]
+            Coral1[1] = Coral1[1] - Orangediver[5]
+            
+        if Orangediver[1] < 0 + 100:
+            Orangediver[1] = 0 + 100
+            Orangediverkick[1] = 0 + 100
+            Background1[1] = Background1[1] + Orangediver[5]
+            Background2[1] = Background2[1] + Orangediver[5]
+            Background3[1] = Background3[1] + Orangediver[5]
+            Background4[1] = Background4[1] + Orangediver[5]
+            Coral1[1] = Coral1[1] + Orangediver[5]
+
+           
+        if Orangediver[2] > 767 - Orangediver[4] - 100:
+            Orangediver[2] = 767 - Orangediver[4] - 100
+            Orangediverkick[2] = 767 - Orangediverkick[4] - 100
+            Background1[2] = Background1[2] - Orangediver[6]
+            Background2[2] = Background2[2] - Orangediver[6]
+            Background3[2] = Background3[2] - Orangediver[6]
+            Background4[2] = Background4[2] - Orangediver[6]
+            Coral1[2] = Coral1[2] - Orangediver[6]
+
+           
+        if Orangediver[2] < 0 + 100:
+            Orangediver[2] = 0 + 100
+            Orangediverkick[2] = 0 + 100
+            Background1[2] = Background1[2] + Orangediver[6]
+            Background2[2] = Background2[2] + Orangediver[6]
+            Background3[2] = Background3[2] + Orangediver[6]
+            Background4[2] = Background4[2] + Orangediver[6]
+            Coral1[2] = Coral1[2] + Orangediver[6]
+
+           
+        if Background1[1] < -1024:
+            Background1[1] = 1024 - Orangediver[5]
+        if Background1[1] > 1024:
+            Background1[1] = -1024 + Orangediver[5]
+        if Background2[1] < -1024:
+            Background2[1] = 1024 - Orangediver[5]
+        if Background2[1] > 1024:
+            Background2[1] = -1024 + Orangediver[5]
+        if Background3[1] < -1024:
+            Background3[1] = 1024 - Orangediver[5]
+        if Background3[1] > 1024:
+            Background3[1] = -1024 + Orangediver[5]
+        if Background4[1] < -1024:
+            Background4[1] = 1024 - Orangediver[5]
+        if Background4[1] > 1024:
+            Background4[1] = -1024 + Orangediver[5]
+        
+        if Background1[2] < -768:
+            Background1[2] = 768 - Orangediver[6]
+        if Background1[2] > 768:
+            Background1[2] = -768 + Orangediver[6]
+        if Background2[2] < -768:
+            Background2[2] = 768 - Orangediver[6]
+        if Background2[2] > 768:
+            Background2[2] = -768 + Orangediver[6]
+        if Background3[2] < -768:
+            Background3[2] = 768 - Orangediver[6]
+        if Background3[2] > 768:
+            Background3[2] = -768 + Orangediver[6]
+        if Background4[2] < -768:
+            Background4[2] = 768 - Orangediver[6]
+        if Background4[2] > 768:
+            Background4[2] = -768 + Orangediver[6]
+        
+        
+        
+        draw(Background1)
+        draw(Background2)
+        draw(Background3)
+        draw(Background4)
+        draw(Coral1)
+        
+        depthtext = myfont.render(str(depth), 1, (255, 255, 0))
+        screen.blit(depthtext, (1024 - 200, 10))
+        animatedorange()
+
+
+########################################################
+####  END   ############################################   
+    pygame.display.flip()
+    clock.tick(30)
+pygame.quit ()
