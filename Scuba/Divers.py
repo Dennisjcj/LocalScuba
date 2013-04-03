@@ -8,6 +8,7 @@ import csv#from PIL import GIFImage
 import random
 import math
 
+
 def load(savefile):
     with open(savefile, 'rt') as f:
         reader = csv.reader(f)
@@ -65,7 +66,7 @@ def clicked(pic): # must go under a for event in pygame.event.get
             else:
                 return False
 
-def keys():
+def keys(): #Sorry to mess with your lovely class but I need to put the air consumption event in here also
     global done
     global level
     global level_1_initialized
@@ -78,6 +79,9 @@ def keys():
     global ud_just_pressed
     global event
     for event in pygame.event.get():
+        if event.type == pygame.USEREVENT+1:
+            #consumeAir(totalair, airRate)
+            print("Consume Air Called")
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
@@ -94,21 +98,28 @@ def keys():
             if event.key == pygame.K_d:
                 right = True
                 lr_just_pressed = 2
+                airRate = 2
             if event.key == pygame.K_w:
                 up = True
                 ud_just_pressed = 3
+                airRate = 2
             if event.key == pygame.K_s:
                 down = True
                 ud_just_pressed = 4
+                airRate = 2
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a:
                 left = False
+                airRate = 1
             if event.key == pygame.K_d:
                 right = False
+                airRate = 1
             if event.key == pygame.K_w:
                 up = False
+                airRate = 1
             if event.key == pygame.K_s:
                 down = False
+                airRate = 1
   
 def move(pic):
     start_x = pic[1]
@@ -508,6 +519,16 @@ def multifish(pic, number):
         pic[a] = rowmove(pic, a)
         rowdraw(pic, a)
 
+########Air Consumption##########################
+#global totalair
+#global airRate
+#################################################
+def consumeAir(totalair, rate):
+    print("ConsumeAir Called")
+    totalair-=rate
+    pygame.transform.rotate(Needle, rate/180)
+    if totalair <= 0:
+        print("You ran out of air and died!")#debugging for now, will add in the image later
 
 def Level0():
     global level
@@ -546,6 +567,8 @@ def Level1():
     global Bubbles
     global bubblecycles
     global angle
+    global totalAir
+    global airRate
 
     if level_1_initialized == False:
         level_1_initialized = True
@@ -567,7 +590,8 @@ def Level1():
         x_max = 6000
         y_min = 0
         y_max = 1000 + 100
-    
+        totalair = 180
+        airRate = 1
     screen.fill(ocean)
 
     Orangediver = keymove(Orangediver)
@@ -587,7 +611,6 @@ def Level1():
     multifish(Dolphin, 4)
     
     draw(Depthguage)
-    
     draw(Needle)
     
     binddiver()
@@ -596,7 +619,7 @@ def Level1():
     scrolltext = myfont.render(str(scroll), 1, (255, 255, 0))
     screen.blit(scrolltext, (1024 - 150 - 150, 10))
     depthtext = myfont.render(str(depth), 1, (255, 255, 0))
-    screen.blit(depthtext, (1024 - 150, 10))
+    screen.blit(depthtext, (1024 - 150, 10))       
 
 def Level2():
     global level_2_initialized
@@ -610,6 +633,7 @@ def Level2():
     global depth
     global ocean
     global myfont  
+    
     if level_2_initialized == False:
         level_2_initialized = True
         initial_coral1_x = -50
@@ -625,6 +649,8 @@ def Level2():
         orangelength = 20 
         scroll = Orangediver[1]  
         depth = Orangediver[2]
+        totalair = 180
+        airRate = 1
     screen.fill(ocean)
 
     Orangediver = keymove(Orangediver)
@@ -712,6 +738,7 @@ Menubutton = [pygame.image.load("Menubutton.png"), 200, 200, 100, 100, 10, 10, T
 #### Surface Variables ###################################################################
 
 pygame.init()
+pygame.time.set_timer(pygame.USEREVENT+1, 1000)
 size=[1024,768]
 screen=pygame.display.set_mode(size)
 pygame.display.set_caption("Diver Test")
@@ -767,8 +794,6 @@ while done == False:
 ################# Seafloor Level 1 ###############################
     if level == 1:
         Level1()
-        
-        
 ####################################################################
 ################# Sandcastle Level 2 ###############################
     if level == 2:
