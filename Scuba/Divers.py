@@ -280,66 +280,59 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     
     if left == True and right == False and x_min_edge == False:
         x_move_speed = x_move_speed - accel
-        start_x = start_x + x_move_speed
-        scroll = scroll + x_move_speed      
         move_direction = False
     elif right == True and left == False and x_max_edge == False:
         x_move_speed = x_move_speed + accel
-        start_x = start_x + x_move_speed
-        scroll = scroll + x_move_speed
         move_direction = True
     if up == True and down == False and y_min_edge == False:
         y_move_speed = y_move_speed - accel
-        start_y = start_y + y_move_speed
-        depth = depth + y_move_speed
     elif down == True and up == False and y_max_edge == False:
         y_move_speed = y_move_speed + accel
-        start_y = start_y + y_move_speed
-        depth = depth + y_move_speed
 
     if left == True and right == True:
         if lr_just_pressed == 1 and x_min_edge == False:
             x_move_speed = x_move_speed - accel
-            start_x = start_x + x_move_speed
-            scroll = scroll + x_move_speed
             move_direction = False
         elif lr_just_pressed == 2 and x_max_edge == False:
             x_move_speed = x_move_speed + accel
-            start_x = start_x + x_move_speed
-            scroll = scroll + x_move_speed
             move_direction = True
 
     if up == True and down == True:
         if ud_just_pressed == 3 and y_min_edge == False:
             y_move_speed = y_move_speed - accel
-            start_y = start_y + y_move_speed
-            depth = depth + y_move_speed
         elif ud_just_pressed == 4 and y_max_edge == False:
-                y_move_speed = y_move_speed + accel
-                start_y = start_y + y_move_speed
-                depth = depth + y_move_speed
-    
+            y_move_speed = y_move_speed + accel
+
     if left == False and right == False:
-        start_x = start_x
-        scroll = scroll
+        if x_move_speed > 0:
+            x_move_speed = x_move_speed - accel/2
+        elif x_move_speed < 0:
+            x_move_speed = x_move_speed + accel/2
+        else:
+            x_move_speed = 0
     if up == False and down == False:
-        start_y = start_y
-        depth = depth
+        if y_move_speed > 0:
+            y_move_speed = y_move_speed - accel/2
+        elif y_move_speed < 0:
+            y_move_speed = y_move_speed + accel/2
+        else:
+            y_move_speed = 0
     
+    start_x = start_x + x_move_speed
+    start_y = start_y + y_move_speed
+    scroll = scroll + x_move_speed
+    depth = depth + y_move_speed
+            
     if scroll < x_min + 1:
-        #scroll = x_min
         x_min_edge = True
     else: x_min_edge =  False
     if scroll > x_max - 1:
-        #scroll = x_max
         x_max_edge = True
     else: x_max_edge =  False
     if depth < y_min + 1:
-        #depth = y_min
         y_min_edge = True
     else: y_min_edge =  False
     if depth > y_max - 1:
-        #depth = y_max
         y_max_edge = True
     else: y_max_edge =  False
     
