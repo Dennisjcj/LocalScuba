@@ -104,7 +104,6 @@ def keys():
     global lr_just_pressed
     global ud_just_pressed
     global event
-    global restartlevel
     global orangedead
     for event in pygame.event.get():
         if event.type == pygame.USEREVENT+1 and totalAir > 0:
@@ -133,7 +132,8 @@ def keys():
                     down = True
                     ud_just_pressed = 4
             if event.key == pygame.K_SPACE:
-                restartlevel = True
+                level_1_initialized = False
+                level_2_initialized = False
                 down = False
         if event.type == pygame.KEYUP:
             if orangedead == False:
@@ -145,9 +145,7 @@ def keys():
                     up = False
                 if event.key == pygame.K_s:
                     down = False
-            if event.key == pygame.K_SPACE:
-                restartlevel = False
-             
+            
 def move(pic, xs, ys):
     start_x = pic[1]
     start_y = pic[2]
@@ -174,7 +172,7 @@ def rowmove(pic, row):
         move_direction = False
     else:
         move_direction = True
-    return [pic[row][0], start_x, start_y, pic[row][3], pic[row][4], x_speed, y_speed, move_direction]
+    return [pic[row][0], start_x, start_y, pic[row][3], pic[row][4], x_speed, y_speed, move_direction, pic[row][8]]
 
 def keymove(pic): # True is right;  Need to fix the coordinates of the diver with depth and scroll
     # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]  
@@ -256,6 +254,96 @@ def keymove(pic): # True is right;  Need to fix the coordinates of the diver wit
     else: y_max_edge =  False
     
     return [pic[0], start_x, start_y, pic[3], pic[4], pic[5], pic[6], move_direction]
+   
+def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver with depth and scroll
+    global Orangediver
+    global depth
+    global scroll
+    global x_min
+    global x_max
+    global y_min
+    global y_max
+
+    global x_min_edge
+    global x_max_edge
+    global y_min_edge
+    global y_max_edge
+    global orangedead
+    
+    accel = 1
+    
+    start_x = pic[1]
+    start_y = pic[2]
+    x_move_speed = pic[5]
+    y_move_speed = pic[6]
+    move_direction = pic[7]
+    
+    if left == True and right == False and x_min_edge == False:
+        x_move_speed = x_move_speed - accel
+        start_x = start_x + x_move_speed
+        scroll = scroll + x_move_speed      
+        move_direction = False
+    elif right == True and left == False and x_max_edge == False:
+        x_move_speed = x_move_speed + accel
+        start_x = start_x + x_move_speed
+        scroll = scroll + x_move_speed
+        move_direction = True
+    if up == True and down == False and y_min_edge == False:
+        y_move_speed = y_move_speed - accel
+        start_y = start_y + y_move_speed
+        depth = depth + y_move_speed
+    elif down == True and up == False and y_max_edge == False:
+        y_move_speed = y_move_speed + accel
+        start_y = start_y + y_move_speed
+        depth = depth + y_move_speed
+
+    if left == True and right == True:
+        if lr_just_pressed == 1 and x_min_edge == False:
+            x_move_speed = x_move_speed - accel
+            start_x = start_x + x_move_speed
+            scroll = scroll + x_move_speed
+            move_direction = False
+        elif lr_just_pressed == 2 and x_max_edge == False:
+            x_move_speed = x_move_speed + accel
+            start_x = start_x + x_move_speed
+            scroll = scroll + x_move_speed
+            move_direction = True
+
+    if up == True and down == True:
+        if ud_just_pressed == 3 and y_min_edge == False:
+            y_move_speed = y_move_speed - accel
+            start_y = start_y + y_move_speed
+            depth = depth + y_move_speed
+        elif ud_just_pressed == 4 and y_max_edge == False:
+                y_move_speed = y_move_speed + accel
+                start_y = start_y + y_move_speed
+                depth = depth + y_move_speed
+    
+    if left == False and right == False:
+        start_x = start_x
+        scroll = scroll
+    if up == False and down == False:
+        start_y = start_y
+        depth = depth
+    
+    if scroll < x_min + 1:
+        #scroll = x_min
+        x_min_edge = True
+    else: x_min_edge =  False
+    if scroll > x_max - 1:
+        #scroll = x_max
+        x_max_edge = True
+    else: x_max_edge =  False
+    if depth < y_min + 1:
+        #depth = y_min
+        y_min_edge = True
+    else: y_min_edge =  False
+    if depth > y_max - 1:
+        #depth = y_max
+        y_max_edge = True
+    else: y_max_edge =  False
+    
+    return [pic[0], start_x, start_y, pic[3], pic[4], pic[5], pic[6], move_direction]
 
 def animatedorange():
         global orangekicking
@@ -297,18 +385,21 @@ def animatedgreen():
 
 def binddiver():
     global Orangediver
-    if Orangediver[1] > 1023 - Orangediver[3] - 100:
-        Orangediver[1] = 1023 - Orangediver[3] - 100
-        Orangediverkick[1] = 1023 - Orangediverkick[3] - 100
-    if Orangediver[1] < 0 + 100:
-        Orangediver[1] = 0 + 100
-        Orangediverkick[1] = 0 + 100
-    if Orangediver[2] > 767 - Orangediver[4] - 100:
-        Orangediver[2] = 767 - Orangediver[4] - 100
-        Orangediverkick[2] = 767 - Orangediverkick[4] - 100
-    if Orangediver[2] < 0 + 100:
-        Orangediver[2] = 0 + 100
-        Orangediverkick[2] = 0 + 100
+    global windowoffset
+    if Orangediver[1] > 1023 - Orangediver[3] - windowoffset:
+        Orangediver[1] = 1023 - Orangediver[3] - windowoffset
+        Orangediverkick[1] = 1023 - Orangediverkick[3] - windowoffset
+        Greendiver[7] = True
+    if Orangediver[1] < 0 + windowoffset:
+        Orangediver[1] = 0 + windowoffset
+        Orangediverkick[1] = 0 + windowoffset
+        Greendiver[7] = False
+    if Orangediver[2] > 767 - Orangediver[4] - windowoffset:
+        Orangediver[2] = 767 - Orangediver[4] - windowoffset
+        Orangediverkick[2] = 767 - Orangediverkick[4] - windowoffset
+    if Orangediver[2] < 0 + windowoffset:
+        Orangediver[2] = 0 + windowoffset
+        Orangediverkick[2] = 0 + windowoffset
         
 def bind(pic):
     x = pic[1]
@@ -418,19 +509,20 @@ def moveedges():      # Not in use
             y_max = y_max + Orangediver[6]
 
 def rowmovebackground(pic, row, following):
+    global windowoffset
     start_x = pic[row][1]
     start_y = pic[row][2]
     global x_edge
     global y_edge
-    if following[1] > 1023 - following[3] - 100:
+    if following[1] > 1023 - following[3] - windowoffset:
         start_x = start_x - following[5]
-    if following[1] < 0 + 100:
+    if following[1] < 0 + windowoffset:
         start_x = start_x + following[5]
-    if following[2] > 767 - following[4] - 100:
+    if following[2] > 767 - following[4] - windowoffset:
         start_y = start_y - following[6]
-    if following[2] < 0 + 100:
+    if following[2] < 0 + windowoffset:
             start_y = start_y + following[6]
-    return [pic[row][0], start_x, start_y, pic[row][3], pic[row][4], pic[row][5], pic[row][6], pic[row][7]]
+    return [pic[row][0], start_x, start_y, pic[row][3], pic[row][4], pic[row][5], pic[row][6], pic[row][7], pic[row][8]]
 
 def greenfollow():
     global Orangediver
@@ -470,7 +562,7 @@ def movebubbles(pic, first, offstep):
     global bubblecycles
     if bubblecycles[first] == 0 + offstep:
         if pic[7] == False:
-            Bubbles[first][1] = pic[1] + 55
+            Bubbles[first][1] = pic[1] + 55 - 30
             Bubbles[first][2] = pic[2] + 60 - 51
         else:
             Bubbles[first][1] = pic[1] - 55 + pic[3]
@@ -482,7 +574,7 @@ def movebubbles(pic, first, offstep):
 
     if bubblecycles[first + 1] == 90 + offstep:
         if pic[7] == False:
-            Bubbles[first + 1][1] = pic[1] + 55
+            Bubbles[first + 1][1] = pic[1] + 55 - 30
             Bubbles[first + 1][2] = pic[2] + 60 - 51
         else:
             Bubbles[first + 1][1] = pic[1] - 55 + pic[3]
@@ -494,7 +586,7 @@ def movebubbles(pic, first, offstep):
 
     if bubblecycles[first + 2] == 180 + offstep:
         if pic[7] == False:
-            Bubbles[first + 2][1] = pic[1] + 55
+            Bubbles[first + 2][1] = pic[1] + 55 - 30
             Bubbles[first + 2][2] = pic[2] + 60 - 51
         else:
             Bubbles[first + 2][1] = pic[1] - 55 + pic[3]
@@ -506,7 +598,7 @@ def movebubbles(pic, first, offstep):
 
     if bubblecycles[first + 3] == 270 + offstep:
         if pic[7] == False:
-            Bubbles[first + 3][1] = pic[1] + 55
+            Bubbles[first + 3][1] = pic[1] + 55 - 30
             Bubbles[first + 3][2] = pic[2] + 60 - 51
         else:
             Bubbles[first + 3][1] = pic[1] - 55 + pic[3]
@@ -517,7 +609,8 @@ def movebubbles(pic, first, offstep):
     Bubbles[first + 3][2] = Bubbles[first + 3][2] - Bubbles[first + 3][6]         
 
     for b in range(first, first + 4):
-        Bubbles[b] = rowmovebackground(Bubbles, b, Orangediver)
+        if greenrise == False:
+            Bubbles[b] = rowmovebackground(Bubbles, b, Orangediver)
         rowdraw(Bubbles, b)
 
 def random_direction_move(pic, row, speed): # speed must be even
@@ -560,7 +653,7 @@ def random_direction_move(pic, row, speed): # speed must be even
     #if c == 12:
      #   sx = 0
       #  sy = -speed
-    return [pic[row][0], pic[row][1], pic[row][2], pic[row][3], pic[row][4], sx, sy, pic[row][7]]
+    return [pic[row][0], pic[row][1], pic[row][2], pic[row][3], pic[row][4], sx, sy, pic[row][7], pic[row][8]]
 
 def outofbounds(pic, row, faroff):
     global x_min
@@ -612,7 +705,7 @@ def rand_start_side(pic, row, offsides):
     elif side == 4: # bottom
         x = random.randrange(x_min, x_max - dimx)
         y = y_max + dimy + offsides
-    return [pic[row][0], x, y, pic[row][3], pic[row][4], pic[row][5], pic[row][6], pic[row][7]]
+    return [pic[row][0], x, y, pic[row][3], pic[row][4], pic[row][5], pic[row][6], pic[row][7], pic[row][8]]
 
 def multifish(pic, number):
     global greenrise
@@ -623,7 +716,8 @@ def multifish(pic, number):
         if greenrise == False:
             pic[a] = rowmovebackground(pic, a, Orangediver)
         pic[a] = rowmove(pic, a)
-        rowdraw(pic, a)
+        if pic[a][8] == False:
+            rowdraw(pic, a)
         
 def restart_fish():
     global Eel
@@ -635,36 +729,37 @@ def restart_fish():
     global Bubbles
     global orangedead
     global greenrise
+    global fish_collected
     orangedead = False
     greenrise = False
+    fish_collected = 0
+    Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True, False],
+           [pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True, False],
+           [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True, False],
+           [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True, False]]
     
-    Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True],
-           [pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True],
-           [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True],
-           [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True]]
+    Clownfish = [[pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True, False],
+                 [pygame.image.load("Clownfish.png"), -1000, -1000, 100, 50, 4, 4, True, False],
+                 [pygame.image.load("Clownfish.png"), -1000, -1000, 50, 25, 4, 4, True, False],
+                 [pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True, False]]
     
-    Clownfish = [[pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True],
-                 [pygame.image.load("Clownfish.png"), -1000, -1000, 100, 50, 4, 4, True],
-                 [pygame.image.load("Clownfish.png"), -1000, -1000, 50, 25, 4, 4, True],
-                 [pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True]]
-    
-    Dolphin = [[pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True],
-               [pygame.image.load("Dolphin.png"), -1000, -1000, 300, 200, 8, 8, True],
-               [pygame.image.load("Dolphin.png"), -1000, -1000, 500, 400, 8, 8, True],
-               [pygame.image.load("Dolphin.png"), -1000, -1000, 100, 50, 8, 8, True]]
+    Dolphin = [[pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True, False],
+               [pygame.image.load("Dolphin.png"), -1000, -1000, 300, 200, 8, 8, True, False],
+               [pygame.image.load("Dolphin.png"), -1000, -1000, 500, 400, 8, 8, True, False],
+               [pygame.image.load("Dolphin.png"), -1000, -1000, 100, 50, 8, 8, True, False]]
     
     Lanturnfish = [pygame.image.load("Lanturnfish.png"), 200, 200, 100, 100, 10, 10, True]
     Jellyfish = [pygame.image.load("Jellyfish.png"), 200, 200, 100, 100, 10, 10, True]
     Bubble = [pygame.image.load("Bubble.png"), 200, 200, 100, 100, 10, 10, True]
     
-    Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True]]
+    Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False]]
 
 
 ########Air Consumption##########################
@@ -729,6 +824,9 @@ def Level1():
     global y_min
     global y_max
     global y_max_edge
+    global y_min_edge
+    global x_max_edge
+    global x_min_edge
     global Bubbles
     global bubblecycles
     global angle
@@ -741,8 +839,15 @@ def Level1():
     global right
     global greentime
     global greenrise
+    global Boat
+    global level_1_complete
+    global Treasurechest
+    global windowoffset
  
-    if level_1_initialized == False or restartlevel == True:
+    if level_1_initialized == False:
+        level_1_complete = False
+        Boat = [[pygame.image.load("Boat.png"), 0, -400, 500, 500, 0, 0, True, False]]
+        
         greenkicking = True
         orangekicking = True
         airSetup()
@@ -755,29 +860,9 @@ def Level1():
         
         level_1_initialized = True
         
-        initial_Coral1_x = -200
-        for n in range(10):
-            Coral1[n][1] = initial_Coral1_x
-            Coral1[n][2] = 2150
-            initial_Coral1_x = initial_Coral1_x + 400
-        
-        initial_Rock5_y = -100
-        for n in range(10):
-            Rock5[n][1] = -200
-            Rock5[n][2] = initial_Rock5_y
-            initial_Rock5_y = initial_Rock5_y + 250
-            
-        initial_Rock5_y2 = -100
-        for n in range(10, 20):
-            Rock5[n][1] = 3675
-            Rock5[n][2] = initial_Rock5_y2
-            initial_Rock5_y2 = initial_Rock5_y2 + 250
-        
-        Treasurechest[0][1] = 2100
-        Treasurechest[0][2] = 2245
-                
-        Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
-        Orangediverkick = [pygame.image.load("Orangediverkick.png"), 200, 200, 224, 188, 10, 10, True]
+        ##########                        
+        Orangediver = [pygame.image.load("Orangediver.png"), 400, 200, 224, 188, 10, 10, True]
+        Orangediverkick = [pygame.image.load("Orangediverkick.png"), 400, 200, 224, 188, 10, 10, True]
         Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
 
         orangekicking = True
@@ -789,16 +874,47 @@ def Level1():
         x_min = 0
         x_max = 3500
         y_min = 0
-        y_max = 2000 + 100
+        y_max = 1800
+        y_min_edge = False
+        y_max_edge = False
+        x_min_edge = False
+        x_max_edge = False
         Orangediver[5] = 10
         Orangediver[6] = 10
         orangedead = False
+        greenrise = False
+        
+        Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - 1450, y_max + 145, 250, 200, 10, 10, True, False]]
+        
+        initial_Coral1_x = -100 - windowoffset
+        for n in range(10):
+            Coral1[n][3] = 600
+            Coral1[n][4] = 400
+            Coral1[n][1] = initial_Coral1_x
+            Coral1[n][2] = y_max + 50 - 100 - 115 + windowoffset
+            initial_Coral1_x = initial_Coral1_x + 400
+        
+        initial_Rock5_y = -windowoffset - 100
+        for n in range(10):
+            Rock5[n][3] = 400
+            Rock5[n][1] = x_min - 200 + 100 - windowoffset
+            Rock5[n][2] = initial_Rock5_y
+            initial_Rock5_y = initial_Rock5_y + 250
+            
+        initial_Rock5_y2 = -windowoffset - 100
+        for n in range(10, 20):
+            Rock5[n][3] = 400
+            Rock5[n][1] = x_max + 175  - 100 - 150 + windowoffset
+            Rock5[n][2] = initial_Rock5_y2
+            initial_Rock5_y2 = initial_Rock5_y2 + 250
+       
+        #########################
+        
     
-    screen.fill(ocean)    
-  
+    screen.fill(ocean)   
+     
     if orangedead == False:
         Orangediver = keymove(Orangediver)
-        movebubbles(Orangediver, 0, 0)
         greenfollow()
     elif greenrise == False:
         down = True
@@ -828,7 +944,6 @@ def Level1():
             Greendiver = move(Greendiver, 0, -5)
             Orangediver = move(Orangediver, 0, -5)
    
-    movebubbles(Greendiver, 4, 40)
     for n in range(20):
         if greenrise == False:
             Rock5[n] = rowmovebackground(Rock5, n, Orangediver)
@@ -838,10 +953,10 @@ def Level1():
             Coral1[n] = rowmovebackground(Coral1, n, Orangediver)
         rowdraw(Coral1, n)
     if greenrise == False:
+        Boat[0] = rowmovebackground(Boat, 0, Orangediver)
         Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
-            
-    rowdraw(Treasurechest, 0)
-    rowdraw(Coral1, 5)
+    
+    rowdraw(Boat, 0)
 
     multifish(Eel, 4)
     multifish(Clownfish, 4)
@@ -849,24 +964,21 @@ def Level1():
         
     draw(Depthguage)
     
-    draw(Needle)
 
-    animatedgreen()
+
+
+    depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
+    screen.blit(depthtext, (1024 - 180, 10))
+    scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
+    screen.blit(scrolltext, (1024 - 180, 50))
     
-    if greenrise == False:
-        binddiver()
-    animatedorange()
-
-    scrolltext = myfont.render(str(scroll), 1, (255, 255, 0))
-    screen.blit(scrolltext, (1024 - 150 - 150, 10))
-    depthtext = myfont.render(str(depth), 1, (255, 255, 0))
-    screen.blit(depthtext, (1024 - 150, 10))
     
     for n in range(4):
         if collision(Eel[n], Orangediver, 75):
             orangedead = True
     
     if collision(Treasurechest[0], Orangediver, 50):
+        Treasurechest[0][8] = True
         if greenrise == False:
             Treasurechest[0][2] = Orangediver[2] + Orangediver[4]/2 - Treasurechest[0][4]/2 + 50
             Treasurechest[0][3] = 150
@@ -875,7 +987,34 @@ def Level1():
                 Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 + 25
             else:
                 Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 - 25
+    if level_1_complete == False:
+        rowdraw(Treasurechest, 0)
+
+    if collision(Boat[0], Orangediver, 0) and Treasurechest[0][8] == True:
+            level_1_complete = True
+    
+    if level_1_complete == True and orangedead == False:
+        winfont = pygame.font.SysFont("monospace", 100, "bold")
+        wintext = winfont.render('YOU WIN!', 1, (255, 255, 0))
+        screen.blit(wintext, (250, 100))
+        
+    if orangedead == True:
+        deadfont = pygame.font.SysFont("monospace", 100, "bold")
+        deadtext = deadfont.render('YOU DEAD!', 1, (255, 255, 0))
+        screen.blit(deadtext, (250, 100))
             
+    animatedgreen()
+    movebubbles(Greendiver, 4, 40)
+
+    animatedorange()
+    if orangedead == False:
+        movebubbles(Orangediver, 0, 0)
+
+    if greenrise == False:
+        binddiver()
+    rowdraw(Coral1, 5)
+
+        
 def Level2():
     global level_2_initialized
     global Coral1
@@ -906,8 +1045,20 @@ def Level2():
     global right
     global greentime
     global greenrise
- 
-    if level_2_initialized == False or restartlevel == True:
+    global Boat
+    global level_2_complete
+    global Treasurechest
+    global fish_collected
+    global holding_a_fish
+    global y_min_edge
+    global x_max_edge
+    global x_min_edge
+    global windowoffset
+    
+    if level_2_initialized == False:
+        level_2_complete = False
+        Boat = [[pygame.image.load("Boat.png"), 0, -400, 500, 500, 0, 0, True, False]]
+        
         greenkicking = True
         orangekicking = True
         airSetup()
@@ -919,30 +1070,8 @@ def Level2():
         right = False
         
         level_2_initialized = True
-        
-        initial_Coral1_x = -200
-        for n in range(10):
-            Coral1[n][1] = initial_Coral1_x
-            Coral1[n][2] = 2150
-            initial_Coral1_x = initial_Coral1_x + 400
-        
-        initial_Rock5_y = -100
-        for n in range(10):
-            Rock5[n][1] = -200
-            Rock5[n][2] = initial_Rock5_y
-            initial_Rock5_y = initial_Rock5_y + 250
-            
-        initial_Rock5_y2 = -100
-        for n in range(10, 20):
-            Rock5[n][1] = 3675
-            Rock5[n][2] = initial_Rock5_y2
-            initial_Rock5_y2 = initial_Rock5_y2 + 250
-        
-        Treasurechest[0][1] = 2100
-        Treasurechest[0][2] = 2245
-                
-        Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
-        Orangediverkick = [pygame.image.load("Orangediverkick.png"), 200, 200, 224, 188, 10, 10, True]
+        Orangediver = [pygame.image.load("Orangediver.png"), 400, 200, 224, 188, 10, 10, True]
+        Orangediverkick = [pygame.image.load("Orangediverkick.png"), 400, 200, 224, 188, 10, 10, True]
         Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
 
         orangekicking = True
@@ -954,16 +1083,44 @@ def Level2():
         x_min = 0
         x_max = 3500
         y_min = 0
-        y_max = 2000 + 100
+        y_max = 1800
+        y_min_edge = False
+        y_max_edge = False
+        x_min_edge = False
+        x_max_edge = False
         Orangediver[5] = 10
         Orangediver[6] = 10
         orangedead = False
+        greenrise = False
+        
+        initial_Coral1_x = -100 - windowoffset
+        for n in range(10):
+            Coral1[n][3] = 600
+            Coral1[n][4] = 400
+            Coral1[n][1] = initial_Coral1_x
+            Coral1[n][2] = y_max + 50 - 100 - 115 + windowoffset
+            initial_Coral1_x = initial_Coral1_x + 400
+        
+        initial_Rock5_y = -windowoffset - 100
+        for n in range(10):
+            Rock5[n][3] = 400
+            Rock5[n][1] = x_min - 200 + 100 - windowoffset
+            Rock5[n][2] = initial_Rock5_y
+            initial_Rock5_y = initial_Rock5_y + 250
+            
+        initial_Rock5_y2 = -windowoffset - 100
+        for n in range(10, 20):
+            Rock5[n][3] = 400
+            Rock5[n][1] = x_max + 175  - 100 - 150 + windowoffset
+            Rock5[n][2] = initial_Rock5_y2
+            initial_Rock5_y2 = initial_Rock5_y2 + 250
+       
+       
     
-    screen.fill(ocean)    
-  
+    screen.fill(ocean)   
+     
     if orangedead == False:
         Orangediver = keymove(Orangediver)
-        movebubbles(Orangediver, 0, 0)
         greenfollow()
     elif greenrise == False:
         down = True
@@ -993,7 +1150,6 @@ def Level2():
             Greendiver = move(Greendiver, 0, -5)
             Orangediver = move(Orangediver, 0, -5)
    
-    movebubbles(Greendiver, 4, 40)
     for n in range(20):
         if greenrise == False:
             Rock5[n] = rowmovebackground(Rock5, n, Orangediver)
@@ -1003,9 +1159,10 @@ def Level2():
             Coral1[n] = rowmovebackground(Coral1, n, Orangediver)
         rowdraw(Coral1, n)
     if greenrise == False:
-        Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
-            
-    rowdraw(Treasurechest, 0)
+        Boat[0] = rowmovebackground(Boat, 0, Orangediver)
+    
+    rowdraw(Boat, 0)
+    
     rowdraw(Coral1, 5)
 
     multifish(Eel, 4)
@@ -1014,33 +1171,68 @@ def Level2():
         
     draw(Depthguage)
     
-    draw(Needle)
 
-    animatedgreen()
-    
-    if greenrise == False:
-        binddiver()
-    animatedorange()
-
-    scrolltext = myfont.render(str(scroll), 1, (255, 255, 0))
-    screen.blit(scrolltext, (1024 - 150 - 150, 10))
-    depthtext = myfont.render(str(depth), 1, (255, 255, 0))
-    screen.blit(depthtext, (1024 - 150, 10))
+    depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
+    screen.blit(depthtext, (1024 - 180, 10))
+    scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
+    screen.blit(scrolltext, (1024 - 180, 50))
     
     for n in range(4):
         if collision(Eel[n], Orangediver, 75):
             orangedead = True
-    
-    if collision(Treasurechest[0], Orangediver, 50):
-        if greenrise == False:
-            Treasurechest[0][2] = Orangediver[2] + Orangediver[4]/2 - Treasurechest[0][4]/2 + 50
-            Treasurechest[0][3] = 150
-            Treasurechest[0][4] = 100
-            if Orangediver[7]:
-                Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 + 25
-            else:
-                Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 - 25
             
+    for f in range(4):
+        if collision(Clownfish[f], Orangediver, 50):
+            if holding_a_fish == False:
+                Clownfish[f][8] = True
+                holding_a_fish = True              
+        if Clownfish[f][8] == True:
+            if greenrise == False:
+                Clownfish[f][7] = Orangediver[7]
+                Clownfish[f][2] = Orangediver[2] + Orangediver[4]/2 - Clownfish[f][4]/2 + 50
+                Clownfish[f][3] = 150
+                Clownfish[f][4] = 100
+                if Orangediver[7]:
+                    Clownfish[f][1] = Orangediver[1] + Orangediver[3]/2 - Clownfish[f][3]/2 + 25
+                else:
+                    Clownfish[f][1] = Orangediver[1] + Orangediver[3]/2 - Clownfish[f][3]/2 - 25
+            rowdraw(Clownfish, f)
+                        
+    fishfont = pygame.font.SysFont("monospace", 40, "bold")
+    fishtext = fishfont.render('You collected ' + str(fish_collected) + ' fish', 1, (255, 255, 0))
+    screen.blit(fishtext, (250, 767 - 60))
+    for f in range(4):
+        if collision(Boat[0], Orangediver, 75) and Clownfish[f][8] == True:
+            holding_a_fish = False
+            Clownfish[f][8] = False
+            Clownfish[f][1] = -1000
+            Clownfish[f][2] = -1000
+            fish_collected = fish_collected + 1
+    if fish_collected == 4:
+        level_2_complete = True
+        
+    if level_2_complete == True and orangedead == False:
+        winfont = pygame.font.SysFont("monospace", 100, "bold")
+        wintext = winfont.render('YOU WIN!', 1, (255, 255, 0))
+        screen.blit(wintext, (250, 100))
+        
+    if orangedead == True:
+        deadfont = pygame.font.SysFont("monospace", 100, "bold")
+        deadtext = deadfont.render('YOU DEAD!', 1, (255, 255, 0))
+        screen.blit(deadtext, (250, 100))
+    
+
+    animatedgreen()
+    movebubbles(Greendiver, 4, 40)
+
+    animatedorange()
+    if orangedead == False:
+        movebubbles(Orangediver, 0, 0)
+
+    if greenrise == False:
+        binddiver()
+
+
 def nothing():
     cool = True
     return cool
@@ -1054,45 +1246,45 @@ Orangediverdead = [pygame.transform.flip(Orangediver[0], False, True), Orangediv
 Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
 Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 224, 188, 10, 10, True]
 
-Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True],
-       [pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True],
-       [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True],
-       [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True]]
+Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True, False],
+       [pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True, False],
+       [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True, False],
+       [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True, False]]
 
-Clownfish = [[pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True],
-             [pygame.image.load("Clownfish.png"), -1000, -1000, 100, 50, 4, 4, True],
-             [pygame.image.load("Clownfish.png"), -1000, -1000, 50, 25, 4, 4, True],
-             [pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True]]
+Clownfish = [[pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True, False], #Clownfish[n][8] is if it is collected
+             [pygame.image.load("Clownfish.png"), -1000, -1000, 100, 50, 4, 4, True, False],
+             [pygame.image.load("Clownfish.png"), -1000, -1000, 50, 25, 4, 4, True, False],
+             [pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True, False]]
 
-Dolphin = [[pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True],
-           [pygame.image.load("Dolphin.png"), -1000, -1000, 300, 200, 8, 8, True],
-           [pygame.image.load("Dolphin.png"), -1000, -1000, 500, 400, 8, 8, True],
-           [pygame.image.load("Dolphin.png"), -1000, -1000, 100, 50, 8, 8, True]]
+Dolphin = [[pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True, False],
+           [pygame.image.load("Dolphin.png"), -1000, -1000, 300, 200, 8, 8, True, False],
+           [pygame.image.load("Dolphin.png"), -1000, -1000, 500, 400, 8, 8, True, False],
+           [pygame.image.load("Dolphin.png"), -1000, -1000, 100, 50, 8, 8, True, False]]
 
-Lanturnfish = [pygame.image.load("Lanturnfish.png"), 200, 200, 100, 100, 10, 10, True]
-Jellyfish = [pygame.image.load("Jellyfish.png"), 200, 200, 100, 100, 10, 10, True]
-Bubble = [pygame.image.load("Bubble.png"), 200, 200, 100, 100, 10, 10, True]
+Lanturnfish = [pygame.image.load("Lanturnfish.png"), 200, 200, 100, 100, 10, 10, True, False]
+Jellyfish = [pygame.image.load("Jellyfish.png"), 200, 200, 100, 100, 10, 10, True, False]
+Bubble = [pygame.image.load("Bubble.png"), 200, 200, 100, 100, 10, 10, True, False]
 
-Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True]]
+Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
+           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False]]
 
 
-Coral1 = [[pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True]]
+Coral1 = [[pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False]]
 
 Coral2 = [pygame.image.load("Coral2.png"), 200, 200, 100, 100, 10, 10, True]
 Coral3 = [pygame.image.load("Coral3.png"), 200, 200, 100, 100, 10, 10, True]
@@ -1101,28 +1293,29 @@ Rock2 = [pygame.image.load("Rock2.png"), 200, 200, 100, 100, 10, 10, True]
 Rock3 = [pygame.image.load("Rock3.png"), 200, 200, 100, 100, 10, 10, True]
 Rock4 = [pygame.image.load("Rock4.png"), 200, 200, 100, 100, 10, 10, True]
 
-Rock5 = [[pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True]]
+Rock5 = [[pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False]]
 
-Treasurechest = [[pygame.image.load("Treasurechest.png"), 200, 200, 250, 200, 10, 10, True]]
+Boat = [[pygame.image.load("Boat.png"), 0, 0, 500, 500, 0, 0, True, False]]
+Treasurechest = [[pygame.image.load("Treasurechest.png"), 200, 200, 250, 200, 10, 10, True, False]]
 
 Sandcastle = [pygame.image.load("Sandcastle.png"), 0, 0, 6000, 768, 10, 0, True]
 Seafloor = [pygame.image.load("Seafloor.png"), 0, 0, 6000, 768, 10, 0, True]
@@ -1132,8 +1325,7 @@ Bottomsea = [pygame.image.load("Bottomsea.png"), 0, 0, 1024, 768, 0, 0, True]
 Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
 Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 10, 10, True]
 Pressureguage = [pygame.image.load("Pressureguage.png"), 200, 200, 100, 100, 10, 10, True]
-Depthguage = [pygame.image.load("Depthguage.png"), 0, 0, 200, 200, 0, 0, True]
-Needle = [pygame.image.load("Needle.png"), 93, 93, 14, 100, 0, 0, True]
+Depthguage = [pygame.image.load("Depthguage.png"), 0, 0, 150, 150, 0, 0, True]
 
 Islandbutton = [pygame.image.load("Islandbutton.png"), 200, 200, 100, 100, 10, 10, True]
 Menubutton = [pygame.image.load("Menubutton.png"), 200, 200, 100, 100, 10, 10, True]
@@ -1148,9 +1340,13 @@ pygame.mouse.set_visible(1)
 
 ### Level 1 Variables ###########################################
 level_1_initialized = False
+level_1_complete = False
 #################################################################
 ### Level 2 Variables ###########################################
 level_2_initialized = False
+level_2_complete= False
+fish_collected = 0
+holding_a_fish = False
 #################################################################
 ### Universal Variables #########################################
 level = 0
@@ -1180,7 +1376,6 @@ red = [255, 0, 0]
 
 bubblecycles = [0, 0, 0, 0, 0, 0, 0, 0] # for more bubbles, add more zeros
 
-restartlevel = False
 
 x_max = 2000
 y_max = 1000
@@ -1190,6 +1385,8 @@ x_min_edge = False
 y_min_edge = False
 x_max_edge = False
 y_max_edge = False
+
+windowoffset = 200
 #################################################################
 # -------- Main Program Loop -----------
 while done == False:
