@@ -107,6 +107,8 @@ def keys():
     global restartlevel
     global orangedead
     for event in pygame.event.get():
+        if event.type == pygame.USEREVENT+1 and totalAir > 0:
+            consumeAir()
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
@@ -664,6 +666,29 @@ def restart_fish():
                [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True],
                [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True]]
 
+
+########Air Consumption##########################
+def airSetup():
+    global totalAir
+    global airRate
+    totalAir = 180
+    airRate = 1
+    pygame.time.set_timer(pygame.USEREVENT+1, 1000)
+    print("Air Setup Called"+str(totalAir) +str(airRate))
+    
+
+def consumeAir():
+    print("ConsumeAir Called"+str(totalAir)+str(airRate))
+    totalAir -= airRate
+  #  newNeedle = We're going to need to redo the needle on the gauge. Making it an image doesn't work
+   # Needle[0] = newNeedle
+    if totalAir <= 0:
+        print("You ran out of air and died!")#debugging for now, will add in the image later
+        orangedead = true
+#################################################
+#################################################################
+
+
 def Level0():
     global level
     global Islandbutton
@@ -720,6 +745,7 @@ def Level1():
     if level_1_initialized == False or restartlevel == True:
         greenkicking = True
         orangekicking = True
+        airSetup()
        
         restart_fish()
         down = False
@@ -884,6 +910,7 @@ def Level2():
     if level_2_initialized == False or restartlevel == True:
         greenkicking = True
         orangekicking = True
+        airSetup()
        
         restart_fish()
         down = False
