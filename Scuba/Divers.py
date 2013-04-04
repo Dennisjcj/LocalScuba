@@ -106,9 +106,13 @@ def keys():
     global event
     global restartlevel
     global orangedead
+    global airRate
+    
     for event in pygame.event.get():
-        if event.type == pygame.USEREVENT+1 and totalAir > 0:
+        if event.type == pygame.USEREVENT+1 and orangedead == False:
             consumeAir()
+        elif totalAir <= 0:
+            orangedead = True
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
@@ -121,15 +125,19 @@ def keys():
                 
             if orangedead == False:
                 if event.key == pygame.K_a: 
+                    airRate = 2
                     left = True
                     lr_just_pressed = 1
                 if event.key == pygame.K_d:
+                    airRate = 2
                     right = True
                     lr_just_pressed = 2
                 if event.key == pygame.K_w:
+                    airRate = 2
                     up = True
                     ud_just_pressed = 3
                 if event.key == pygame.K_s:
+                    airRate = 2
                     down = True
                     ud_just_pressed = 4
             if event.key == pygame.K_SPACE:
@@ -138,12 +146,16 @@ def keys():
         if event.type == pygame.KEYUP:
             if orangedead == False:
                 if event.key == pygame.K_a:
+                    airRate = 1
                     left = False
                 if event.key == pygame.K_d:
+                    airRate = 1
                     right = False
                 if event.key == pygame.K_w:
+                    airRate = 1
                     up = False
                 if event.key == pygame.K_s:
+                    airRate = 1
                     down = False
             if event.key == pygame.K_SPACE:
                 restartlevel = False
@@ -667,6 +679,8 @@ def restart_fish():
                [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True]]
 
 
+totalAir = 0
+airRate = 0
 ########Air Consumption##########################
 def airSetup():
     global totalAir
@@ -678,13 +692,13 @@ def airSetup():
     
 
 def consumeAir():
+    global totalAir
     print("ConsumeAir Called"+str(totalAir)+str(airRate))
     totalAir -= airRate
-  #  newNeedle = We're going to need to redo the needle on the gauge. Making it an image doesn't work
-   # Needle[0] = newNeedle
+    #newNeedle = We're going to need to redo the needle on the gauge. Making it an image doesn't work
+    #Needle[0] = newNeedle
     if totalAir <= 0:
         print("You ran out of air and died!")#debugging for now, will add in the image later
-        orangedead = true
 #################################################
 #################################################################
 
