@@ -8,7 +8,6 @@ import csv#from PIL import GIFImage
 import random
 import math
 
-
 def load(savefile):
     with open(savefile, 'rt') as f:
         reader = csv.reader(f)
@@ -26,6 +25,7 @@ def save(newsavearray):
 # pic = [image, x, y, x size, y size, x speed, y speed, direction]
 # direction right = True, left = false
 
+
 def draw(pic):
     if pic[7] == True:
         screen.blit(pygame.transform.scale(pic[0], (pic[3], pic[4])), (pic[1], pic[2]))
@@ -37,6 +37,13 @@ def rowdraw(pic, row):
         screen.blit(pygame.transform.scale(pic[row][0], (pic[row][3], pic[row][4])), (pic[row][1], pic[row][2]))
     else:
         screen.blit(pygame.transform.scale(pygame.transform.flip(pic[row][0], True, False), (pic[row][3], pic[row][4])), (pic[row][1], pic[row][2]))
+
+def rot_center(image, rect, angle):
+        """rotate an image while keeping its center"""
+        rot_image = pygame.transform.rotate(image, angle)
+        rot_rect = rot_image.get_rect(center=rect.center)
+        return rot_image,rot_rect
+
 
 def collision(object1, object2):
     x1 = object1[1]
@@ -79,9 +86,8 @@ def keys(): #Sorry to mess with your lovely class but I need to put the air cons
     global ud_just_pressed
     global event
     for event in pygame.event.get():
-        if event.type == pygame.USEREVENT+1:
-            #consumeAir(totalair, airRate)
-            print("Consume Air Called")
+        if event.type == pygame.USEREVENT+1 and totalAir > 0:
+            consumeAir()
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
@@ -519,17 +525,6 @@ def multifish(pic, number):
         pic[a] = rowmove(pic, a)
         rowdraw(pic, a)
 
-########Air Consumption##########################
-#global totalair
-#global airRate
-#################################################
-def consumeAir(totalair, rate):
-    print("ConsumeAir Called")
-    totalair-=rate
-    pygame.transform.rotate(Needle, rate/180)
-    if totalair <= 0:
-        print("You ran out of air and died!")#debugging for now, will add in the image later
-
 def Level0():
     global level
     global Islandbutton
@@ -569,7 +564,8 @@ def Level1():
     global angle
     global totalAir
     global airRate
-
+    
+    
     if level_1_initialized == False:
         level_1_initialized = True
         initial_coral1_x = -50
@@ -590,7 +586,7 @@ def Level1():
         x_max = 6000
         y_min = 0
         y_max = 1000 + 100
-        totalair = 180
+        totalAir = 180
         airRate = 1
     screen.fill(ocean)
 
@@ -649,7 +645,7 @@ def Level2():
         orangelength = 20 
         scroll = Orangediver[1]  
         depth = Orangediver[2]
-        totalair = 180
+        totalAir = 180
         airRate = 1
     screen.fill(ocean)
 
@@ -663,6 +659,9 @@ def Level2():
     binddiver()
     animatedorange()
     
+    draw(Depthguage)
+    draw(Needle)
+    
     scrolltext = myfont.render(str(scroll), 1, (255, 255, 0))
     screen.blit(scrolltext, (1024 - 150 - 150, 10))
     depthtext = myfont.render(str(depth), 1, (255, 255, 0))
@@ -671,6 +670,7 @@ def Level2():
 def nothing():
     cool = True
     return cool
+
 
 #### Surface Variables #######################################################################
 # list = [image, x, y, x size, y size, x speed, y speed, right]
@@ -731,14 +731,13 @@ Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
 Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 10, 10, True]
 Pressureguage = [pygame.image.load("Pressureguage.png"), 200, 200, 100, 100, 10, 10, True]
 Depthguage = [pygame.image.load("Depthguage.png"), 0, 0, 200, 200, 0, 0, True]
+#airNeedle = pygame.image.load("Needle.png")
 Needle = [pygame.image.load("Needle.png"), 93, 93, 14, 100, 0, 0, True]
-
 Islandbutton = [pygame.image.load("Islandbutton.png"), 200, 200, 100, 100, 10, 10, True]
 Menubutton = [pygame.image.load("Menubutton.png"), 200, 200, 100, 100, 10, 10, True]
 #### Surface Variables ###################################################################
 
 pygame.init()
-pygame.time.set_timer(pygame.USEREVENT+1, 1000)
 size=[1024,768]
 screen=pygame.display.set_mode(size)
 pygame.display.set_caption("Diver Test")
@@ -782,6 +781,30 @@ x_min_edge = False
 y_min_edge = False
 x_max_edge = False
 y_max_edge = False
+
+
+########Air Consumption##########################
+global totalAir
+global airRate
+
+def airSetup():
+    global totalAir
+    totalAir = 180
+    global airRate
+    airRate = 1
+    pygame.time.set_timer(pygame.USEREVENT+1, 1000)
+    print("Air Setup Called"+str(totalAir) +str(airRate))
+    
+airSetup()
+def consumeAir():
+    print("ConsumeAir Called"+str(totalAir)+str(airRate))
+    global totalAir
+    totalAir -= 5
+  #  newNeedle = We're going to need to redo the needle on the gauge. Making it an image doesn't work
+   # Needle[0] = newNeedle
+    if totalAir <= 0:
+        print("You ran out of air and died!")#debugging for now, will add in the image later
+#################################################
 #################################################################
 # -------- Main Program Loop -----------
 while done == False:
@@ -794,10 +817,12 @@ while done == False:
 ################# Seafloor Level 1 ###############################
     if level == 1:
         Level1()
+        
 ####################################################################
 ################# Sandcastle Level 2 ###############################
     if level == 2:
         Level2()
+        
 ########################################################
 ####  END   ############################################   
     pygame.display.flip()
