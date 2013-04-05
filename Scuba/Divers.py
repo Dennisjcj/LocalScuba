@@ -106,8 +106,7 @@ def keys():
     global event
     global orangedead
     for event in pygame.event.get():
-        if event.type == pygame.USEREVENT+1 and totalAir > 0:
-            consumeAir()
+        
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
@@ -263,6 +262,9 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     global x_max
     global y_min
     global y_max
+    
+    global orangelength
+    global greenlength
 
     global x_min_edge
     global x_max_edge
@@ -270,7 +272,8 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     global y_max_edge
     global orangedead
     
-    accel = 1
+    accel = 0.2
+    kickaccel = 0.5
     
     start_x = pic[1]
     start_y = pic[2]
@@ -288,7 +291,6 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
         y_move_speed = y_move_speed - accel
     elif down == True and up == False and y_max_edge == False:
         y_move_speed = y_move_speed + accel
-
     if left == True and right == True:
         if lr_just_pressed == 1 and x_min_edge == False:
             x_move_speed = x_move_speed - accel
@@ -296,33 +298,82 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
         elif lr_just_pressed == 2 and x_max_edge == False:
             x_move_speed = x_move_speed + accel
             move_direction = True
-
     if up == True and down == True:
         if ud_just_pressed == 3 and y_min_edge == False:
             y_move_speed = y_move_speed - accel
         elif ud_just_pressed == 4 and y_max_edge == False:
             y_move_speed = y_move_speed + accel
-
     if left == False and right == False:
-        if x_move_speed > 0:
-            x_move_speed = x_move_speed - accel/2
-        elif x_move_speed < 0:
-            x_move_speed = x_move_speed + accel/2
+        if x_move_speed > 0 + accel/8:
+            x_move_speed = x_move_speed - accel/8
+        elif x_move_speed < 0 - accel/8:
+            x_move_speed = x_move_speed + accel/8
         else:
             x_move_speed = 0
+   
     if up == False and down == False:
-        if y_move_speed > 0:
-            y_move_speed = y_move_speed - accel/2
-        elif y_move_speed < 0:
-            y_move_speed = y_move_speed + accel/2
+        if y_move_speed > 0 + accel/8:
+            y_move_speed = y_move_speed - accel/8
+        elif y_move_speed < 0 - accel/8:
+            y_move_speed = y_move_speed + accel/8
         else:
             y_move_speed = 0
-    
-    start_x = start_x + x_move_speed
-    start_y = start_y + y_move_speed
-    scroll = scroll + x_move_speed
-    depth = depth + y_move_speed
             
+    if up == True or down == True or left == True or right == True:
+        orangelength = orangelength - kickaccel
+        greenlength = greenlength - kickaccel
+    if up == False and down == False and left == False and right == False:
+        orangelength = orangelength + kickaccel
+        greenlength = greenlength + kickaccel
+    
+    kickmax = 20
+    kickmin = 4
+    if orangelength > kickmax:
+        orangelength = kickmax
+    if orangelength < kickmin:
+        orangelength = kickmin
+        
+    if greenlength > kickmax:
+        greenlength = kickmax
+    if greenlength < kickmin:
+        greenlength = kickmin
+            
+
+    if x_move_speed > 20:
+        x_move_speed = 20
+    elif x_move_speed < -20:
+        x_move_speed = -20
+    if y_move_speed > 20:
+        y_move_speed = 20
+    elif y_move_speed < -20:
+        y_move_speed = 20
+    
+    #if math.fabs(x_move_speed) < 5 and math.fabs(y_move_speed)  < 5:
+    #    orangelength = 20
+    #    greenlength = 20
+    #if (math.fabs(x_move_speed) > 5 and math.fabs(x_move_speed) < 10) or (math.fabs(y_move_speed) > 5 and math.fabs(y_move_speed) < 10):
+    #    orangelength = 10
+    #    greenlength = 10
+    #if (math.fabs(x_move_speed) > 10 and math.fabs(x_move_speed) < 15) or (math.fabs(y_move_speed) > 10 and math.fabs(y_move_speed) < 15):
+    #    orangelength = 5
+    #    greenlength = 5
+    #if (math.fabs(x_move_speed) > 15 and math.fabs(x_move_speed) < 20) or (math.fabs(y_move_speed) > 15 and math.fabs(y_move_speed) < 20):
+    #    orangelength = 1
+    #    greenlength = 1
+    
+    
+    if (x_min_edge == True and x_move_speed < 0) or (x_max_edge == True and x_move_speed > 0):
+        x_move_speed = 0
+    else:
+        start_x = start_x + x_move_speed
+    if (y_min_edge == True and y_move_speed < 0) or (y_max_edge == True and y_move_speed > 0):
+        y_move_speed = 0
+    else:
+        start_y = start_y + y_move_speed
+    scroll = scroll + x_move_speed
+    depth = depth + y_move_speed  
+            
+    
     if scroll < x_min + 1:
         x_min_edge = True
     else: x_min_edge =  False
@@ -336,7 +387,7 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
         y_max_edge = True
     else: y_max_edge =  False
     
-    return [pic[0], start_x, start_y, pic[3], pic[4], pic[5], pic[6], move_direction]
+    return [pic[0], start_x, start_y, pic[3], pic[4], x_move_speed, y_move_speed, move_direction]
 
 def animatedorange():
         global orangekicking
@@ -345,7 +396,7 @@ def animatedorange():
         global Orangediver
         global Orangediverkick
         if orangekicking == False:
-            Orangediverkick = [Orangediverkick[0], Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[5], Orangediver[7]]
+            Orangediverkick = [Orangediverkick[0], Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[6], Orangediver[7]]
             draw(Orangediverkick)
             if orangecycles > orangelength:
                 orangekicking = True
@@ -477,11 +528,11 @@ def movebackground(pic):  # Doesn't use the row system
     if Orangediver[1] > 1023 - Orangediver[3] - 100:
         start_x = start_x - Orangediver[5]
     if Orangediver[1] < 0 + 100:
-        start_x = start_x + Orangediver[5]
+        start_x = start_x - Orangediver[5]
     if Orangediver[2] > 767 - Orangediver[4] - 100:
         start_y = start_y - Orangediver[6]
     if Orangediver[2] < 0 + 100:
-        start_y = start_y + Orangediver[6]
+        start_y = start_y - Orangediver[6]
     return [pic[0], start_x, start_y, pic[3], pic[4], pic[5], pic[6], pic[7]]
 
 def moveedges():      # Not in use
@@ -494,12 +545,12 @@ def moveedges():      # Not in use
         if Orangediver[1] > 1023 - Orangediver[3] - 100:
             x_max = x_max - Orangediver[5]
         if Orangediver[1] < 0 + 100:
-            x_max = x_max + Orangediver[5]
+            x_max = x_max - Orangediver[5]
     if y_edge == False:
         if Orangediver[2] > 767 - Orangediver[4] - 100:
             y_max = y_max - Orangediver[6]
         if Orangediver[2] < 0 + 100:
-            y_max = y_max + Orangediver[6]
+            y_max = y_max - Orangediver[6]
 
 def rowmovebackground(pic, row, following):
     global windowoffset
@@ -510,11 +561,11 @@ def rowmovebackground(pic, row, following):
     if following[1] > 1023 - following[3] - windowoffset:
         start_x = start_x - following[5]
     if following[1] < 0 + windowoffset:
-        start_x = start_x + following[5]
+        start_x = start_x - following[5]
     if following[2] > 767 - following[4] - windowoffset:
         start_y = start_y - following[6]
     if following[2] < 0 + windowoffset:
-            start_y = start_y + following[6]
+        start_y = start_y - following[6]
     return [pic[row][0], start_x, start_y, pic[row][3], pic[row][4], pic[row][5], pic[row][6], pic[row][7], pic[row][8]]
 
 def greenfollow():
@@ -745,34 +796,18 @@ def restart_fish():
     Jellyfish = [pygame.image.load("Jellyfish.png"), 200, 200, 100, 100, 10, 10, True]
     Bubble = [pygame.image.load("Bubble.png"), 200, 200, 100, 100, 10, 10, True]
     
-    Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 2, 2, True, False]]
+    Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 6, 6, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 6, 6, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 6, 6, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 6, 6, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 6, 6, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 6, 6, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 6, 6, True, False],
+               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 6, 6, True, False]]
 
 
 ########Air Consumption##########################
-def airSetup():
-    global totalAir
-    global airRate
-    totalAir = 180
-    airRate = 1
-    pygame.time.set_timer(pygame.USEREVENT+1, 1000)
-    print("Air Setup Called"+str(totalAir) +str(airRate))
-    
 
-def consumeAir():
-    print("ConsumeAir Called"+str(totalAir)+str(airRate))
-    totalAir -= airRate
-  #  newNeedle = We're going to need to redo the needle on the gauge. Making it an image doesn't work
-   # Needle[0] = newNeedle
-    if totalAir <= 0:
-        print("You ran out of air and died!")#debugging for now, will add in the image later
-        orangedead = true
 #################################################
 #################################################################
 
@@ -836,6 +871,8 @@ def Level1():
     global level_1_complete
     global Treasurechest
     global windowoffset
+    global bubbleskilled
+    global eelskilled
  
     if level_1_initialized == False:
         level_1_complete = False
@@ -843,7 +880,6 @@ def Level1():
         
         greenkicking = True
         orangekicking = True
-        airSetup()
        
         restart_fish()
         down = False
@@ -854,9 +890,9 @@ def Level1():
         level_1_initialized = True
         
         ##########                        
-        Orangediver = [pygame.image.load("Orangediver.png"), 400, 200, 224, 188, 10, 10, True]
-        Orangediverkick = [pygame.image.load("Orangediverkick.png"), 400, 200, 224, 188, 10, 10, True]
-        Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
+        Orangediver = [pygame.image.load("Orangediver.png"), 400, 200, 224, 188, 0, 0, True]
+        Orangediverkick = [pygame.image.load("Orangediverkick.png"), 400, 200, 224, 188, 0, 0, True]
+        Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 0, 0, True]
 
         orangekicking = True
         orangecycles = 0
@@ -872,12 +908,12 @@ def Level1():
         y_max_edge = False
         x_min_edge = False
         x_max_edge = False
-        Orangediver[5] = 10
-        Orangediver[6] = 10
+        Orangediver[5] = 0
+        Orangediver[6] = 0
         orangedead = False
         greenrise = False
         
-        Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - 1450, y_max + 145, 250, 200, 10, 10, True, False]]
+        Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - 1400, y_max + 145, 250, 200, 10, 10, True, False]]
         
         initial_Coral1_x = -100 - windowoffset
         for n in range(10):
@@ -907,14 +943,14 @@ def Level1():
     screen.fill(ocean)   
      
     if orangedead == False:
-        Orangediver = keymove(Orangediver)
+        Orangediver = keyaccel(Orangediver)
         greenfollow()
     elif greenrise == False:
         down = True
         up = False
         left = False
         right  = False
-        Orangediver = keymove(Orangediver)
+        Orangediver = keyaccel(Orangediver)
         Orangediver[0] = Orangediverdead[0]
         Orangediverkick[0] = Orangediverdead[0]
         if y_max_edge == True:
@@ -956,19 +992,19 @@ def Level1():
     multifish(Dolphin, 4)
         
     draw(Depthguage)
-    
-
-
 
     depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
-    screen.blit(depthtext, (1024 - 180, 10))
+    screen.blit(depthtext, (1024 - 240, 10))
     scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
-    screen.blit(scrolltext, (1024 - 180, 50))
+    screen.blit(scrolltext, (1024 - 240, 50))
     
     
     for n in range(4):
         if collision(Eel[n], Orangediver, 75):
             orangedead = True
+            eelskilled = True
+
+
     
     if collision(Treasurechest[0], Orangediver, 50):
         Treasurechest[0][8] = True
@@ -1006,7 +1042,24 @@ def Level1():
     if greenrise == False:
         binddiver()
     rowdraw(Coral1, 5)
+    
+    for b in range(4):
+        if Orangediver[2] < Bubbles[b][2] - 40:
+            orangedead = True
+            bubbleskilled = True
 
+    if orangedead == True:
+        if bubbleskilled == True:
+            bubbledeadfont = pygame.font.SysFont("monospace", 30, "bold")
+            bubbledeadtext = bubbledeadfont.render('Never ascend faster than your bubbles.', 1, (255, 255, 0))
+            screen.blit(bubbledeadtext, (100, 400))        
+        if eelskilled == True:
+            eeldeadfont = pygame.font.SysFont("monospace", 50, "bold")
+            eeldeadtext = eeldeadfont.render('Watch out for eels.', 1, (255, 255, 0))
+            screen.blit(eeldeadtext, (200, 450))
+
+
+            
         
 def Level2():
     global level_2_initialized
@@ -1047,6 +1100,8 @@ def Level2():
     global x_max_edge
     global x_min_edge
     global windowoffset
+    global bubbleskilled
+    global eelskilled
     
     if level_2_initialized == False:
         level_2_complete = False
@@ -1054,7 +1109,6 @@ def Level2():
         
         greenkicking = True
         orangekicking = True
-        airSetup()
        
         restart_fish()
         down = False
@@ -1081,8 +1135,8 @@ def Level2():
         y_max_edge = False
         x_min_edge = False
         x_max_edge = False
-        Orangediver[5] = 10
-        Orangediver[6] = 10
+        Orangediver[5] = 0
+        Orangediver[6] = 0
         orangedead = False
         greenrise = False
         
@@ -1113,14 +1167,14 @@ def Level2():
     screen.fill(ocean)   
      
     if orangedead == False:
-        Orangediver = keymove(Orangediver)
+        Orangediver = keyaccel(Orangediver)
         greenfollow()
     elif greenrise == False:
         down = True
         up = False
         left = False
         right  = False
-        Orangediver = keymove(Orangediver)
+        Orangediver = keyaccel(Orangediver)
         Orangediver[0] = Orangediverdead[0]
         Orangediverkick[0] = Orangediverdead[0]
         if y_max_edge == True:
@@ -1166,13 +1220,14 @@ def Level2():
     
 
     depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
-    screen.blit(depthtext, (1024 - 180, 10))
+    screen.blit(depthtext, (1024 - 240, 10))
     scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
-    screen.blit(scrolltext, (1024 - 180, 50))
+    screen.blit(scrolltext, (1024 - 240, 50))
     
     for n in range(4):
         if collision(Eel[n], Orangediver, 75):
             orangedead = True
+            eelskilled = True
             
     for f in range(4):
         if collision(Clownfish[f], Orangediver, 50):
@@ -1224,6 +1279,21 @@ def Level2():
 
     if greenrise == False:
         binddiver()
+    
+    for b in range(4):
+        if Orangediver[2] < Bubbles[b][2] - 40:
+            orangedead = True
+            bubbleskilled = True
+
+    if orangedead == True:
+        if bubbleskilled == True:
+            bubbledeadfont = pygame.font.SysFont("monospace", 30, "bold")
+            bubbledeadtext = bubbledeadfont.render('Never ascend faster than your bubbles.', 1, (255, 255, 0))
+            screen.blit(bubbledeadtext, (100, 400))        
+        if eelskilled == True:
+            eeldeadfont = pygame.font.SysFont("monospace", 50, "bold")
+            eeldeadtext = eeldeadfont.render('Watch out for eels.', 1, (255, 255, 0))
+            screen.blit(eeldeadtext, (200, 450))
 
 
 def nothing():
@@ -1234,7 +1304,7 @@ def nothing():
 # list = [image, x, y, x size, y size, x speed, y speed, right]
 Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
 Orangediverkick = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
-Orangediverdead = [pygame.transform.flip(Orangediver[0], False, True), Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[5], Orangediver[7]]
+Orangediverdead = [pygame.transform.flip(Orangediver[0], False, True), Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[6], Orangediver[7]]
 
 Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
 Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 224, 188, 10, 10, True]
@@ -1369,6 +1439,8 @@ red = [255, 0, 0]
 
 bubblecycles = [0, 0, 0, 0, 0, 0, 0, 0] # for more bubbles, add more zeros
 
+bubbleskilled = False
+eelskilled = False
 
 x_max = 2000
 y_max = 1000
@@ -1379,7 +1451,7 @@ y_min_edge = False
 x_max_edge = False
 y_max_edge = False
 
-windowoffset = 200
+windowoffset = 150
 #################################################################
 # -------- Main Program Loop -----------
 while done == False:
