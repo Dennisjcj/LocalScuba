@@ -880,6 +880,9 @@ def Level1():
         
         greenkicking = True
         orangekicking = True
+        
+        eelskilled = False
+        bubbleskilled = False
        
         restart_fish()
         down = False
@@ -1048,11 +1051,7 @@ def Level1():
             orangedead = True
             bubbleskilled = True
 
-    if orangedead == True:
-        if bubbleskilled == True:
-            bubbledeadfont = pygame.font.SysFont("monospace", 30, "bold")
-            bubbledeadtext = bubbledeadfont.render('Never ascend faster than your bubbles.', 1, (255, 255, 0))
-            screen.blit(bubbledeadtext, (100, 400))        
+    if orangedead == True and greenrise == True:
         if eelskilled == True:
             eeldeadfont = pygame.font.SysFont("monospace", 50, "bold")
             eeldeadtext = eeldeadfont.render('Watch out for eels.', 1, (255, 255, 0))
@@ -1060,6 +1059,11 @@ def Level1():
 
 
             
+        elif bubbleskilled == True:
+            bubbledeadfont = pygame.font.SysFont("monospace", 30, "bold")
+            bubbledeadtext = bubbledeadfont.render('Never ascend faster than your bubbles.', 1, (255, 255, 0))
+            screen.blit(bubbledeadtext, (100, 400))        
+        
         
 def Level2():
     global level_2_initialized
@@ -1109,6 +1113,9 @@ def Level2():
         
         greenkicking = True
         orangekicking = True
+        
+        eelskilled = False
+        bubbleskilled = False
        
         restart_fish()
         down = False
