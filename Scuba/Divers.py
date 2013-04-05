@@ -1065,6 +1065,7 @@ Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10,
 Orangediverkick = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
 Orangediverdead = [pygame.transform.flip(Orangediver[0], False, True), Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[5], Orangediver[7]]
 
+
 Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
 Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 224, 188, 10, 10, True]
 
