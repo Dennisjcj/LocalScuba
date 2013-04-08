@@ -272,7 +272,7 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     global y_max_edge
     global orangedead
     
-    accel = 0.2
+    accel = 0.5 #0.2
     kickaccel = 0.5
     
     start_x = pic[1]
@@ -955,7 +955,11 @@ def Level1():
         right  = False
         Orangediver = keyaccel(Orangediver)
         Orangediver[0] = Orangediverdead[0]
+        Orangediver[3] = Orangediverdead[3]
+        Orangediver[4] = Orangediverdead[4]
         Orangediverkick[0] = Orangediverdead[0]
+        Orangediverkick[3] = Orangediverdead[3]
+        Orangediverkick[4] = Orangediverdead[4]
         if y_max_edge == True:
             greenrise = True
         greenfollow()
@@ -1183,7 +1187,11 @@ def Level2():
         right  = False
         Orangediver = keyaccel(Orangediver)
         Orangediver[0] = Orangediverdead[0]
+        Orangediver[3] = Orangediverdead[3]
+        Orangediver[4] = Orangediverdead[4]
         Orangediverkick[0] = Orangediverdead[0]
+        Orangediverkick[3] = Orangediverdead[3]
+        Orangediverkick[4] = Orangediverdead[4]
         if y_max_edge == True:
             greenrise = True
         greenfollow()
@@ -1310,8 +1318,8 @@ def nothing():
 #### Surface Variables #######################################################################
 # list = [image, x, y, x size, y size, x speed, y speed, right]
 Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
-Orangediverkick = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
-Orangediverdead = [pygame.transform.flip(Orangediver[0], False, True), Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[6], Orangediver[7]]
+Orangediverkick = [pygame.image.load("Orangediverkick.png"), 200, 200, 224, 188, 10, 10, True]
+Orangediverdead = [pygame.image.load("Orangediverdead.png"), Orangediver[1], Orangediver[2], 230, 145, Orangediver[5], Orangediver[6], Orangediver[7]]
 
 Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
 Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 224, 188, 10, 10, True]
