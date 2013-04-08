@@ -95,8 +95,7 @@ def clicked(pic): # must go under a for event in pygame.event.get
 def keys():
     global done
     global level
-    global level_1_initialized
-    global level_2_initialized
+    global level_initialized
     global left
     global right
     global up
@@ -114,9 +113,7 @@ def keys():
                 done = True
             if event.key == pygame.K_BACKSPACE:
                 level = 0
-                level_1_initialized = False
-                level_2_initialized = False
-                
+                level_initialized = False
             if orangedead == False:
                 if event.key == pygame.K_a: 
                     left = True
@@ -131,9 +128,7 @@ def keys():
                     down = True
                     ud_just_pressed = 4
             if event.key == pygame.K_SPACE:
-                level_1_initialized = False
-                level_2_initialized = False
-                down = False
+                level_initialized = False
         if event.type == pygame.KEYUP:
             if orangedead == False:
                 if event.key == pygame.K_a:
@@ -178,6 +173,7 @@ def keymove(pic): # True is right;  Need to fix the coordinates of the diver wit
     global Orangediver
     global depth
     global scroll
+    
     global x_min
     global x_max
     global y_min
@@ -539,19 +535,26 @@ def moveedges():      # Not in use
     global Orangediver
     global x_max
     global y_max
-    global x_edge
-    global y_edge
-    if x_edge == False:
-        if Orangediver[1] > 1023 - Orangediver[3] - 100:
+    global x_min
+    global y_min
+    global x_max_edge
+    global y_max_edge
+    global x_min_edge
+    global y_min_edge
+    if x_max_edge == False:
+        if Orangediver[1] > 1023 - Orangediver[3] - windowoffset:
             x_max = x_max - Orangediver[5]
-        if Orangediver[1] < 0 + 100:
+    if x_min_edge == False:
+        if Orangediver[1] < 0 + windowoffset:
             x_max = x_max - Orangediver[5]
-    if y_edge == False:
-        if Orangediver[2] > 767 - Orangediver[4] - 100:
+    if y_max_edge == False:
+        if Orangediver[2] > 767 - Orangediver[4] - windowoffset:
             y_max = y_max - Orangediver[6]
-        if Orangediver[2] < 0 + 100:
+    if y_min_edge == False:
+        if Orangediver[2] < 0 + windowoffset:
             y_max = y_max - Orangediver[6]
-
+    return [x_min, y_min, x_max, y_max]
+    
 def rowmovebackground(pic, row, following):
     global windowoffset
     start_x = pic[row][1]
@@ -828,7 +831,6 @@ def restart_fish():
 #################################################
 #################################################################
 
-
 def Level0():
     global level
     global Islandbutton
@@ -845,12 +847,7 @@ def Level0():
     if clicked(Singapore):
         level = 2
         pygame.mouse.set_visible(0)
-
-angle = 0
-greentime = 0
-greenrise = False
-clasped = False
-
+    
 def Level1():
     global level_1_initialized
     global Coral1
@@ -1441,7 +1438,7 @@ Rock5 = [[pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, Fals
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False]]
 
 Boat = [[pygame.image.load("Boat.png"), 0, 0, 800, 500, 0, 0, True, False]]
-Treasurechest = [[pygame.image.load("Treasurechest.png"), 200, 200, 250, 200, 10, 10, True, False]]
+Treasurechest = [[pygame.image.load("Treasurechest.png"), -10000, -10000, 250, 200, 10, 10, True, False]]
 
 Sandcastle = [pygame.image.load("Sandcastle.png"), 0, 0, 6000, 768, 10, 0, True]
 Seafloor = [pygame.image.load("Seafloor.png"), 0, 0, 6000, 768, 10, 0, True]
@@ -1449,7 +1446,7 @@ Undersea = [pygame.image.load("Undersea.png"), 0, 0, 1024, 768, 0, 0, True]
 Bottomsea = [pygame.image.load("Bottomsea.png"), 0, 0, 1024, 768, 0, 0, True]
 
 Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
-Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 10, 10, True]
+Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 0, 0, True]
 Pressureguage = [pygame.image.load("Pressureguage.png"), 200, 200, 100, 100, 10, 10, True]
 Depthguage = [pygame.image.load("Depthguage.png"), 0, 0, 150, 150, 0, 0, True]
 
@@ -1464,6 +1461,10 @@ pygame.display.set_caption("Diver Test")
 clock=pygame.time.Clock()
 pygame.mouse.set_visible(1)
 
+### Common Level Variables ###########################################
+level_initialized = False
+level_complete = False
+#################################################################
 ### Level 1 Variables ###########################################
 level_1_initialized = False
 level_1_complete = False
@@ -1488,6 +1489,8 @@ greenkicking = True
 greencycles = 0
 greenlength = 20
 
+greenrise = False
+
 orangekicking = True
 orangecycles = 0
 orangelength = 20
@@ -1508,34 +1511,285 @@ sharkskilled = False
 lanturnskilled = False
 jellyskilled = False
 
+x_min = 0
+y_min = 0
 x_max = 2000
 y_max = 1000
-x_min = -100
-y_min = -100
+
 x_min_edge = False
 y_min_edge = False
 x_max_edge = False
 y_max_edge = False
+
+#edges = [0, 0, 2000, 1000]
 
 windowoffset = 200
 #################################################################
 # -------- Main Program Loop -----------
 while done == False:
     keys()
-################# Map Level 0 ###########################
+    
+    ################# Map Level 0 ###########################
     if level == 0:
-        Level0()
+        Level0()         
+    ##################################################################
+    else:
+        if level_initialized == False:
+            level_initialized = True
+            level_complete = False
             
-##################################################################
+            x_min = 0
+            y_min = 0
+            x_max = 3500
+            y_max = 1800
+            y_min_edge = False
+            y_max_edge = False
+            x_min_edge = False
+            x_max_edge = False
+            
+            Boat = [[pygame.image.load("Boat.png"), 0, -400, 800, 500, 0, 0, True, False]]
+            Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - x_max/2, y_max + 145, 250, 200, 0, 0, True, False]]
+            
+            eelskilled = False
+            bubbleskilled = False
+            sharkskilled = False
+            jellyskilled = False
+            lanturnskilled = False
+           
+            restart_fish()
+            
+            holding_a_fish = False
+            fish_collected = 0
+            
+            down = False
+            up = False
+            left = False
+            right = False
+            
+            Orangediver = [pygame.image.load("Orangediver.png"), 400, 200, 224, 188, 10, 10, True]
+            Orangediverkick = [pygame.image.load("Orangediverkick.png"), 400, 200, 224, 188, 10, 10, True]
+            Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
+            Orangediver[5] = 0
+            Orangediver[6] = 0
+            orangedead = False
+            greenrise = False
+            greenkicking = True
+            orangekicking = True
+            orangekicking = True
+            orangecycles = 0
+            orangelength = 20 
+            
+            bubblecycles = [0, 0, 0, 0, 0, 0, 0, 0]
+            scroll = Orangediver[1]  
+            depth = Orangediver[2]
+            
+            #edges = [-100, -100, 3500, 1800]
+            
+            
+            initial_Coral1_x = -100 - windowoffset
+            for n in range(10):
+                Coral1[n][3] = 600
+                Coral1[n][4] = 400
+                Coral1[n][1] = initial_Coral1_x
+                Coral1[n][2] = y_max + 50 - 100 - 115 + windowoffset
+                initial_Coral1_x = initial_Coral1_x + 400
+            
+            initial_Rock5_y = -windowoffset - 100
+            for n in range(10):
+                Rock5[n][3] = 400
+                Rock5[n][1] = x_min - 200 + 100 - windowoffset
+                Rock5[n][2] = initial_Rock5_y
+                initial_Rock5_y = initial_Rock5_y + 250
+                
+            initial_Rock5_y2 = -windowoffset - 100
+            for n in range(10, 20):
+                Rock5[n][3] = 400
+                Rock5[n][1] = x_max + 175  - 100 - 150 + windowoffset
+                Rock5[n][2] = initial_Rock5_y2
+                initial_Rock5_y2 = initial_Rock5_y2 + 250
+           
+
+        screen.fill(ocean)   
+         
+        if orangedead == False:
+            Orangediver = keyaccel(Orangediver)
+            greenfollow()
+        elif greenrise == False:
+            down = True
+            up = False
+            left = False
+            right  = False
+            Orangediver = keyaccel(Orangediver)
+            Orangediver[0] = Orangediverdead[0]
+            Orangediver[3] = Orangediverdead[3]
+            Orangediver[4] = Orangediverdead[4]
+            Orangediverkick[0] = Orangediverdead[0]
+            Orangediverkick[3] = Orangediverdead[3]
+            Orangediverkick[4] = Orangediverdead[4]
+            if y_max_edge == True:
+                greenrise = True
+            greenfollow()
+        elif greenrise == True:
+            if collision(Greendiver, Orangediver, 180) == False:
+                if Greendiver[1] < Orangediver[1] - 12:
+                    Greendiver[7] = True
+                    Greendiver = move(Greendiver, 2, 0)
+                elif Greendiver[1] > Orangediver[1] + 12:
+                    Greendiver[7] = False
+                    Greendiver = move(Greendiver, -2, 0)
+                if Greendiver[2] < Orangediver[2] - 12 + 50:
+                    Greendiver = move(Greendiver, 0, 2)
+                elif Greendiver[2] > Orangediver[2] + 12 + 50:
+                    Greendiver = move(Greendiver, 0, -2)
+            else:
+                Greendiver[7] = Orangediver[7]
+                Greendiver = move(Greendiver, 0, -5)
+                Orangediver = move(Orangediver, 0, -5)
+       
+        for n in range(20):
+            if greenrise == False:
+                Rock5[n] = rowmovebackground(Rock5, n, Orangediver)
+            rowdraw(Rock5, n)
+        for n in range(10):
+            if greenrise == False:
+                Coral1[n] = rowmovebackground(Coral1, n, Orangediver)
+            rowdraw(Coral1, n)
+        if greenrise == False:
+            Boat[0] = rowmovebackground(Boat, 0, Orangediver)
+            Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
+
+        
+        rowdraw(Boat, 0)
+        
+        rowdraw(Coral1, 5)
+    
+        multifish(Eel, 4)
+        multifish(Clownfish, 4)
+        multifish(Dolphin, 4)
+        multifish(Jellyfish, 4)
+        multifish(Lanturnfish, 4)
+        multifish(Shark, 4)
+
+        draw(Depthguage)
+
+        depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
+        screen.blit(depthtext, (1024 - 240, 10))
+        scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
+        screen.blit(scrolltext, (1024 - 240, 50))
+        
+        for n in range(4):
+            if collision(Eel[n], Orangediver, 75):
+                orangedead = True
+                eelskilled = True
+                
+        for n in range(4):
+            if collision(Shark[n], Orangediver, 75):
+                orangedead = True
+                sharkskilled = True
+                
+        for n in range(4):
+            if collision(Jellyfish[n], Orangediver, 75):
+                orangedead = True
+                jellyskilled = True
+                
+        for n in range(4):
+            if collision(Lanturnfish[n], Orangediver, 75):
+                orangedead = True
+                lanturnskilled = True
+
+        if level_complete == True and orangedead == False:
+            winfont = pygame.font.SysFont("monospace", 100, "bold")
+            wintext = winfont.render('YOU WIN!', 1, (255, 255, 0))
+            screen.blit(wintext, (250, 100))
+            
+        if orangedead == True:
+            deadfont = pygame.font.SysFont("monospace", 100, "bold")
+            deadtext = deadfont.render('YOU DEAD!', 1, (255, 255, 0))
+            screen.blit(deadtext, (250, 100))
+        
+        animatedgreen()
+        movebubbles(Greendiver, 4, 40)
+    
+        animatedorange()
+        if orangedead == False:
+            movebubbles(Orangediver, 0, 0)
+    
+        if greenrise == False:
+            binddiver()
+        
+        if Orangediver[6] < -15:
+            orangedead = True
+            bubbleskilled = True
+    
+        if orangedead == True and greenrise == True:
+            if bubbleskilled == True:
+                bubbledeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                bubbledeadtext = bubbledeadfont.render('Never ascend faster than your bubbles.', 1, (255, 255, 0))
+                screen.blit(bubbledeadtext, (100, 400))        
+            if eelskilled == True or sharkskilled == True or jellyskilled or lanturnskilled:
+                eeldeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                eeldeadtext = eeldeadfont.render('Watch out for dangerous fish.', 1, (255, 255, 0))
+                screen.blit(eeldeadtext, (200, 450))
+
+
 ################# Seafloor Level 1 ###############################
-    if level == 1:
-        Level1()
+
+        if level == 1:
+            
+            if collision(Treasurechest[0], Orangediver, 50):
+                Treasurechest[0][8] = True
+                if greenrise == False:
+                    Treasurechest[0][2] = Orangediver[2] + Orangediver[4]/2 - Treasurechest[0][4]/2 + 50
+                    Treasurechest[0][3] = 150
+                    Treasurechest[0][4] = 100
+                    if Orangediver[7]:
+                        Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 + 25
+                    else:
+                        Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 - 25
+            if level_complete == False:
+                rowdraw(Treasurechest, 0)
+        
+            if collision(Boat[0], Orangediver, 0) and Treasurechest[0][8] == True:
+                    level_complete = True
+            
+        #Level1()
+       
+                
         
         
 ####################################################################
 ################# Sandcastle Level 2 ###############################
-    if level == 2:
-        Level2()
+        if level == 2:
+            for f in range(4):
+                if collision(Clownfish[f], Orangediver, 50):
+                    if holding_a_fish == False:
+                        Clownfish[f][8] = True
+                        holding_a_fish = True              
+                if Clownfish[f][8] == True:
+                    if greenrise == False:
+                        Clownfish[f][7] = Orangediver[7]
+                        Clownfish[f][2] = Orangediver[2] + Orangediver[4]/2 - Clownfish[f][4]/2 + 50
+                        Clownfish[f][3] = 150
+                        Clownfish[f][4] = 100
+                        if Orangediver[7]:
+                            Clownfish[f][1] = Orangediver[1] + Orangediver[3]/2 - Clownfish[f][3]/2 + 25
+                        else:
+                            Clownfish[f][1] = Orangediver[1] + Orangediver[3]/2 - Clownfish[f][3]/2 - 25
+                    rowdraw(Clownfish, f)
+                    
+            fishfont = pygame.font.SysFont("monospace", 40, "bold")
+            fishtext = fishfont.render('You collected ' + str(fish_collected) + ' fish', 1, (255, 255, 0))
+            screen.blit(fishtext, (250, 767 - 60))
+            for f in range(4):
+                if collision(Boat[0], Orangediver, 75) and Clownfish[f][8] == True:
+                    holding_a_fish = False
+                    Clownfish[f][8] = False
+                    Clownfish[f][1] = -1000
+                    Clownfish[f][2] = -1000
+                    fish_collected = fish_collected + 1
+            if fish_collected == 4:
+                level_complete = True
+        #    Level2()
 ########################################################
 ####  END   ############################################   
     pygame.display.flip()
