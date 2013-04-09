@@ -517,20 +517,6 @@ def maxbind(pic):  # Not in use
         y_edge = True
     return [pic[0], x, y, pic[3], pic[4], pic[5], pic[6], pic[7]]
 
-def movebackground(pic):  # Doesn't use the row system
-    start_x = pic[1]
-    start_y = pic[2]
-    global Orangediver
-    if Orangediver[1] > 1023 - Orangediver[3] - 100:
-        start_x = start_x - Orangediver[5]
-    if Orangediver[1] < 0 + 100:
-        start_x = start_x - Orangediver[5]
-    if Orangediver[2] > 767 - Orangediver[4] - 100:
-        start_y = start_y - Orangediver[6]
-    if Orangediver[2] < 0 + 100:
-        start_y = start_y - Orangediver[6]
-    return [pic[0], start_x, start_y, pic[3], pic[4], pic[5], pic[6], pic[7]]
-
 def moveedges():      # Not in use
     global Orangediver
     global x_max
@@ -554,7 +540,23 @@ def moveedges():      # Not in use
         if Orangediver[2] < 0 + windowoffset:
             y_max = y_max - Orangediver[6]
     return [x_min, y_min, x_max, y_max]
-    
+
+def movebackground(pic, following):
+    global windowoffset
+    start_x = pic[1]
+    start_y = pic[2]
+    global x_edge
+    global y_edge
+    if following[1] > 1023 - following[3] - windowoffset:
+        start_x = start_x - following[5]
+    if following[1] < 0 + windowoffset:
+        start_x = start_x - following[5]
+    if following[2] > 767 - following[4] - windowoffset:
+        start_y = start_y - following[6]
+    if following[2] < 0 + windowoffset:
+        start_y = start_y - following[6]
+    return [pic[0], start_x, start_y, pic[3], pic[4], pic[5], pic[6], pic[7]]
+
 def rowmovebackground(pic, row, following):
     global windowoffset
     start_x = pic[row][1]
@@ -575,22 +577,24 @@ def greenfollow():
     global Orangediver
     global Greendiver
     global Greendiverkick
-    if Orangediver[1] > Greendiver[1] + 224:
+    xoff = 200
+    yoff = 130
+    if Orangediver[1] > Greendiver[1] + xoff:
         Greendiver[7] = True
-        Greendiver[1] = Orangediver[1] - 224
+        Greendiver[1] = Orangediver[1] - xoff
         Greendiverkick[7] = True
-        Greendiverkick[1] = Orangediver[1] - 224
-    if Orangediver[1] < Greendiver[1] - 224:
+        Greendiverkick[1] = Orangediver[1] - xoff
+    if Orangediver[1] < Greendiver[1] - xoff:
         Greendiver[7] = False
-        Greendiver[1] = Orangediver[1] + 224
+        Greendiver[1] = Orangediver[1] + xoff
         Greendiverkick[7] = False
-        Greendiverkick[1] = Orangediver[1] + 224
-    if Orangediver[2] > Greendiver[2] + 188:
-        Greendiver[2] = Orangediver[2] - 188
-        Greendiverkick[2] = Orangediver[2] - 188
-    if Orangediver[2] < Greendiver[2] - 188:
-        Greendiver[2] = Orangediver[2] + 188  
-        Greendiverkick[2] = Orangediver[2] + 188                      
+        Greendiverkick[1] = Orangediver[1] + xoff
+    if Orangediver[2] > Greendiver[2] + yoff:
+        Greendiver[2] = Orangediver[2] - yoff
+        Greendiverkick[2] = Orangediver[2] - yoff
+    if Orangediver[2] < Greendiver[2] - yoff:
+        Greendiver[2] = Orangediver[2] + yoff  
+        Greendiverkick[2] = Orangediver[2] + yoff                      
 
     if Greendiver[1] < 0:
         Greendiver[1] = 0
@@ -598,12 +602,12 @@ def greenfollow():
     if Greendiver[2] < 0:
         Greendiver[2] = 0
         Greendiverkick[2] = 0
-    if Greendiver[1] > 1024-224:
-        Greendiver[1] = 1024-224
-        Greendiverkick[1] = 1024-224
-    if Greendiver[2] > 768-188:
-        Greendiver[2] = 768-188
-        Greendiverkick[2] = 768-188
+    if Greendiver[1] > 1024-xoff:
+        Greendiver[1] = 1024-xoff
+        Greendiverkick[1] = 1024-xoff
+    if Greendiver[2] > 768-yoff:
+        Greendiver[2] = 768-yoff
+        Greendiverkick[2] = 768-yoff
 
 def movebubbles(pic, first, offstep):
     global bubblecycles
@@ -848,499 +852,6 @@ def Level0():
         level = 2
         pygame.mouse.set_visible(0)
     
-def Level1():
-    global level_1_initialized
-    global Coral1
-    global Orangediver
-    global Orangediverkick
-    global Greendiver
-    global Greendiverkick
-    global orangekicking
-    global greenkicking
-    global scroll
-    global depth
-    global ocean
-    global myfont  
-    global x_min
-    global x_max
-    global y_min
-    global y_max
-    global y_max_edge
-    global y_min_edge
-    global x_max_edge
-    global x_min_edge
-    global Bubbles
-    global bubblecycles
-    global angle
-    global Lanturnfish
-    global orangedead
-    global Orangediverdead
-    global up
-    global down
-    global left 
-    global right
-    global greentime
-    global greenrise
-    global Boat
-    global level_1_complete
-    global Treasurechest
-    global windowoffset
-    global bubbleskilled
-    global eelskilled
- 
-    if level_1_initialized == False:
-        level_1_complete = False
-        Boat = [[pygame.image.load("Boat.png"), 0, -400, 800, 500, 0, 0, True, False]]
-        
-        greenkicking = True
-        orangekicking = True
-        
-        eelskilled = False
-        bubbleskilled = False
-       
-        restart_fish()
-        down = False
-        up = False
-        left = False
-        right = False
-        
-        level_1_initialized = True
-        
-        ##########                        
-        Orangediver = [pygame.image.load("Orangediver.png"), 400, 200, 224, 188, 0, 0, True]
-        Orangediverkick = [pygame.image.load("Orangediverkick.png"), 400, 200, 224, 188, 0, 0, True]
-        Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 0, 0, True]
-
-        orangekicking = True
-        orangecycles = 0
-        orangelength = 20 
-        bubblecycles = [0, 0, 0, 0, 0, 0, 0, 0]
-        scroll = Orangediver[1]  
-        depth = Orangediver[2]
-        x_min = 0
-        x_max = 3500
-        y_min = 0
-        y_max = 1800
-        y_min_edge = False
-        y_max_edge = False
-        x_min_edge = False
-        x_max_edge = False
-        Orangediver[5] = 0
-        Orangediver[6] = 0
-        orangedead = False
-        greenrise = False
-        
-        Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - 1400, y_max + 145, 250, 200, 10, 10, True, False]]
-        
-        initial_Coral1_x = -100 - windowoffset
-        for n in range(10):
-            Coral1[n][3] = 600
-            Coral1[n][4] = 400
-            Coral1[n][1] = initial_Coral1_x
-            Coral1[n][2] = y_max + 50 - 100 - 115 + windowoffset
-            initial_Coral1_x = initial_Coral1_x + 400
-        
-        initial_Rock5_y = -windowoffset - 100
-        for n in range(10):
-            Rock5[n][3] = 400
-            Rock5[n][1] = x_min - 200 + 100 - windowoffset
-            Rock5[n][2] = initial_Rock5_y
-            initial_Rock5_y = initial_Rock5_y + 250
-            
-        initial_Rock5_y2 = -windowoffset - 100
-        for n in range(10, 20):
-            Rock5[n][3] = 400
-            Rock5[n][1] = x_max + 175  - 100 - 150 + windowoffset
-            Rock5[n][2] = initial_Rock5_y2
-            initial_Rock5_y2 = initial_Rock5_y2 + 250
-       
-        #########################
-        
-    
-    screen.fill(ocean)   
-     
-    if orangedead == False:
-        Orangediver = keyaccel(Orangediver)
-        greenfollow()
-    elif greenrise == False:
-        down = True
-        up = False
-        left = False
-        right  = False
-        Orangediver = keyaccel(Orangediver)
-        Orangediver[0] = Orangediverdead[0]
-        Orangediver[3] = Orangediverdead[3]
-        Orangediver[4] = Orangediverdead[4]
-        Orangediverkick[0] = Orangediverdead[0]
-        Orangediverkick[3] = Orangediverdead[3]
-        Orangediverkick[4] = Orangediverdead[4]
-        if y_max_edge == True:
-            greenrise = True
-        greenfollow()
-    elif greenrise == True:
-        if collision(Greendiver, Orangediver, 180) == False:
-            if Greendiver[1] < Orangediver[1] - 12:
-                Greendiver[7] = True
-                Greendiver = move(Greendiver, 2, 0)
-            elif Greendiver[1] > Orangediver[1] + 12:
-                Greendiver[7] = False
-                Greendiver = move(Greendiver, -2, 0)
-            if Greendiver[2] < Orangediver[2] - 12 + 50:
-                Greendiver = move(Greendiver, 0, 2)
-            elif Greendiver[2] > Orangediver[2] + 12 + 50:
-                Greendiver = move(Greendiver, 0, -2)
-        else:
-            Greendiver[7] = Orangediver[7]
-            Greendiver = move(Greendiver, 0, -5)
-            Orangediver = move(Orangediver, 0, -5)
-   
-    for n in range(20):
-        if greenrise == False:
-            Rock5[n] = rowmovebackground(Rock5, n, Orangediver)
-        rowdraw(Rock5, n)
-    for n in range(10):
-        if greenrise == False:
-            Coral1[n] = rowmovebackground(Coral1, n, Orangediver)
-        rowdraw(Coral1, n)
-    if greenrise == False:
-        Boat[0] = rowmovebackground(Boat, 0, Orangediver)
-        Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
-    
-    rowdraw(Boat, 0)
-
-    multifish(Eel, 4)
-    multifish(Clownfish, 4)
-    multifish(Dolphin, 4)
-        
-    draw(Depthguage)
-
-    depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
-    screen.blit(depthtext, (1024 - 240, 10))
-    scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
-    screen.blit(scrolltext, (1024 - 240, 50))
-    
-    
-    for n in range(4):
-        if collision(Eel[n], Orangediver, 75):
-            orangedead = True
-            eelskilled = True
-
-
-    
-    if collision(Treasurechest[0], Orangediver, 50):
-        Treasurechest[0][8] = True
-        if greenrise == False:
-            Treasurechest[0][2] = Orangediver[2] + Orangediver[4]/2 - Treasurechest[0][4]/2 + 50
-            Treasurechest[0][3] = 150
-            Treasurechest[0][4] = 100
-            if Orangediver[7]:
-                Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 + 25
-            else:
-                Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 - 25
-    if level_1_complete == False:
-        rowdraw(Treasurechest, 0)
-
-    if collision(Boat[0], Orangediver, 0) and Treasurechest[0][8] == True:
-            level_1_complete = True
-    
-    if level_1_complete == True and orangedead == False:
-        winfont = pygame.font.SysFont("monospace", 100, "bold")
-        wintext = winfont.render('YOU WIN!', 1, (255, 255, 0))
-        screen.blit(wintext, (250, 100))
-        
-    if orangedead == True:
-        deadfont = pygame.font.SysFont("monospace", 100, "bold")
-        deadtext = deadfont.render('YOU DEAD!', 1, (255, 255, 0))
-        screen.blit(deadtext, (250, 100))
-            
-    animatedgreen()
-    movebubbles(Greendiver, 4, 40)
-
-    animatedorange()
-    if orangedead == False:
-        movebubbles(Orangediver, 0, 0)
-
-    if greenrise == False:
-        binddiver()
-    rowdraw(Coral1, 5)
-    
-    if Orangediver[6] < -15:
-        orangedead = True
-        bubbleskilled = True
-
-   
-    if orangedead == True and greenrise == True:
-        if bubbleskilled == True:
-            bubbledeadfont = pygame.font.SysFont("monospace", 30, "bold")
-            bubbledeadtext = bubbledeadfont.render('Never ascend faster than your bubbles.', 1, (255, 255, 0))
-            screen.blit(bubbledeadtext, (100, 400))        
-        if eelskilled == True or sharkskilled == True or jellyskilled or lanturnskilled:
-            eeldeadfont = pygame.font.SysFont("monospace", 30, "bold")
-            eeldeadtext = eeldeadfont.render('Watch out for dangerous fish.', 1, (255, 255, 0))
-            screen.blit(eeldeadtext, (200, 450))
-
-        
-def Level2():
-    global level_2_initialized
-    global Coral1
-    global Orangediver
-    global Orangediverkick
-    global Greendiver
-    global Greendiverkick
-    global orangekicking
-    global greenkicking
-    global scroll
-    global depth
-    global ocean
-    global myfont  
-    global x_min
-    global x_max
-    global y_min
-    global y_max
-    global y_max_edge
-    global Bubbles
-    global bubblecycles
-    global angle
-    global Lanturnfish
-    global orangedead
-    global Orangediverdead
-    global up
-    global down
-    global left 
-    global right
-    global greentime
-    global greenrise
-    global Boat
-    global level_2_complete
-    global Treasurechest
-    global fish_collected
-    global holding_a_fish
-    global y_min_edge
-    global x_max_edge
-    global x_min_edge
-    global windowoffset
-    global bubbleskilled
-    global eelskilled
-    global sharkskilled
-    global jellyskilled
-    global lanturnskilled
-    
-    if level_2_initialized == False:
-        level_2_complete = False
-        Boat = [[pygame.image.load("Boat.png"), 0, -400, 800, 500, 0, 0, True, False]]
-        
-        greenkicking = True
-        orangekicking = True
-        
-        eelskilled = False
-        bubbleskilled = False
-       
-        restart_fish()
-        down = False
-        up = False
-        left = False
-        right = False
-        
-        level_2_initialized = True
-        Orangediver = [pygame.image.load("Orangediver.png"), 400, 200, 224, 188, 10, 10, True]
-        Orangediverkick = [pygame.image.load("Orangediverkick.png"), 400, 200, 224, 188, 10, 10, True]
-        Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
-
-        orangekicking = True
-        orangecycles = 0
-        orangelength = 20 
-        bubblecycles = [0, 0, 0, 0, 0, 0, 0, 0]
-        scroll = Orangediver[1]  
-        depth = Orangediver[2]
-        x_min = 0
-        x_max = 3500
-        y_min = 0
-        y_max = 1800
-        y_min_edge = False
-        y_max_edge = False
-        x_min_edge = False
-        x_max_edge = False
-        Orangediver[5] = 0
-        Orangediver[6] = 0
-        orangedead = False
-        greenrise = False
-        
-        initial_Coral1_x = -100 - windowoffset
-        for n in range(10):
-            Coral1[n][3] = 600
-            Coral1[n][4] = 400
-            Coral1[n][1] = initial_Coral1_x
-            Coral1[n][2] = y_max + 50 - 100 - 115 + windowoffset
-            initial_Coral1_x = initial_Coral1_x + 400
-        
-        initial_Rock5_y = -windowoffset - 100
-        for n in range(10):
-            Rock5[n][3] = 400
-            Rock5[n][1] = x_min - 200 + 100 - windowoffset
-            Rock5[n][2] = initial_Rock5_y
-            initial_Rock5_y = initial_Rock5_y + 250
-            
-        initial_Rock5_y2 = -windowoffset - 100
-        for n in range(10, 20):
-            Rock5[n][3] = 400
-            Rock5[n][1] = x_max + 175  - 100 - 150 + windowoffset
-            Rock5[n][2] = initial_Rock5_y2
-            initial_Rock5_y2 = initial_Rock5_y2 + 250
-       
-       
-    
-    screen.fill(ocean)   
-     
-    if orangedead == False:
-        Orangediver = keyaccel(Orangediver)
-        greenfollow()
-    elif greenrise == False:
-        down = True
-        up = False
-        left = False
-        right  = False
-        Orangediver = keyaccel(Orangediver)
-        Orangediver[0] = Orangediverdead[0]
-        Orangediver[3] = Orangediverdead[3]
-        Orangediver[4] = Orangediverdead[4]
-        Orangediverkick[0] = Orangediverdead[0]
-        Orangediverkick[3] = Orangediverdead[3]
-        Orangediverkick[4] = Orangediverdead[4]
-        if y_max_edge == True:
-            greenrise = True
-        greenfollow()
-    elif greenrise == True:
-        if collision(Greendiver, Orangediver, 180) == False:
-            if Greendiver[1] < Orangediver[1] - 12:
-                Greendiver[7] = True
-                Greendiver = move(Greendiver, 2, 0)
-            elif Greendiver[1] > Orangediver[1] + 12:
-                Greendiver[7] = False
-                Greendiver = move(Greendiver, -2, 0)
-            if Greendiver[2] < Orangediver[2] - 12 + 50:
-                Greendiver = move(Greendiver, 0, 2)
-            elif Greendiver[2] > Orangediver[2] + 12 + 50:
-                Greendiver = move(Greendiver, 0, -2)
-        else:
-            Greendiver[7] = Orangediver[7]
-            Greendiver = move(Greendiver, 0, -5)
-            Orangediver = move(Orangediver, 0, -5)
-   
-    for n in range(20):
-        if greenrise == False:
-            Rock5[n] = rowmovebackground(Rock5, n, Orangediver)
-        rowdraw(Rock5, n)
-    for n in range(10):
-        if greenrise == False:
-            Coral1[n] = rowmovebackground(Coral1, n, Orangediver)
-        rowdraw(Coral1, n)
-    if greenrise == False:
-        Boat[0] = rowmovebackground(Boat, 0, Orangediver)
-    
-    rowdraw(Boat, 0)
-    
-    rowdraw(Coral1, 5)
-
-    multifish(Eel, 4)
-    multifish(Clownfish, 4)
-    multifish(Dolphin, 4)
-    multifish(Jellyfish, 4)
-    #multifish(Lanturnfish, 4)
-    multifish(Shark, 4)
-
-        
-    draw(Depthguage)
-    
-
-    depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
-    screen.blit(depthtext, (1024 - 240, 10))
-    scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
-    screen.blit(scrolltext, (1024 - 240, 50))
-    
-    for n in range(4):
-        if collision(Eel[n], Orangediver, 75):
-            orangedead = True
-            eelskilled = True
-            
-    for n in range(4):
-        if collision(Shark[n], Orangediver, 75):
-            orangedead = True
-            sharkskilled = True
-            
-    for n in range(4):
-        if collision(Jellyfish[n], Orangediver, 75):
-            orangedead = True
-            jellyskilled = True
-            
-    for n in range(4):
-        if collision(Lanturnfish[n], Orangediver, 75):
-            orangedead = True
-            lanturnskilled = True
-
-    for f in range(4):
-        if collision(Clownfish[f], Orangediver, 50):
-            if holding_a_fish == False:
-                Clownfish[f][8] = True
-                holding_a_fish = True              
-        if Clownfish[f][8] == True:
-            if greenrise == False:
-                Clownfish[f][7] = Orangediver[7]
-                Clownfish[f][2] = Orangediver[2] + Orangediver[4]/2 - Clownfish[f][4]/2 + 50
-                Clownfish[f][3] = 150
-                Clownfish[f][4] = 100
-                if Orangediver[7]:
-                    Clownfish[f][1] = Orangediver[1] + Orangediver[3]/2 - Clownfish[f][3]/2 + 25
-                else:
-                    Clownfish[f][1] = Orangediver[1] + Orangediver[3]/2 - Clownfish[f][3]/2 - 25
-            rowdraw(Clownfish, f)
-                        
-    fishfont = pygame.font.SysFont("monospace", 40, "bold")
-    fishtext = fishfont.render('You collected ' + str(fish_collected) + ' fish', 1, (255, 255, 0))
-    screen.blit(fishtext, (250, 767 - 60))
-    for f in range(4):
-        if collision(Boat[0], Orangediver, 75) and Clownfish[f][8] == True:
-            holding_a_fish = False
-            Clownfish[f][8] = False
-            Clownfish[f][1] = -1000
-            Clownfish[f][2] = -1000
-            fish_collected = fish_collected + 1
-    if fish_collected == 4:
-        level_2_complete = True
-        
-    if level_2_complete == True and orangedead == False:
-        winfont = pygame.font.SysFont("monospace", 100, "bold")
-        wintext = winfont.render('YOU WIN!', 1, (255, 255, 0))
-        screen.blit(wintext, (250, 100))
-        
-    if orangedead == True:
-        deadfont = pygame.font.SysFont("monospace", 100, "bold")
-        deadtext = deadfont.render('YOU DEAD!', 1, (255, 255, 0))
-        screen.blit(deadtext, (250, 100))
-    
-
-    animatedgreen()
-    movebubbles(Greendiver, 4, 40)
-
-    animatedorange()
-    if orangedead == False:
-        movebubbles(Orangediver, 0, 0)
-
-    if greenrise == False:
-        binddiver()
-    
-    if Orangediver[6] < -15:
-        orangedead = True
-        bubbleskilled = True
-
-    if orangedead == True and greenrise == True:
-        if bubbleskilled == True:
-            bubbledeadfont = pygame.font.SysFont("monospace", 30, "bold")
-            bubbledeadtext = bubbledeadfont.render('Never ascend faster than your bubbles.', 1, (255, 255, 0))
-            screen.blit(bubbledeadtext, (100, 400))        
-        if eelskilled == True or sharkskilled == True or jellyskilled or lanturnskilled:
-            eeldeadfont = pygame.font.SysFont("monospace", 30, "bold")
-            eeldeadtext = eeldeadfont.render('Watch out for dangerous fish.', 1, (255, 255, 0))
-            screen.blit(eeldeadtext, (200, 450))
 
 
 def nothing():
@@ -1628,19 +1139,20 @@ while done == False:
             Orangediverkick[4] = Orangediverdead[4]
             if y_max_edge == True:
                 greenrise = True
-            greenfollow()
+            #greenfollow()
+            Greendiver = movebackground(Greendiver, Orangediver)
         elif greenrise == True:
-            if collision(Greendiver, Orangediver, 180) == False:
+            if collision(Greendiver, Orangediver, 125) == False:
                 if Greendiver[1] < Orangediver[1] - 12:
                     Greendiver[7] = True
-                    Greendiver = move(Greendiver, 2, 0)
+                    Greendiver = move(Greendiver, 8, 0)
                 elif Greendiver[1] > Orangediver[1] + 12:
                     Greendiver[7] = False
-                    Greendiver = move(Greendiver, -2, 0)
+                    Greendiver = move(Greendiver, -8, 0)
                 if Greendiver[2] < Orangediver[2] - 12 + 50:
-                    Greendiver = move(Greendiver, 0, 2)
+                    Greendiver = move(Greendiver, 0, 8)
                 elif Greendiver[2] > Orangediver[2] + 12 + 50:
-                    Greendiver = move(Greendiver, 0, -2)
+                    Greendiver = move(Greendiver, 0, -8)
             else:
                 Greendiver[7] = Orangediver[7]
                 Greendiver = move(Greendiver, 0, -5)
