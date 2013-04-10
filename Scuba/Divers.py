@@ -783,13 +783,13 @@ def rand_start_side(pic, row, offsides):
     if side == 1: # right
         x = x_max + dimx + offsides
         y = random.randrange(0, y_max - dimy)
-    elif side == 2: # top
-        x = random.randrange(x_min, x_max - dimx)
-        y = y_min - dimy - offsides
-    elif side == 3: # left
+    #elif side == 2: # top
+     #   x = random.randrange(x_min, x_max - dimx)
+      #  y = y_min - dimy - offsides
+    elif side == 2: # left
         x = x_min - dimx - offsides
         y = random.randrange(0, y_max - dimy)
-    elif side == 4: # bottom
+    elif side == 3: # bottom
         x = random.randrange(x_min, x_max - dimx)
         y = y_max + dimy + offsides
     return [pic[row][0], x, y, pic[row][3], pic[row][4], pic[row][5], pic[row][6], pic[row][7], pic[row][8]]
