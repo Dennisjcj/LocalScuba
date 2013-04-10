@@ -1146,6 +1146,8 @@ y_min_edge = False
 x_max_edge = False
 y_max_edge = False
 
+wintime = 0
+
 #edges = [0, 0, 2000, 1000]
 
 windowoffset = 200
@@ -1173,7 +1175,7 @@ while done == False:
             level_initialized = True
             level_complete = False
             
-    
+            wintime = 0
             
             Boat = [[pygame.image.load("Boat.png"), 100, -400, 800, 500, 0, 0, True, False]]
             Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - x_max/2, y_max + 145, 250, 200, 0, 0, True, False]]
@@ -1352,11 +1354,11 @@ while done == False:
             multifish(Shark, 4, 4, 75)
 
         if level == 2:
-            multifish(Eel, 4, 2, 1000)
+            multifish(Eel, 4, 2, 1600)
             multifish(Clownfish, 4, 5, 200)
             multifish(Dolphin, 4, 3, 75)
             multifish(Jellyfish, 4, 1, 75)
-            multifish(Lanturnfish, 4, 2, 1000)
+            multifish(Lanturnfish, 4, 2, 1600)
             multifish(Shark, 4, 4, 75)
 
        
@@ -1391,6 +1393,9 @@ while done == False:
             winfont = pygame.font.SysFont("monospace", 100, "bold")
             wintext = winfont.render('YOU WIN!', 1, (255, 255, 0))
             screen.blit(wintext, (250, 100))
+            if wintime > 1000:
+                level = 0
+            wintime = wintime + 1
             
         if orangedead == True:
             deadfont = pygame.font.SysFont("monospace", 100, "bold")
