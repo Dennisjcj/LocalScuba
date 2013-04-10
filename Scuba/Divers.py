@@ -77,7 +77,43 @@ def collision(object1, object2, offset):
         return True
     else:
         return False
+
+def fancycollision(object1, object2, ox1, oy1, ox2, oy2, offset):
+    x1 = object1[1]
+    y1 = object1[2]
+    x2 = object2[1]
+    y2 = object2[2]
     
+    x11 = x1 + ox1 - offset
+    y11 = y1 + oy1 - offset
+    x12 = x1 + ox1 + offset
+    y12 = y1 + oy1 + offset
+    
+    x21 = x2 + ox2 - offset
+    y21 = y2 + oy2 - offset
+    x22 = x2 + ox2 + offset
+    y22 = y2 + oy2 + offset
+    
+    
+    if corner_in_object(x11, y11, x21, y21, x22, y22):
+        return True
+    elif corner_in_object(x12, y11, x21, y21, x22, y22):
+        return True
+    elif corner_in_object(x11, y12, x21, y21, x22, y22):
+        return True
+    elif corner_in_object(x12, y12, x21, y21, x22, y22):
+        return True
+    elif corner_in_object(x21, y21, x11, y11, x12, y12):
+        return True
+    elif corner_in_object(x22, y21, x11, y11, x12, y12):
+        return True   
+    elif corner_in_object(x21, y22, x11, y11, x12, y12):
+        return True
+    elif corner_in_object(x22, y22, x11, y11, x12, y12):
+        return True
+    else:
+        return False
+        
 def clicked(pic): # must go under a for event in pygame.event.get
         x = pic[1]
         y = pic[2]
@@ -758,17 +794,18 @@ def rand_start_side(pic, row, offsides):
         y = y_max + dimy + offsides
     return [pic[row][0], x, y, pic[row][3], pic[row][4], pic[row][5], pic[row][6], pic[row][7], pic[row][8]]
 
-def multifish(pic, number):
+def multifish(pic, number, speed):
     global greenrise
     for a in range(number):
         if outofbounds(pic, a, pic[a][3]):
             pic[a] = rand_start_side(pic, a, pic[a][3])
-            pic[a] = random_direction_move(pic, a, 2*a + 2)
+            pic[a] = random_direction_move(pic, a, speed)
         if greenrise == False:
             pic[a] = rowmovebackground(pic, a, Orangediver)
         pic[a] = rowmove(pic, a)
         if pic[a][8] == False:
             rowdraw(pic, a)
+        speed = speed + 2
         
 def restart_fish():
     global Eel
@@ -786,38 +823,37 @@ def restart_fish():
     orangedead = False
     greenrise = False
     fish_collected = 0
-    Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-           [pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-           [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True, False],
-           [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True, False]]
+        
+    Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+           [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+           [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+           [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False]]
     
-    Shark = [[pygame.image.load("Shark.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-         [pygame.image.load("Shark.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-         [pygame.image.load("Shark.png"), -1000, -1000, 300, 100, 6, 6, True, False],
-         [pygame.image.load("Shark.png"), -1000, -1000, 300, 100, 6, 6, True, False]]
-
-    Jellyfish = [[pygame.image.load("Jellyfish.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-             [pygame.image.load("Jellyfish.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-             [pygame.image.load("Jellyfish.png"), -1000, -1000, 300, 100, 6, 6, True, False],
-             [pygame.image.load("Jellyfish.png"), -1000, -1000, 300, 100, 6, 6, True, False]]
-
-    Lanturnfish = [[pygame.image.load("Lanturnfish.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 6, 6, True, False],
-               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 6, 6, True, False]]
-
+    Shark = [[pygame.image.load("Shark.png"), -1000, -1000, 400, 100, 6, 6, True, False],
+             [pygame.image.load("Shark.png"), -1000, -1000, 400, 100, 6, 6, True, False],
+             [pygame.image.load("Shark.png"), -1000, -1000, 400, 100, 6, 6, True, False],
+             [pygame.image.load("Shark.png"), -1000, -1000, 400, 100, 6, 6, True, False]]
     
-    Clownfish = [[pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True, False],
-                 [pygame.image.load("Clownfish.png"), -1000, -1000, 100, 50, 4, 4, True, False],
-                 [pygame.image.load("Clownfish.png"), -1000, -1000, 50, 25, 4, 4, True, False],
-                 [pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True, False]]
+    Jellyfish = [[pygame.image.load("Jellyfish.png"), -1000, -1000, 200, 50, 2, 2, True, False],
+                 [pygame.image.load("Jellyfish.png"), -1000, -1000, 200, 50, 2, 2, True, False],
+                 [pygame.image.load("Jellyfish.png"), -1000, -1000, 200, 50, 2, 2, True, False],
+                 [pygame.image.load("Jellyfish.png"), -1000, -1000, 200, 50, 2, 2, True, False]]
+
+    Lanturnfish = [[pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 2, 2, True, False]]
+
+    Clownfish = [[pygame.image.load("Clownfish.png"), -1000, -1000, 150, 100, 4, 4, True, False], #Clownfish[n][8] is if it is collected
+                 [pygame.image.load("Clownfish.png"), -1000, -1000, 150, 100, 4, 4, True, False],
+                 [pygame.image.load("Clownfish.png"), -1000, -1000, 150, 100, 4, 4, True, False],
+                 [pygame.image.load("Clownfish.png"), -1000, -1000, 150, 100, 4, 4, True, False]]
     
     Dolphin = [[pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True, False],
-               [pygame.image.load("Dolphin.png"), -1000, -1000, 300, 200, 8, 8, True, False],
-               [pygame.image.load("Dolphin.png"), -1000, -1000, 500, 400, 8, 8, True, False],
-               [pygame.image.load("Dolphin.png"), -1000, -1000, 100, 50, 8, 8, True, False]]
-    
-    
+               [pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True, False],
+               [pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True, False],
+               [pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True, False]]
+
     Bubble = [pygame.image.load("Bubble.png"), 200, 200, 100, 100, 10, 10, True]
     
     Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
@@ -867,35 +903,35 @@ Orangediverdead = [pygame.image.load("Orangediverdead.png"), Orangediver[1], Ora
 Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
 Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 224, 188, 10, 10, True]
 
-Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-       [pygame.image.load("Eel.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-       [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True, False],
-       [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 6, 6, True, False]]
+Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+       [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+       [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+       [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False]]
 
-Shark = [[pygame.image.load("Shark.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-         [pygame.image.load("Shark.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-         [pygame.image.load("Shark.png"), -1000, -1000, 300, 100, 6, 6, True, False],
-         [pygame.image.load("Shark.png"), -1000, -1000, 300, 100, 6, 6, True, False]]
+Shark = [[pygame.image.load("Shark.png"), -1000, -1000, 400, 100, 6, 6, True, False],
+         [pygame.image.load("Shark.png"), -1000, -1000, 400, 100, 6, 6, True, False],
+         [pygame.image.load("Shark.png"), -1000, -1000, 400, 100, 6, 6, True, False],
+         [pygame.image.load("Shark.png"), -1000, -1000, 400, 100, 6, 6, True, False]]
 
-Jellyfish = [[pygame.image.load("Jellyfish.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-             [pygame.image.load("Jellyfish.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-             [pygame.image.load("Jellyfish.png"), -1000, -1000, 300, 100, 6, 6, True, False],
-             [pygame.image.load("Jellyfish.png"), -1000, -1000, 300, 100, 6, 6, True, False]]
+Jellyfish = [[pygame.image.load("Jellyfish.png"), -1000, -1000, 200, 50, 2, 2, True, False],
+             [pygame.image.load("Jellyfish.png"), -1000, -1000, 200, 50, 2, 2, True, False],
+             [pygame.image.load("Jellyfish.png"), -1000, -1000, 200, 50, 2, 2, True, False],
+             [pygame.image.load("Jellyfish.png"), -1000, -1000, 200, 50, 2, 2, True, False]]
 
-Lanturnfish = [[pygame.image.load("Lanturnfish.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 100, 25, 6, 6, True, False],
-               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 6, 6, True, False],
-               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 6, 6, True, False]]
+Lanturnfish = [[pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 2, 2, True, False],
+               [pygame.image.load("Lanturnfish.png"), -1000, -1000, 300, 100, 2, 2, True, False]]
 
-Clownfish = [[pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True, False], #Clownfish[n][8] is if it is collected
-             [pygame.image.load("Clownfish.png"), -1000, -1000, 100, 50, 4, 4, True, False],
-             [pygame.image.load("Clownfish.png"), -1000, -1000, 50, 25, 4, 4, True, False],
-             [pygame.image.load("Clownfish.png"), -1000, -1000, 200, 100, 4, 4, True, False]]
+Clownfish = [[pygame.image.load("Clownfish.png"), -1000, -1000, 150, 100, 4, 4, True, False], #Clownfish[n][8] is if it is collected
+             [pygame.image.load("Clownfish.png"), -1000, -1000, 150, 100, 4, 4, True, False],
+             [pygame.image.load("Clownfish.png"), -1000, -1000, 150, 100, 4, 4, True, False],
+             [pygame.image.load("Clownfish.png"), -1000, -1000, 150, 100, 4, 4, True, False]]
 
 Dolphin = [[pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True, False],
-           [pygame.image.load("Dolphin.png"), -1000, -1000, 300, 200, 8, 8, True, False],
-           [pygame.image.load("Dolphin.png"), -1000, -1000, 500, 400, 8, 8, True, False],
-           [pygame.image.load("Dolphin.png"), -1000, -1000, 100, 50, 8, 8, True, False]]
+           [pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True, False],
+           [pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True, False],
+           [pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True, False]]
 
 Bubble = [pygame.image.load("Bubble.png"), 200, 200, 100, 100, 10, 10, True, False]
 
@@ -1046,8 +1082,6 @@ while done == False:
     ##################################################################
     else:
         if level_initialized == False:
-            level_initialized = True
-            level_complete = False
             
             x_min = 0
             y_min = 0
@@ -1057,6 +1091,11 @@ while done == False:
             y_max_edge = False
             x_min_edge = False
             x_max_edge = False
+            
+            level_initialized = True
+            level_complete = False
+            
+    
             
             Boat = [[pygame.image.load("Boat.png"), 0, -400, 800, 500, 0, 0, True, False]]
             Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - x_max/2, y_max + 145, 250, 200, 0, 0, True, False]]
@@ -1118,7 +1157,7 @@ while done == False:
                 Rock5[n][1] = x_max + 175  - 100 - 150 + windowoffset
                 Rock5[n][2] = initial_Rock5_y2
                 initial_Rock5_y2 = initial_Rock5_y2 + 250
-           
+        ##  Initialized #########################################################3 
 
         screen.fill(ocean)   
          
@@ -1139,19 +1178,27 @@ while done == False:
             Orangediverkick[4] = Orangediverdead[4]
             if y_max_edge == True:
                 greenrise = True
-            #greenfollow()
             Greendiver = movebackground(Greendiver, Orangediver)
         elif greenrise == True:
-            if collision(Greendiver, Orangediver, 125) == False:
-                if Greendiver[1] < Orangediver[1] - 12:
+            if Orangediver[7] == True:
+                ox1 = 129
+                ox2 = 160
+            else:
+                ox1 = 95
+                ox2 = 64
+            oy1 = 118
+            oy2 = 31
+            offerness = 5
+            if fancycollision(Greendiver, Orangediver, ox1, oy1, ox2, oy2, offerness) == False:
+                if Greendiver[1] + ox1 + offerness < Orangediver[1] + ox2 - offerness:
                     Greendiver[7] = True
                     Greendiver = move(Greendiver, 8, 0)
-                elif Greendiver[1] > Orangediver[1] + 12:
+                elif Greendiver[1] + ox1 - offerness > Orangediver[1] + ox2 + offerness:
                     Greendiver[7] = False
                     Greendiver = move(Greendiver, -8, 0)
-                if Greendiver[2] < Orangediver[2] - 12 + 50:
+                if Greendiver[2] + oy1 + offerness < Orangediver[2] + oy2 - offerness:
                     Greendiver = move(Greendiver, 0, 8)
-                elif Greendiver[2] > Orangediver[2] + 12 + 50:
+                elif Greendiver[2] + oy1 - offerness > Orangediver[2] + oy2 + offerness:
                     Greendiver = move(Greendiver, 0, -8)
             else:
                 Greendiver[7] = Orangediver[7]
@@ -1174,14 +1221,22 @@ while done == False:
         rowdraw(Boat, 0)
         
         rowdraw(Coral1, 5)
-    
-        multifish(Eel, 4)
-        multifish(Clownfish, 4)
-        multifish(Dolphin, 4)
-        multifish(Jellyfish, 4)
-        multifish(Lanturnfish, 4)
-        multifish(Shark, 4)
+        
+        
+        if level == 1:
+            multifish(Dolphin, 4, 3)
+            multifish(Jellyfish, 4, 1)
+            multifish(Shark, 4, 4)
 
+        if level == 2:
+            multifish(Eel, 4, 2)
+            multifish(Clownfish, 4, 5)
+            multifish(Dolphin, 4, 3)
+            multifish(Jellyfish, 4, 1)
+            multifish(Lanturnfish, 4, 2)
+            multifish(Shark, 4, 4)
+
+       
         draw(Depthguage)
 
         depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
@@ -1247,7 +1302,7 @@ while done == False:
 ################# Seafloor Level 1 ###############################
 
         if level == 1:
-            
+
             if collision(Treasurechest[0], Orangediver, 50):
                 Treasurechest[0][8] = True
                 if greenrise == False:
@@ -1272,6 +1327,7 @@ while done == False:
 ####################################################################
 ################# Sandcastle Level 2 ###############################
         if level == 2:
+
             for f in range(4):
                 if collision(Clownfish[f], Orangediver, 50):
                     if holding_a_fish == False:
