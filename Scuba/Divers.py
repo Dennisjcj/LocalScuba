@@ -787,12 +787,14 @@ def offscreen(pic, row, faroff):
 def rand_start_side(pic, row, offsides):
     dimx = pic[row][3]
     dimy = pic[row][4]
-    side = random.randrange(1, 4)
+    side = random.randrange(1, 8)
     global y_min
     global y_max
     global x_min    
     global x_max
     # 1 is right, 2 is top, 3 is left, 4 is bottom
+    # Never spawn a fish at the top, because it will look like it's out of the water
+    # Weight it more heavily to spawn them at the bottom
     if side == 1: # right
         x = x_max + dimx + offsides
         y = random.randrange(0, y_max - dimy)
@@ -802,7 +804,7 @@ def rand_start_side(pic, row, offsides):
     elif side == 2: # left
         x = x_min - dimx - offsides
         y = random.randrange(0, y_max - dimy)
-    elif side == 3: # bottom
+    elif side == 3 or side == 4 or side == 5 or side == 6 or side == 7: # bottom
         x = random.randrange(x_min, x_max - dimx)
         y = y_max + dimy + offsides
     return [pic[row][0], x, y, pic[row][3], pic[row][4], pic[row][5], pic[row][6], pic[row][7], pic[row][8]]
@@ -1021,6 +1023,48 @@ Wave = [[pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False]]
 
+
+Underwave = [[pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False]]
+
 Sandcastle = [pygame.image.load("Sandcastle.png"), 0, 0, 6000, 768, 10, 0, True]
 Seafloor = [pygame.image.load("Seafloor.png"), 0, 0, 6000, 768, 10, 0, True]
 Undersea = [pygame.image.load("Undersea.png"), 0, 0, 1024, 768, 0, 0, True]
@@ -1185,6 +1229,38 @@ while done == False:
                 Wave[n][1] = initial_Wave_x
                 Wave[n][2] = y_min + 20 - windowoffset
                 initial_Wave_x = initial_Wave_x + 536
+                
+            initial_Underwave_x = -100 - windowoffset
+            for n in range(10):
+                Underwave[n][3] = 300
+                Underwave[n][4] = 100
+                Underwave[n][1] = initial_Underwave_x
+                Underwave[n][2] = y_min + 500 - windowoffset
+                initial_Underwave_x = initial_Underwave_x + 536
+                
+            initial_Underwave_x = -400 - windowoffset
+            for n in range(10, 20):
+                Underwave[n][3] = 300
+                Underwave[n][4] = 100
+                Underwave[n][1] = initial_Underwave_x
+                Underwave[n][2] = y_min + 1000 - windowoffset
+                initial_Underwave_x = initial_Underwave_x + 536
+                
+            initial_Underwave_x = -100 - windowoffset
+            for n in range(20, 30):
+                Underwave[n][3] = 300
+                Underwave[n][4] = 100
+                Underwave[n][1] = initial_Underwave_x
+                Underwave[n][2] = y_min + 1500 - windowoffset
+                initial_Underwave_x = initial_Underwave_x + 536
+                
+            initial_Underwave_x = -400 - windowoffset
+            for n in range(30, 40):
+                Underwave[n][3] = 300
+                Underwave[n][4] = 100
+                Underwave[n][1] = initial_Underwave_x
+                Underwave[n][2] = y_min + 2000 - windowoffset
+                initial_Underwave_x = initial_Underwave_x + 536
             
             initial_Rock5_y = -windowoffset - 100
             for n in range(10):
@@ -1249,7 +1325,14 @@ while done == False:
        
         
         rowdraw(Boat, 0)        
-       
+        for n in range(10):
+            if greenrise == False:
+                Wave[n] = rowmovebackground(Wave, n, Orangediver)
+            rowdraw(Wave, n)
+        for n in range(40):
+            if greenrise == False:
+                Underwave[n] = rowmovebackground(Underwave, n, Orangediver)
+            rowdraw(Underwave, n)
         for n in range(20):
             if greenrise == False:
                 Rock5[n] = rowmovebackground(Rock5, n, Orangediver)
@@ -1258,10 +1341,6 @@ while done == False:
             if greenrise == False:
                 Coral1[n] = rowmovebackground(Coral1, n, Orangediver)
             rowdraw(Coral1, n)
-        for n in range(10):
-            if greenrise == False:
-                Wave[n] = rowmovebackground(Wave, n, Orangediver)
-            rowdraw(Wave, n)
         if greenrise == False:
             Boat[0] = rowmovebackground(Boat, 0, Orangediver)
             Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
