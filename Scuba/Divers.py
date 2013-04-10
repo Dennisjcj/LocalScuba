@@ -647,6 +647,8 @@ def greenfollow():
 
 def movebubbles(pic, first, offstep):
     global bubblecycles
+    global Orangediver
+    bubblemax = 0
     if bubblecycles[first] == 0 + offstep:
         if pic[7] == False:
             Bubbles[first][1] = pic[1] + 55 - 30
@@ -658,6 +660,9 @@ def movebubbles(pic, first, offstep):
     if bubblecycles[first] > 360:
         bubblecycles[first] = 0
     Bubbles[first][2] = Bubbles[first][2] - Bubbles[first][6]
+    bubbledepth = depth - (Orangediver[2] - Bubbles[first][2])
+    if bubbledepth < bubblemax:
+        Bubbles[first][2] = -10000
 
     if bubblecycles[first + 1] == 90 + offstep:
         if pic[7] == False:
@@ -670,7 +675,10 @@ def movebubbles(pic, first, offstep):
     if bubblecycles[first + 1] > 455:
         bubblecycles[first + 1] = 90
     Bubbles[first + 1][2] = Bubbles[first + 1][2] - Bubbles[first + 1][6]
-
+    bubbledepth = depth - (Orangediver[2] - Bubbles[first + 1][2])
+    if bubbledepth < bubblemax:
+        Bubbles[first + 1][2] = -10000
+        
     if bubblecycles[first + 2] == 180 + offstep:
         if pic[7] == False:
             Bubbles[first + 2][1] = pic[1] + 55 - 30
@@ -682,7 +690,9 @@ def movebubbles(pic, first, offstep):
     if bubblecycles[first + 2] > 540:
         bubblecycles[first + 2] = 180
     Bubbles[first + 2][2] = Bubbles[first + 2][2] - Bubbles[first + 2][6]        
-
+    bubbledepth = depth - (Orangediver[2] - Bubbles[first + 2][2])
+    if bubbledepth < bubblemax:
+        Bubbles[first + 2][2] = -10000
     if bubblecycles[first + 3] == 270 + offstep:
         if pic[7] == False:
             Bubbles[first + 3][1] = pic[1] + 55 - 30
@@ -693,7 +703,10 @@ def movebubbles(pic, first, offstep):
     bubblecycles[first + 3] = bubblecycles[first + 3] + 1
     if bubblecycles[first + 3] > 630:
         bubblecycles[first + 3] = 270
-    Bubbles[first + 3][2] = Bubbles[first + 3][2] - Bubbles[first + 3][6]         
+    Bubbles[first + 3][2] = Bubbles[first + 3][2] - Bubbles[first + 3][6] 
+    bubbledepth = depth - (Orangediver[2] - Bubbles[first + 3][2])
+    if bubbledepth < bubblemax:
+            Bubbles[first + 3][2] = -10000        
 
     for b in range(first, first + 4):
         if greenrise == False:
@@ -796,6 +809,9 @@ def rand_start_side(pic, row, offsides):
 
 def multifish(pic, number, speed):
     global greenrise
+    global Orangediver
+    global depth
+    global y_min
     for a in range(number):
         if outofbounds(pic, a, pic[a][3]):
             pic[a] = rand_start_side(pic, a, pic[a][3])
@@ -803,6 +819,13 @@ def multifish(pic, number, speed):
         if greenrise == False:
             pic[a] = rowmovebackground(pic, a, Orangediver)
         pic[a] = rowmove(pic, a)
+        fishdepth = depth - (Orangediver[2] - pic[a][2])
+        if fishdepth < 75:
+            pic[a][2] = Orangediver[2] - (depth - 74)
+            pic[a] = random_direction_move(pic, a, speed)
+        randomturn = random.randrange(0, 100)
+        if randomturn == 5:
+            pic[a] = random_direction_move(pic, a, speed)
         if pic[a][8] == False:
             rowdraw(pic, a)
         speed = speed + 2
