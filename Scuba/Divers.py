@@ -787,7 +787,7 @@ def offscreen(pic, row, faroff):
 def rand_start_side(pic, row, offsides):
     dimx = pic[row][3]
     dimy = pic[row][4]
-    side = random.randrange(1, 8)
+    side = random.randrange(1, 100)
     global y_min
     global y_max
     global x_min    
@@ -804,12 +804,12 @@ def rand_start_side(pic, row, offsides):
     elif side == 2: # left
         x = x_min - dimx - offsides
         y = random.randrange(0, y_max - dimy)
-    elif side == 3 or side == 4 or side == 5 or side == 6 or side == 7: # bottom
+    else: # bottom
         x = random.randrange(x_min, x_max - dimx)
         y = y_max + dimy + offsides
     return [pic[row][0], x, y, pic[row][3], pic[row][4], pic[row][5], pic[row][6], pic[row][7], pic[row][8]]
 
-def multifish(pic, number, speed):
+def multifish(pic, number, speed, fishmaxdepth):
     global greenrise
     global Orangediver
     global depth
@@ -822,8 +822,8 @@ def multifish(pic, number, speed):
             pic[a] = rowmovebackground(pic, a, Orangediver)
         pic[a] = rowmove(pic, a)
         fishdepth = depth - (Orangediver[2] - pic[a][2])
-        if fishdepth < 75:
-            pic[a][2] = Orangediver[2] - (depth - 74)
+        if fishdepth < fishmaxdepth:
+            pic[a][2] = Orangediver[2] - (depth - fishmaxdepth - 1)
             pic[a] = random_direction_move(pic, a, speed)
         randomturn = random.randrange(0, 100)
         if randomturn == 5:
@@ -1347,17 +1347,17 @@ while done == False:
 
         
         if level == 1:
-            multifish(Dolphin, 4, 3)
-            multifish(Jellyfish, 4, 1)
-            multifish(Shark, 4, 4)
+            multifish(Dolphin, 4, 3, 75)
+            multifish(Jellyfish, 4, 1, 75)
+            multifish(Shark, 4, 4, 75)
 
         if level == 2:
-            multifish(Eel, 4, 2)
-            multifish(Clownfish, 4, 5)
-            multifish(Dolphin, 4, 3)
-            multifish(Jellyfish, 4, 1)
-            multifish(Lanturnfish, 4, 2)
-            multifish(Shark, 4, 4)
+            multifish(Eel, 4, 2, 1000)
+            multifish(Clownfish, 4, 5, 200)
+            multifish(Dolphin, 4, 3, 75)
+            multifish(Jellyfish, 4, 1, 75)
+            multifish(Lanturnfish, 4, 2, 1000)
+            multifish(Shark, 4, 4, 75)
 
        
         draw(Depthguage)
