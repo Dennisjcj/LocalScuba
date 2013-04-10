@@ -987,6 +987,17 @@ Rock5 = [[pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, Fals
 Boat = [[pygame.image.load("Boat.png"), 0, 0, 800, 500, 0, 0, True, False]]
 Treasurechest = [[pygame.image.load("Treasurechest.png"), -10000, -10000, 250, 200, 10, 10, True, False]]
 
+Wave = [[pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False]]
+
 Sandcastle = [pygame.image.load("Sandcastle.png"), 0, 0, 6000, 768, 10, 0, True]
 Seafloor = [pygame.image.load("Seafloor.png"), 0, 0, 6000, 768, 10, 0, True]
 Undersea = [pygame.image.load("Undersea.png"), 0, 0, 1024, 768, 0, 0, True]
@@ -1097,7 +1108,7 @@ while done == False:
             
     
             
-            Boat = [[pygame.image.load("Boat.png"), 0, -400, 800, 500, 0, 0, True, False]]
+            Boat = [[pygame.image.load("Boat.png"), 100, -400, 800, 500, 0, 0, True, False]]
             Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - x_max/2, y_max + 145, 250, 200, 0, 0, True, False]]
             
             eelskilled = False
@@ -1143,6 +1154,14 @@ while done == False:
                 Coral1[n][1] = initial_Coral1_x
                 Coral1[n][2] = y_max + 50 - 100 - 115 + windowoffset
                 initial_Coral1_x = initial_Coral1_x + 400
+                
+            initial_Wave_x = -100 - windowoffset
+            for n in range(10):
+                Wave[n][3] = 600
+                Wave[n][4] = 400
+                Wave[n][1] = initial_Wave_x
+                Wave[n][2] = y_min + 20 - windowoffset
+                initial_Wave_x = initial_Wave_x + 536
             
             initial_Rock5_y = -windowoffset - 100
             for n in range(10):
@@ -1205,6 +1224,9 @@ while done == False:
                 Greendiver = move(Greendiver, 0, -5)
                 Orangediver = move(Orangediver, 0, -5)
        
+        
+        rowdraw(Boat, 0)        
+       
         for n in range(20):
             if greenrise == False:
                 Rock5[n] = rowmovebackground(Rock5, n, Orangediver)
@@ -1213,15 +1235,14 @@ while done == False:
             if greenrise == False:
                 Coral1[n] = rowmovebackground(Coral1, n, Orangediver)
             rowdraw(Coral1, n)
+        for n in range(10):
+            if greenrise == False:
+                Wave[n] = rowmovebackground(Wave, n, Orangediver)
+            rowdraw(Wave, n)
         if greenrise == False:
             Boat[0] = rowmovebackground(Boat, 0, Orangediver)
             Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
 
-        
-        rowdraw(Boat, 0)
-        
-        rowdraw(Coral1, 5)
-        
         
         if level == 1:
             multifish(Dolphin, 4, 3)
