@@ -3,10 +3,12 @@ Created on Mar 29, 2013
 
 @author: Dennis
 '''
+from __future__ import division
 import pygame
 import csv#from PIL import GIFImage
 import random
 import math
+
 
 def load(savefile):
     with open(savefile, 'rt') as f:
@@ -905,29 +907,43 @@ def restart_fish():
 ########Air Consumption##########################
 totalAir = 0
 airRate = 0
+
+#Notes for rotation: Radius is 150
 ########Air Consumption##########################
 def airSetup():
     global totalAir
-    global airRate
+    global airRate 
     totalAir = 180
     airRate = 1
     pygame.time.set_timer(pygame.USEREVENT+1, 1000)
     print("Air Setup Called"+str(totalAir) +str(airRate))
-    pygame.draw.line(Pressuregauge[0], (120,0,0), (0,0), (20,20), 5)
+    global gaugerect
+    gaugerect = Pressuregauge[0].get_rect()
+    global needle
+    needle = pygame.draw.line(Pressuregauge[0], (120,0,0), (gaugerect.centerx, gaugerect.centery), (gaugerect.centerx+150, gaugerect.centery), 5)
     
 
 def consumeAir():
     global totalAir
+    global airRate
+    global gaugerect
+    global needle
+    pi = 3.141592653589793238462643383279502884197169399375
+    radius = 150 #Radius of gauge, if time try to make that actually use the gauge rect to calculate width
     print("ConsumeAir Called"+str(totalAir)+str(airRate))
     totalAir -= airRate
-    #newNeedle = We're going to need to redo the needle on the gauge. Making it an image doesn't work
-    #Needle[0] = newNeedle
+    startx = gaugerect.centerx
+    starty = gaugerect.centery
+    endx = radius*math.cos(airRate/180.0*pi) 
+    endy = radius*math.sin(airRate/180.0*pi)
+    pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
+    #pygame.display.flip()
     if totalAir <= 0:
         print("You ran out of air and died!")#debugging for now, will add in the image later
         
-def gaugeLinedraw():
-     pygame.draw.line(Depthgauge[0], (0,0,0), (0,0), (10,10), 1)
-     print("Foo")       
+#def gaugeLinedraw():
+    # pygame.draw.line(Depthgauge[0], (0,0,0), (0,0), (10,10), 1)
+    # print("Foo")       
 #################################################
 #################################################################
 #################################################
