@@ -689,6 +689,7 @@ def airSetup():
     airRate = 1
     pygame.time.set_timer(pygame.USEREVENT+1, 1000)
     print("Air Setup Called"+str(totalAir) +str(airRate))
+  
     
 
 def consumeAir():
@@ -699,6 +700,10 @@ def consumeAir():
     #Needle[0] = newNeedle
     if totalAir <= 0:
         print("You ran out of air and died!")#debugging for now, will add in the image later
+        
+def gaugeLinedraw():
+     pygame.draw.line(Depthgauge[0], (0,0,0), (0,0), (10,10), 1)
+     print("Foo")       
 #################################################
 #################################################################
 
@@ -862,8 +867,9 @@ def Level1():
     multifish(Dolphin, 4)
         
     draw(Depthguage)
-    
-    draw(Needle)
+    #pygame.draw.line(Depthgauge[0], (0,0,0), (0,0), (10,10), 1)
+    #gaugeLinedraw()
+    #draw(Needle)
 
     animatedgreen()
     
