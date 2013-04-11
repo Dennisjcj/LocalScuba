@@ -934,8 +934,8 @@ def consumeAir():
     totalAir -= airRate
     startx = gaugerect.centerx
     starty = gaugerect.centery
-    endx = radius*math.cos(airRate/180.0*pi) 
-    endy = radius*math.sin(airRate/180.0*pi)
+    endx = radius*math.cos((totalAir)/180.0*pi) 
+    endy = radius*math.sin((totalAir)/180.0*pi)
     pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
     #pygame.display.flip()
     if totalAir <= 0:
