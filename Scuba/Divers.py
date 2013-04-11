@@ -939,7 +939,6 @@ def consumeAir():
     endy = radius*math.sin((totalAir)/180.0*pi)
     needle = pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
     if totalAir <= 0:
-        print("You ran out of air and died!")#debugging for now, will add in the image later
         orangedead = True
 #def gaugeLinedraw():
     # pygame.draw.line(Depthgauge[0], (0,0,0), (0,0), (10,10), 1)
