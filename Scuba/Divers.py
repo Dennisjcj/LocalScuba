@@ -928,6 +928,7 @@ def consumeAir():
     global airRate
     global gaugerect
     global needle
+    global orangedead
     pi = 3.141592653589793238462643383279502884197169399375
     radius = 150 #Radius of gauge, if time try to make that actually use the gauge rect to calculate width
     print("ConsumeAir Called"+str(totalAir)+str(airRate))
@@ -1480,6 +1481,11 @@ while done == False:
                 eeldeadfont = pygame.font.SysFont("monospace", 30, "bold")
                 eeldeadtext = eeldeadfont.render('Watch out for dangerous fish.', 1, (255, 255, 0))
                 screen.blit(eeldeadtext, (200, 450))
+            if totalAir == 0:
+                deadairfont = pygame.font.SysFont("monospace", 30, "bold")
+                deadairtext = deadairfont.render('Keep an eye on your air gauge.', 1, (255, 255, 0))
+                screen.blit(deadairtext, (300, 500))
+            
 
 
 ################# Seafloor Level 1 ###############################
