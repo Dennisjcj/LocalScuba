@@ -1402,6 +1402,7 @@ while done == False:
 
        
         draw(Depthguage)
+        pygame.draw.line(Depthguage[0], (120,0,0), (0,0), (20,20), 5)
 
         depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
         screen.blit(depthtext, (1024 - 240, 10))
