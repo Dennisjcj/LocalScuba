@@ -140,8 +140,11 @@ def keys():
     global ud_just_pressed
     global event
     global orangedead
+    global airRate
+    
     for event in pygame.event.get():
-        
+        if event.type == pygame.USEREVENT+1 and orangedead == False:
+            consumeAir()
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
@@ -152,15 +155,19 @@ def keys():
                 level_initialized = False
             if orangedead == False:
                 if event.key == pygame.K_a: 
+                    airRate = 2
                     left = True
                     lr_just_pressed = 1
                 if event.key == pygame.K_d:
+                    airRate = 2
                     right = True
                     lr_just_pressed = 2
                 if event.key == pygame.K_w:
+                    airRate = 2
                     up = True
                     ud_just_pressed = 3
                 if event.key == pygame.K_s:
+                    airRate = 2
                     down = True
                     ud_just_pressed = 4
             if event.key == pygame.K_SPACE:
@@ -168,12 +175,16 @@ def keys():
         if event.type == pygame.KEYUP:
             if orangedead == False:
                 if event.key == pygame.K_a:
+                    airRate = 1
                     left = False
                 if event.key == pygame.K_d:
+                    airRate = 1
                     right = False
                 if event.key == pygame.K_w:
+                    airRate = 1
                     up = False
                 if event.key == pygame.K_s:
+                    airRate = 1
                     down = False
             
 def move(pic, xs, ys):
@@ -1188,7 +1199,7 @@ while done == False:
     ##################################################################
     else:
         if level_initialized == False:
-            
+            airSetup()
             x_min = 0
             y_min = 0
             x_max = 3500
@@ -1378,6 +1389,7 @@ while done == False:
             multifish(Dolphin, 4, 3, 75)
             multifish(Jellyfish, 4, 1, 75)
             multifish(Shark, 4, 4, 75)
+            
 
         if level == 2:
             multifish(Eel, 4, 2, 1600)
@@ -1386,6 +1398,7 @@ while done == False:
             multifish(Jellyfish, 4, 1, 75)
             multifish(Lanturnfish, 4, 2, 1600)
             multifish(Shark, 4, 4, 75)
+            
 
        
         draw(Depthguage)
@@ -1456,7 +1469,7 @@ while done == False:
 ################# Seafloor Level 1 ###############################
 
         if level == 1:
-
+            
             if collision(Treasurechest[0], Orangediver, 50):
                 Treasurechest[0][8] = True
                 if greenrise == False:
@@ -1481,7 +1494,7 @@ while done == False:
 ####################################################################
 ################# Sandcastle Level 2 ###############################
         if level == 2:
-
+            
             for f in range(4):
                 if collision(Clownfish[f], Orangediver, 50):
                     if holding_a_fish == False:
