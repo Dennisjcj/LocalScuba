@@ -907,6 +907,7 @@ def restart_fish():
 ########Air Consumption##########################
 totalAir = 0
 airRate = 0
+degree = 0
 
 #Notes for rotation: Radius is 150
 ########Air Consumption##########################
@@ -929,14 +930,16 @@ def consumeAir():
     global gaugerect
     global needle
     global orangedead
+    global degree
     pi = 3.141592653589793238462643383279502884197169399375
     radius = 150 #Radius of gauge, if time try to make that actually use the gauge rect to calculate width
     print("ConsumeAir Called"+str(totalAir)+str(airRate))
     totalAir -= airRate
     startx = gaugerect.centerx
     starty = gaugerect.centery
-    endx = radius*math.cos((totalAir/.25)/180*pi) 
-    endy = radius*math.sin((totalAir/.25)/180*pi)
+    degree-=airRate
+    endx = radius*math.cos((degree)/180.0*pi) 
+    endy = radius*math.sin((degree)/180.0*pi)
     needle = pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
     if totalAir <= 0:
         orangedead = True
