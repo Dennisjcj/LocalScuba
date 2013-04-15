@@ -128,10 +128,26 @@ def clicked(pic): # must go under a for event in pygame.event.get
             else:
                 return False
 
+def rowclicked(pic, row): # must go under a for event in pygame.event.get
+        x = pic[row][1]
+        y = pic[row][2]
+        dim_x = pic[row][3]
+        dim_y = pic[row][4]
+        mouse_pos = pygame.mouse.get_pos()
+        x_mouse = mouse_pos[0]
+        y_mouse = mouse_pos[1]
+        if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
+            if x_mouse > x and x_mouse < x + dim_x and y_mouse > y and y_mouse < y + dim_y:
+                return True
+            else:
+                return False
+            
 def keys():
     global done
     global level
     global level_initialized
+    global level_1_initialized
+    global level_2_initialized
     global left
     global right
     global up
@@ -150,6 +166,8 @@ def keys():
             if event.key == pygame.K_BACKSPACE:
                 level = 0
                 level_initialized = False
+                level_1_initialized = False
+                level_2_initialized = False
             if orangedead == False:
                 if event.key == pygame.K_a: 
                     left = True
@@ -165,6 +183,8 @@ def keys():
                     ud_just_pressed = 4
             if event.key == pygame.K_SPACE:
                 level_initialized = False
+                level_1_initialized = False
+                level_2_initialized = False
         if event.type == pygame.KEYUP:
             if orangedead == False:
                 if event.key == pygame.K_a:
@@ -962,12 +982,43 @@ def Level0():
     if clicked(Unknown):
         level = 12
         pygame.mouse.set_visible(0)
+
+def Level8():
+    global level
+    global Islandbutton
+    global Shelves
+    global equipment
+    pygame.mouse.set_visible(1)
+    draw(Shelves)
+    
+    ShopSnorkel = [Snorkel[0][0], 245, 330, 100, 100, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    if equipment[0] == 0:
+        draw(ShopSnorkel)
+    if clicked(ShopSnorkel):
+        equipment[0] = 1
+        
+    ShopFlashlight = [Flashlight[0][0], 500, 330, 100, 100, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    if equipment[10] == 0:
+        draw(ShopFlashlight)
+    if clicked(ShopFlashlight):
+        equipment[10] = 1
+        
+        
 def nothing():
     cool = True
     return cool
 
 #### Surface Variables #######################################################################
 # list = [image, x, y, x size, y size, x speed, y speed, right]
+### Equipment #####
+equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+# Snorkel, Goggles, BCD, Fins, Regulator, Extra Regulator, Air Tank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Underwater Scooter 
+Snorkel = [[pygame.image.load("Snorkel.png"), 0, 0, 100, 100, 0, 0, True], # 0
+           [pygame.image.load("Snorkel.png"), 0, 0, 100, 100, 0, 0, True]]
+
+Flashlight = [[pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True], # 10
+              [pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True]]
+#######################
 Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
 Orangediverkick = [pygame.image.load("Orangediverkick.png"), 200, 200, 224, 188, 10, 10, True]
 Orangediverdead = [pygame.image.load("Orangediverdead.png"), Orangediver[1], Orangediver[2], 230, 145, Orangediver[5], Orangediver[6], Orangediver[7]]
@@ -1017,7 +1068,7 @@ Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True
            [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False]]
 
 
-Coral1 = [[pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+Coral0 = [[pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
@@ -1028,14 +1079,11 @@ Coral1 = [[pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False]]
 
+Coral1 = [pygame.image.load("Coral1.png"), 200, 200, 100, 100, 10, 10, True]
 Coral2 = [pygame.image.load("Coral2.png"), 200, 200, 100, 100, 10, 10, True]
 Coral3 = [pygame.image.load("Coral3.png"), 200, 200, 100, 100, 10, 10, True]
-Rock1 = [pygame.image.load("Rock1.png"), 200, 200, 100, 100, 10, 10, True]
-Rock2 = [pygame.image.load("Rock2.png"), 200, 200, 100, 100, 10, 10, True]
-Rock3 = [pygame.image.load("Rock3.png"), 200, 200, 100, 100, 10, 10, True]
-Rock4 = [pygame.image.load("Rock4.png"), 200, 200, 100, 100, 10, 10, True]
 
-Rock5 = [[pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
+Rock0 = [[pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
@@ -1055,6 +1103,13 @@ Rock5 = [[pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, Fals
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False]]
+
+Rock1 = [pygame.image.load("Rock1.png"), 200, 200, 100, 100, 10, 10, True]
+Rock2 = [pygame.image.load("Rock2.png"), 200, 200, 100, 100, 10, 10, True]
+Rock3 = [pygame.image.load("Rock3.png"), 200, 200, 100, 100, 10, 10, True]
+Rock4 = [pygame.image.load("Rock4.png"), 200, 200, 100, 100, 10, 10, True]
+Rock5 = [pygame.image.load("Rock5.png"), 200, 200, 100, 100, 10, 10, True]
+
 
 Boat = [[pygame.image.load("Boat.png"), 0, 0, 800, 500, 0, 0, True, False]]
 Treasurechest = [[pygame.image.load("Treasurechest.png"), -10000, -10000, 250, 200, 10, 10, True, False]]
@@ -1121,6 +1176,8 @@ Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
 Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 0, 0, True]
 Pressureguage = [pygame.image.load("Pressureguage.png"), 200, 200, 100, 100, 10, 10, True]
 Depthguage = [pygame.image.load("Depthguage.png"), 0, 0, 150, 150, 0, 0, True]
+Shelves = [pygame.image.load("Shelves.png"), 0, 0, 1024, 768, 0, 0, True]
+
 
 Islandbutton = [pygame.image.load("Islandbutton.png"), 200, 200, 100, 100, 10, 10, True]
 Menubutton = [pygame.image.load("Menubutton.png"), 200, 200, 100, 100, 10, 10, True]
@@ -1205,8 +1262,12 @@ while done == False:
     
     ################# Map Level 0 ###########################
     if level == 0:
-        Level0()         
-    ##################################################################
+        Level0()
+    ################# Dive Shop Level 8
+    elif level == 8:
+        Level8()
+                
+    ############### Game Levels ###################################################
     else:
         if level_initialized == False:
             
@@ -1263,13 +1324,13 @@ while done == False:
             #edges = [-100, -100, 3500, 1800]
             
             
-            initial_Coral1_x = -100 - windowoffset
+            initial_Coral0_x = -100 - windowoffset
             for n in range(10):
-                Coral1[n][3] = 600
-                Coral1[n][4] = 400
-                Coral1[n][1] = initial_Coral1_x
-                Coral1[n][2] = y_max + 50 - 100 - 115 + windowoffset
-                initial_Coral1_x = initial_Coral1_x + 400
+                Coral0[n][3] = 600
+                Coral0[n][4] = 400
+                Coral0[n][1] = initial_Coral0_x
+                Coral0[n][2] = y_max + 50 - 100 - 115 + windowoffset
+                initial_Coral0_x = initial_Coral0_x + 400
                 
             initial_Wave_x = -100 - windowoffset
             for n in range(10):
@@ -1311,19 +1372,19 @@ while done == False:
                 Underwave[n][2] = y_min + 2000 - windowoffset
                 initial_Underwave_x = initial_Underwave_x + 536
             
-            initial_Rock5_y = -windowoffset - 100
+            initial_Rock0_y = -windowoffset - 100
             for n in range(10):
-                Rock5[n][3] = 400
-                Rock5[n][1] = x_min - 200 + 100 - windowoffset
-                Rock5[n][2] = initial_Rock5_y
-                initial_Rock5_y = initial_Rock5_y + 250
+                Rock0[n][3] = 400
+                Rock0[n][1] = x_min - 200 + 100 - windowoffset
+                Rock0[n][2] = initial_Rock0_y
+                initial_Rock0_y = initial_Rock0_y + 250
                 
-            initial_Rock5_y2 = -windowoffset - 100
+            initial_Rock0_y2 = -windowoffset - 100
             for n in range(10, 20):
-                Rock5[n][3] = 400
-                Rock5[n][1] = x_max + 175  - 100 - 150 + windowoffset
-                Rock5[n][2] = initial_Rock5_y2
-                initial_Rock5_y2 = initial_Rock5_y2 + 250
+                Rock0[n][3] = 400
+                Rock0[n][1] = x_max + 175  - 100 - 150 + windowoffset
+                Rock0[n][2] = initial_Rock0_y2
+                initial_Rock0_y2 = initial_Rock0_y2 + 250
         ##  Initialized #########################################################3 
 
         screen.fill(ocean)   
@@ -1372,7 +1433,7 @@ while done == False:
                 Greendiver = move(Greendiver, 0, -5)
                 Orangediver = move(Orangediver, 0, -5)
        
-        
+       
         rowdraw(Boat, 0)        
         for n in range(10):
             if greenrise == False:
@@ -1384,30 +1445,47 @@ while done == False:
             rowdraw(Underwave, n)
         for n in range(20):
             if greenrise == False:
-                Rock5[n] = rowmovebackground(Rock5, n, Orangediver)
-            rowdraw(Rock5, n)
+                Rock0[n] = rowmovebackground(Rock0, n, Orangediver)
+            rowdraw(Rock0, n)
         for n in range(10):
             if greenrise == False:
-                Coral1[n] = rowmovebackground(Coral1, n, Orangediver)
-            rowdraw(Coral1, n)
+                Coral0[n] = rowmovebackground(Coral0, n, Orangediver)
+            rowdraw(Coral0, n)
         if greenrise == False:
             Boat[0] = rowmovebackground(Boat, 0, Orangediver)
             Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
 
-        
-        if level == 1:
+        #########################################################
+        #### Level Initialization and Fish ############
+          
+        if level == 1: # Outer Banks
+            if level_1_initialized == False:
+                level_1_initialized = True
+                for n in range(10):
+                    Coral0[n][0] = Coral1[0]
+                for n in range(10):
+                    Rock0[n][0] = Rock5[0]
             multifish(Dolphin, 4, 3, 75)
             multifish(Jellyfish, 4, 1, 75)
             multifish(Shark, 4, 4, 75)
-
-        if level == 2:
+        
+        if level == 2: # Singapore
+            if level_2_initialized == False:
+                level_2_initialized = True
+                for n in range(10):
+                    Coral0[n][0] = Coral2[0]
+                for n in range(10):
+                    Rock0[n][0] = Rock4[0]
             multifish(Eel, 4, 2, 1600)
             multifish(Clownfish, 4, 5, 200)
             multifish(Dolphin, 4, 3, 75)
             multifish(Jellyfish, 4, 1, 75)
             multifish(Lanturnfish, 4, 2, 1600)
             multifish(Shark, 4, 4, 75)
-
+        
+            
+        #########################################################
+        
        
         draw(Depthguage)
 
@@ -1473,8 +1551,8 @@ while done == False:
                 eeldeadtext = eeldeadfont.render('Watch out for dangerous fish.', 1, (255, 255, 0))
                 screen.blit(eeldeadtext, (200, 450))
 
-
-################# Seafloor Level 1 ###############################
+#### Level Gameplay
+################# Outer Banks Level 1 ###############################
 
         if level == 1:
 
@@ -1492,15 +1570,11 @@ while done == False:
                 rowdraw(Treasurechest, 0)
         
             if collision(Boat[0], Orangediver, 0) and Treasurechest[0][8] == True:
-                    level_complete = True
-            
-        #Level1()
-       
-                
+                    level_complete = True              
         
         
 ####################################################################
-################# Sandcastle Level 2 ###############################
+################# Singapore Level 2 ###############################
         if level == 2:
 
             for f in range(4):
@@ -1532,7 +1606,7 @@ while done == False:
                     fish_collected = fish_collected + 1
             if fish_collected == 4:
                 level_complete = True
-        #    Level2()
+
 ########################################################
 ####  END   ############################################   
     pygame.display.flip()
