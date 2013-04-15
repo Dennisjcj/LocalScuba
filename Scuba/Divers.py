@@ -988,16 +988,16 @@ def Level8():
     global Islandbutton
     global Shelves
     global equipment
+    global ShopSnorkel
+    global ShopFlashlight
     pygame.mouse.set_visible(1)
     draw(Shelves)
     
-    ShopSnorkel = [Snorkel[0][0], 245, 330, 100, 100, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     if equipment[0] == 0:
         draw(ShopSnorkel)
     if clicked(ShopSnorkel):
         equipment[0] = 1
         
-    ShopFlashlight = [Flashlight[0][0], 500, 330, 100, 100, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     if equipment[10] == 0:
         draw(ShopFlashlight)
     if clicked(ShopFlashlight):
@@ -1013,10 +1013,15 @@ def nothing():
 ### Equipment #####
 equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
 # Snorkel, Goggles, BCD, Fins, Regulator, Extra Regulator, Air Tank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Underwater Scooter 
-Snorkel = [[pygame.image.load("Snorkel.png"), 0, 0, 100, 100, 0, 0, True], # 0
-           [pygame.image.load("Snorkel.png"), 0, 0, 100, 100, 0, 0, True]]
 
-Flashlight = [[pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True], # 10
+ShopSnorkel = [pygame.image.load("Snorkel.png"), 245, 330, 100, 100, 0, 0, True] # 0
+
+Snorkel = [[pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True], # 0
+           [pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True]]
+
+ShopFlashlight = [pygame.image.load("Flashlight.png"), 500, 330, 100, 100, 0, 0, True] # 11
+
+Flashlight = [[pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True], # 11
               [pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True]]
 #######################
 Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 224, 188, 10, 10, True]
@@ -1286,7 +1291,7 @@ while done == False:
             wintime = 0
             
             Boat = [[pygame.image.load("Boat.png"), 100, -400, 800, 500, 0, 0, True, False]]
-            Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - x_max/2, y_max + 145, 250, 200, 0, 0, True, False]]
+            Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - x_max/2, y_max + 120, 250, 200, 0, 0, True, False]]
             
             eelskilled = False
             bubbleskilled = False
@@ -1432,8 +1437,41 @@ while done == False:
                 Greendiver[7] = Orangediver[7]
                 Greendiver = move(Greendiver, 0, -5)
                 Orangediver = move(Orangediver, 0, -5)
-       
-       
+        ######### Equipment coordinates ############
+        if orangedead == False:
+            Snorkel[0][7] = Orangediver[7]
+            Snorkel[0][3] = 75
+            Snorkel[0][4] = 75
+            Snorkel[0][2] = Orangediver[2] - 10
+            Flashlight[0][7] = Orangediver[7]
+            Flashlight[0][3] = 60
+            Flashlight[0][4] = 40
+            Flashlight[0][2] = Orangediver[2] + 107
+            
+            if Orangediver[7] == True:
+                Snorkel[0][1] = Orangediver[1] + Orangediver[3] - Snorkel[0][3] - 10
+                Flashlight[0][1] = Orangediver[1] + Orangediver[3] - Flashlight[0][3] - 55
+            else:
+                Snorkel[0][1] = Orangediver[1] + 10
+                Flashlight[0][1] = Orangediver[1] + 55
+        Snorkel[1][7] = Greendiver[7]
+        Snorkel[1][3] = 75
+        Snorkel[1][4] = 75
+        Snorkel[1][2] = Greendiver[2] - 10
+        Flashlight[1][7] = Greendiver[7]
+        Flashlight[1][3] = 60
+        Flashlight[1][4] = 40
+        Flashlight[1][2] = Greendiver[2] + 107
+        
+        if Greendiver[7] == True:
+            Snorkel[1][1] = Greendiver[1] + Greendiver[3] - Snorkel[1][3] - 10
+            Flashlight[1][1] = Greendiver[1] + Greendiver[3] - Flashlight[1][3] - 55
+        else:
+            Snorkel[1][1] = Greendiver[1] + 10
+            Flashlight[1][1] = Greendiver[1] + 55
+
+                
+        #####################################################
         rowdraw(Boat, 0)        
         for n in range(10):
             if greenrise == False:
@@ -1526,14 +1564,33 @@ while done == False:
             deadfont = pygame.font.SysFont("monospace", 100, "bold")
             deadtext = deadfont.render('YOU DEAD!', 1, (255, 255, 0))
             screen.blit(deadtext, (250, 100))
-        
+            
+        if equipment[0] == 1: 
+            if Orangediver[7]: ## Behind
+                if orangedead == False:
+                    rowdraw(Snorkel, 0)
+            if Greendiver[7]:
+                rowdraw(Snorkel, 1)
+                
         animatedgreen()
         movebubbles(Greendiver, 4, 40)
-    
+        
+        if equipment[0] == 1:
+            if Greendiver[7] == False: ## In front
+                rowdraw(Snorkel, 1)
+        if equipment[10] == 1:
+            rowdraw(Flashlight, 1)
+            
         animatedorange()
         if orangedead == False:
             movebubbles(Orangediver, 0, 0)
-    
+            
+        if equipment[0] == 1 and orangedead == False:
+            if Orangediver[7] == False: ## In front
+                rowdraw(Snorkel, 0)
+        if equipment[10] == 1 and orangedead == False:
+            rowdraw(Flashlight, 0)
+      
         if greenrise == False:
             binddiver()
         
@@ -1550,6 +1607,9 @@ while done == False:
                 eeldeadfont = pygame.font.SysFont("monospace", 30, "bold")
                 eeldeadtext = eeldeadfont.render('Watch out for dangerous fish.', 1, (255, 255, 0))
                 screen.blit(eeldeadtext, (200, 450))
+                
+        
+    
 
 #### Level Gameplay
 ################# Outer Banks Level 1 ###############################
