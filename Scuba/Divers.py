@@ -902,19 +902,66 @@ def Level0():
     global Treasuremap
     pygame.mouse.set_visible(1)
     draw(Treasuremap)
-    Outerbanks = [Islandbutton[0], 220, 280, 50, 50, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    Outerbanks = [Islandbutton[0], 245, 330, 25, 25, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Outerbanks)
     if clicked(Outerbanks):
         level = 1
         pygame.mouse.set_visible(0)
-    Singapore = [Islandbutton[0], 750, 385, 50, 50, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    Singapore = [Islandbutton[0], 760, 425, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Singapore)
     if clicked(Singapore):
         level = 2
         pygame.mouse.set_visible(0)
-    
-
-
+    Sydney = [Islandbutton[0], 885, 560, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(Sydney)
+    if clicked(Sydney):
+        level = 3
+        pygame.mouse.set_visible(0)
+    Panama = [Islandbutton[0], 260, 415, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(Panama)
+    if clicked(Panama):
+        level = 4
+        pygame.mouse.set_visible(0)
+    SanDiego = [Islandbutton[0], 155, 335, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(SanDiego)
+    if clicked(SanDiego):
+        level = 5
+        pygame.mouse.set_visible(0)
+    Tokyo = [Islandbutton[0], 860, 325, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(Tokyo)
+    if clicked(Tokyo):
+        level = 6
+        pygame.mouse.set_visible(0)
+    CapeTown = [Islandbutton[0], 535, 555, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(CapeTown)
+    if clicked(CapeTown):
+        level = 7
+        pygame.mouse.set_visible(0)
+    DiveShop = [Islandbutton[0], 475, 275, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(DiveShop)
+    if clicked(DiveShop):
+        level = 8
+        pygame.mouse.set_visible(0)
+    Santiago = [Islandbutton[0], 290, 550, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(Santiago)
+    if clicked(Santiago):
+        level = 9
+        pygame.mouse.set_visible(0)
+    Antarctica = [Islandbutton[0], 630, 695, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(Antarctica)
+    if clicked(Antarctica):
+        level = 10
+        pygame.mouse.set_visible(0)
+    KeyWest = [Islandbutton[0], 243, 363, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(KeyWest)
+    if clicked(KeyWest):
+        level = 11
+        pygame.mouse.set_visible(0)
+    Unknown = [Islandbutton[0], 123, 567, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(Unknown)
+    if clicked(Unknown):
+        level = 12
+        pygame.mouse.set_visible(0)
 def nothing():
     cool = True
     return cool
