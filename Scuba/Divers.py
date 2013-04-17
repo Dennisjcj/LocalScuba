@@ -994,6 +994,10 @@ def Level8():
     draw(Shelves)
     
     if equipment[0] == 0:
+        ShopSnorkel = [pygame.image.load("Snorkel.png"), 245, 330, 100, 100, 0, 0, True]
+        draw(ShopSnorkel)
+    else:
+        ShopSnorkel = [pygame.image.load("Snorkel.png"), 245, 700, 50, 50, 0, 0, True]
         draw(ShopSnorkel)
     if clicked(ShopSnorkel):
         equipment[0] = 1
@@ -1003,6 +1007,9 @@ def Level8():
     if clicked(ShopFlashlight):
         equipment[10] = 1
         
+    moneyfont = pygame.font.SysFont("monospace", 30, "bold")
+    moneytext = moneyfont.render('Wallet = ' + MONEY, 1, (255, 255, 0))
+    screen.blit(moneytext, (250, 100)
         
 def nothing():
     cool = True
