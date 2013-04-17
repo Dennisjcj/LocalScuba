@@ -988,29 +988,44 @@ def Level8():
     global Islandbutton
     global Shelves
     global equipment
-    global ShopSnorkel
-    global ShopFlashlight
+    global MONEY
     pygame.mouse.set_visible(1)
     draw(Shelves)
-    
+    snorkelprice = 50
+    flashlightprice = 20
+    pricefont = pygame.font.SysFont("monospace", 15, "bold")
+
+    ### Snorkel ###
+    snorkeltext = pricefont.render('Snorkel: $' + str(snorkelprice), 1, (255, 255, 255))
+    screen.blit(snorkeltext, (245, 430))
     if equipment[0] == 0:
         ShopSnorkel = [pygame.image.load("Snorkel.png"), 245, 330, 100, 100, 0, 0, True]
         draw(ShopSnorkel)
+        if clicked(ShopSnorkel):
+            equipment[0] = 1
+            MONEY = MONEY - snorkelprice
     else:
         ShopSnorkel = [pygame.image.load("Snorkel.png"), 245, 700, 50, 50, 0, 0, True]
         draw(ShopSnorkel)
-    if clicked(ShopSnorkel):
-        equipment[0] = 1
         
+    ### Flashlight ###
+    flashlighttext = pricefont.render('Flashlight: $' + str(flashlightprice), 1, (255, 255, 255))
+    screen.blit(flashlighttext, (500, 430))
     if equipment[10] == 0:
+        ShopFlashlight = [pygame.image.load("Flashlight.png"), 500, 330, 100, 100, 0, 0, True] # 11
         draw(ShopFlashlight)
-    if clicked(ShopFlashlight):
-        equipment[10] = 1
-        
+        if clicked(ShopFlashlight):
+            equipment[10] = 1
+            MONEY = MONEY - flashlightprice
+    else:
+        ShopFlashlight = [pygame.image.load("Flashlight.png"), 500, 700, 50, 50, 0, 0, True] # 11
+        draw(ShopFlashlight)
+
+                
     moneyfont = pygame.font.SysFont("monospace", 30, "bold")
-    moneytext = moneyfont.render('Wallet = ' + MONEY, 1, (255, 255, 0))
-    screen.blit(moneytext, (250, 100)
-        
+    moneytext = moneyfont.render('Wallet = $' + str(MONEY), 1, (0, 0, 0))
+    screen.blit(moneytext, (350, 5))
+
 def nothing():
     cool = True
     return cool
@@ -1021,12 +1036,10 @@ def nothing():
 equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
 # Snorkel, Goggles, BCD, Fins, Regulator, Extra Regulator, Air Tank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Underwater Scooter 
 
-ShopSnorkel = [pygame.image.load("Snorkel.png"), 245, 330, 100, 100, 0, 0, True] # 0
 
 Snorkel = [[pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True], # 0
            [pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True]]
 
-ShopFlashlight = [pygame.image.load("Flashlight.png"), 500, 330, 100, 100, 0, 0, True] # 11
 
 Flashlight = [[pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True], # 11
               [pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True]]
@@ -1263,6 +1276,7 @@ x_max_edge = False
 y_max_edge = False
 
 wintime = 0
+MONEY = 1000
 
 #edges = [0, 0, 2000, 1000]
 
