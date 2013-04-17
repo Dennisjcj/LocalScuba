@@ -989,6 +989,19 @@ def Level8():
     global Shelves
     global equipment
     global MONEY
+    global levels
+    
+    ### Level Limit is the number of times the player can do the level and earn money ###
+    levellimit = 1
+    if levels[1] == 1 and levelsdone[1] < levellimit:
+        MONEY = MONEY + 100
+        levels[1] = 0
+        levelsdone[1] = levelsdone[1] + 1
+    if levels[2] == 1 and levelsdone[2] < levellimit:
+        MONEY = MONEY + 50
+        levels[2] = 0
+        levelsdone[2] = levelsdone[2] + 1
+
     pygame.mouse.set_visible(1)
     draw(Shelves)
     snorkelprice = 50
@@ -1279,7 +1292,8 @@ wintime = 0
 MONEY = 1000
 
 #edges = [0, 0, 2000, 1000]
-
+levels = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+levelsdone = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 windowoffset = 200
 #################################################################
 # -------- Main Program Loop -----------
@@ -1651,8 +1665,9 @@ while done == False:
                 rowdraw(Treasurechest, 0)
         
             if collision(Boat[0], Orangediver, 0) and Treasurechest[0][8] == True:
-                    level_complete = True              
-        
+                    level_complete = True  
+                    levels[1] = 1
+            
         
 ####################################################################
 ################# Singapore Level 2 ###############################
@@ -1687,7 +1702,18 @@ while done == False:
                     fish_collected = fish_collected + 1
             if fish_collected == 4:
                 level_complete = True
+                levels[2] = 1
 
+
+########################################################
+################# Key West Level 11 ###############################
+        if level == 11:
+            if equipment[10] == 0:
+                screen.fill([0,0,0]) 
+                darkfont = pygame.font.SysFont("monospace", 30, "bold")
+                darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
+                screen.blit(darktext, (250, 400))    
+                #pygame.display.set_gamma(0.0)
 ########################################################
 ####  END   ############################################   
     pygame.display.flip()
