@@ -1206,7 +1206,7 @@ y_max_edge = False
 wintime = 0
 
 #edges = [0, 0, 2000, 1000]
-
+airSetup()
 windowoffset = 200
 #################################################################
 # -------- Main Program Loop -----------
@@ -1219,7 +1219,7 @@ while done == False:
     ##################################################################
     else:
         if level_initialized == False:
-            airSetup()
+            
             x_min = 0
             y_min = 0
             x_max = 3500
@@ -1334,10 +1334,11 @@ while done == False:
                 Rock5[n][1] = x_max + 175  - 100 - 150 + windowoffset
                 Rock5[n][2] = initial_Rock5_y2
                 initial_Rock5_y2 = initial_Rock5_y2 + 250
+        
         ##  Initialized #########################################################3 
 
         screen.fill(ocean)   
-         
+        
         if orangedead == False:
             Orangediver = keyaccel(Orangediver)
             greenfollow()
@@ -1485,7 +1486,7 @@ while done == False:
                 deadairtext = deadairfont.render('Keep an eye on your air gauge.', 1, (255, 255, 0))
                 screen.blit(deadairtext, (300, 500))
             
-
+       
 
 ################# Seafloor Level 1 ###############################
 
