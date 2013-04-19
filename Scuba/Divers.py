@@ -912,6 +912,7 @@ degrees = 0
 #Notes for rotation: Radius is 150
 ########Air Consumption##########################
 def airSetup():
+    draw(Pressuregauge)
     global totalAir
     global airRate 
     totalAir = 180
@@ -921,7 +922,7 @@ def airSetup():
     global gaugerect
     gaugerect = Pressuregauge[0].get_rect()
     global needle
-    needle = pygame.draw.line(Pressuregauge[0], (120,0,0), (gaugerect.centerx, gaugerect.centery), (gaugerect.centerx+150, gaugerect.centery), 5)
+    pygame.draw.line(Pressuregauge[0], (120,0,0), (gaugerect.centerx, gaugerect.centery), (gaugerect.centerx+150, gaugerect.centery), 5)
     
 
 def consumeAir():
@@ -940,8 +941,8 @@ def consumeAir():
     starty = gaugerect.centery
     endx = 150*math.cos((degrees*pi)/180.0) + startx
     endy = -150*math.sin((degrees*pi)/180.0)+starty
-	draw(Pressuregauge)
-	needle = pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
+    draw(Pressuregauge)
+    pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
     if totalAir <= 0:
         orangedead = True
 #def gaugeLinedraw():
@@ -1417,11 +1418,6 @@ while done == False:
             multifish(Jellyfish, 4, 1, 75)
             multifish(Lanturnfish, 4, 2, 1600)
             multifish(Shark, 4, 4, 75)
-            
-
-       
-        draw(Pressuregauge)
-       
 
         depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
         screen.blit(depthtext, (1024 - 240, 10))
