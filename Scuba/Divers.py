@@ -938,9 +938,9 @@ def consumeAir():
     degrees += airRate
     startx = gaugerect.centerx
     starty = gaugerect.centery
-    endx = 150*math.cos((degrees*pi)/180.0) 
-    endy = 150*-math.sin((degrees*pi)/180.0)
-	#draw(Pressuregauge)
+    endx = 150*math.cos((degrees*pi)/180.0) + startx
+    endy = -150*math.sin((degrees*pi)/180.0)+starty
+	draw(Pressuregauge)
 	needle = pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
     if totalAir <= 0:
         orangedead = True
