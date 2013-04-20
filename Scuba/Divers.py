@@ -1004,35 +1004,93 @@ def Level8():
 
     pygame.mouse.set_visible(1)
     draw(Shelves)
-    snorkelprice = 50
-    flashlightprice = 20
     pricefont = pygame.font.SysFont("monospace", 15, "bold")
 
     ### Snorkel ###
+    snorkelprice = 50
     snorkeltext = pricefont.render('Snorkel: $' + str(snorkelprice), 1, (255, 255, 255))
-    screen.blit(snorkeltext, (245, 430))
+    screen.blit(snorkeltext, (275, 420))
     if equipment[0] == 0:
-        ShopSnorkel = [pygame.image.load("Snorkel.png"), 245, 330, 100, 100, 0, 0, True]
+        ShopSnorkel = [pygame.image.load("Snorkel.png"), 275, 320, 100, 100, 0, 0, True]
         draw(ShopSnorkel)
         if clicked(ShopSnorkel):
             equipment[0] = 1
             MONEY = MONEY - snorkelprice
     else:
-        ShopSnorkel = [pygame.image.load("Snorkel.png"), 245, 700, 50, 50, 0, 0, True]
+        ShopSnorkel = [pygame.image.load("Snorkel.png"), 275, 700, 50, 50, 0, 0, True]
         draw(ShopSnorkel)
+    
+
+    ### Goggles ###
+    Gogglesprice = 50
+    Gogglestext = pricefont.render('Goggles: $' + str(Gogglesprice), 1, (255, 255, 255))
+    screen.blit(Gogglestext, (435, 420))
+    if equipment[1] == 0:
+        ShopGoggles = [pygame.image.load("Goggles.jpg"), 435, 320, 100, 100, 0, 0, True]
+        draw(ShopGoggles)
+        if clicked(ShopGoggles):
+            equipment[1] = 1
+            MONEY = MONEY - Gogglesprice
+    else:
+        ShopGoggles = [pygame.image.load("Goggles.jpg"), 435, 700, 50, 50, 0, 0, True]
+        draw(ShopGoggles)  
         
     ### Flashlight ###
+    flashlightprice = 20
     flashlighttext = pricefont.render('Flashlight: $' + str(flashlightprice), 1, (255, 255, 255))
-    screen.blit(flashlighttext, (500, 430))
+    screen.blit(flashlighttext, (590, 420))
     if equipment[10] == 0:
-        ShopFlashlight = [pygame.image.load("Flashlight.png"), 500, 330, 100, 100, 0, 0, True] # 11
+        ShopFlashlight = [pygame.image.load("Flashlight.png"), 590, 320, 100, 100, 0, 0, True] # 11
         draw(ShopFlashlight)
         if clicked(ShopFlashlight):
             equipment[10] = 1
             MONEY = MONEY - flashlightprice
     else:
-        ShopFlashlight = [pygame.image.load("Flashlight.png"), 500, 700, 50, 50, 0, 0, True] # 11
-        draw(ShopFlashlight)
+        ShopFlashlight = [pygame.image.load("Flashlight.png"), 590, 700, 50, 50, 0, 0, True] # 11
+        draw(ShopFlashlight)  
+
+    ### BCD ###
+    BCDprice = 100
+    BCDtext = pricefont.render('BCD: $' + str(BCDprice), 1, (255, 255, 255))
+    screen.blit(BCDtext, (300, 220))
+    if equipment[2] == 0:
+        ShopBCD = [pygame.image.load("BCD.jpg"), 300, 120, 100, 100, 0, 0, True]
+        draw(ShopBCD)
+        if clicked(ShopBCD):
+            equipment[2] = 1
+            MONEY = MONEY - BCDprice
+    else:
+        ShopBCD = [pygame.image.load("BCD.jpg"), 300, 620, 50, 50, 0, 0, True]
+        draw(ShopBCD)   
+        
+    ### Fins ###
+    Finsprice = 100
+    Finstext = pricefont.render('Fins: $' + str(Finsprice), 1, (255, 255, 255))
+    screen.blit(Finstext, (460, 220))
+    if equipment[3] == 0:
+        ShopFins = [pygame.image.load("Fins.jpg"), 460, 120, 100, 100, 0, 0, True]
+        draw(ShopFins)
+        if clicked(ShopFins):
+            equipment[3] = 1
+            MONEY = MONEY - Finsprice
+    else:
+        ShopFins = [pygame.image.load("Fins.jpg"), 460, 620, 50, 50, 0, 0, True]
+        draw(ShopFins)   
+         
+    ### Regulator ###
+    Regulatorprice = 100
+    Regulatortext = pricefont.render('Regulator: $' + str(Regulatorprice), 1, (255, 255, 255))
+    screen.blit(Regulatortext, (620, 220))
+    if equipment[4] == 0:
+        ShopRegulator = [pygame.image.load("Regulator.jpg"), 620, 120, 100, 100, 0, 0, True]
+        draw(ShopRegulator)
+        if clicked(ShopRegulator):
+            equipment[4] = 1
+            MONEY = MONEY - Regulatorprice
+    else:
+        ShopRegulator = [pygame.image.load("Regulator.jpg"), 620, 620, 50, 50, 0, 0, True]
+        draw(ShopRegulator)   
+
 
                 
     moneyfont = pygame.font.SysFont("monospace", 30, "bold")
@@ -1243,7 +1301,7 @@ fish_collected = 0
 holding_a_fish = False
 #################################################################
 ### Universal Variables #########################################
-level = 0
+level = 8
 done=False
 left = False
 right = False
