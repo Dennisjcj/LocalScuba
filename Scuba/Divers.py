@@ -1005,92 +1005,218 @@ def Level8():
     pygame.mouse.set_visible(1)
     draw(Shelves)
     pricefont = pygame.font.SysFont("monospace", 15, "bold")
-
+    
+    pricecolor = [250, 250, 0]
     ### Snorkel ###
-    snorkelprice = 50
-    snorkeltext = pricefont.render('Snorkel: $' + str(snorkelprice), 1, (255, 255, 255))
-    screen.blit(snorkeltext, (275, 420))
+    snorkelprice = 20
+    snorkeltext = pricefont.render('Snorkel: $' + str(snorkelprice), 1, (pricecolor))
+    screen.blit(snorkeltext, (320, 420))
     if equipment[0] == 0:
-        ShopSnorkel = [pygame.image.load("Snorkel.png"), 275, 320, 100, 100, 0, 0, True]
+        ShopSnorkel = [pygame.image.load("Snorkel.png"), 320, 320, 100, 100, 0, 0, True]
         draw(ShopSnorkel)
-        if clicked(ShopSnorkel):
+        if MONEY > snorkelprice and clicked(ShopSnorkel):
             equipment[0] = 1
             MONEY = MONEY - snorkelprice
     else:
-        ShopSnorkel = [pygame.image.load("Snorkel.png"), 275, 700, 50, 50, 0, 0, True]
+        ShopSnorkel = [pygame.image.load("Snorkel.png"), 320, 650, 50, 50, 0, 0, True]
         draw(ShopSnorkel)
     
 
     ### Goggles ###
-    Gogglesprice = 50
-    Gogglestext = pricefont.render('Goggles: $' + str(Gogglesprice), 1, (255, 255, 255))
-    screen.blit(Gogglestext, (435, 420))
+    Gogglesprice = 20
+    Gogglestext = pricefont.render('Goggles: $' + str(Gogglesprice), 1, (pricecolor))
+    screen.blit(Gogglestext, (480, 420))
     if equipment[1] == 0:
-        ShopGoggles = [pygame.image.load("Goggles.jpg"), 435, 320, 100, 100, 0, 0, True]
+        ShopGoggles = [pygame.image.load("Goggles.jpg"), 480, 320, 100, 100, 0, 0, True]
         draw(ShopGoggles)
-        if clicked(ShopGoggles):
+        if MONEY > Gogglesprice and clicked(ShopGoggles):
             equipment[1] = 1
             MONEY = MONEY - Gogglesprice
     else:
-        ShopGoggles = [pygame.image.load("Goggles.jpg"), 435, 700, 50, 50, 0, 0, True]
+        ShopGoggles = [pygame.image.load("Goggles.jpg"), 480, 650, 50, 50, 0, 0, True]
         draw(ShopGoggles)  
         
     ### Flashlight ###
-    flashlightprice = 20
-    flashlighttext = pricefont.render('Flashlight: $' + str(flashlightprice), 1, (255, 255, 255))
-    screen.blit(flashlighttext, (590, 420))
-    if equipment[10] == 0:
-        ShopFlashlight = [pygame.image.load("Flashlight.png"), 590, 320, 100, 100, 0, 0, True] # 11
+    flashlightprice = 100
+    flashlighttext = pricefont.render('Light: $' + str(flashlightprice), 1, (pricecolor))
+    screen.blit(flashlighttext, (640, 420))
+    if equipment[11] == 0:
+        ShopFlashlight = [pygame.image.load("Flashlight.png"), 640, 320, 100, 100, 0, 0, True] # 11
         draw(ShopFlashlight)
-        if clicked(ShopFlashlight):
-            equipment[10] = 1
+        if MONEY > flashlightprice and clicked(ShopFlashlight):
+            equipment[11] = 1
             MONEY = MONEY - flashlightprice
     else:
-        ShopFlashlight = [pygame.image.load("Flashlight.png"), 590, 700, 50, 50, 0, 0, True] # 11
+        ShopFlashlight = [pygame.image.load("Flashlight.png"), 640, 650, 50, 50, 0, 0, True] # 11
         draw(ShopFlashlight)  
 
     ### BCD ###
-    BCDprice = 100
-    BCDtext = pricefont.render('BCD: $' + str(BCDprice), 1, (255, 255, 255))
-    screen.blit(BCDtext, (300, 220))
+    BCDprice = 300
+    BCDtext = pricefont.render('BCD: $' + str(BCDprice), 1, (pricecolor))
+    screen.blit(BCDtext, (250, 220))
     if equipment[2] == 0:
-        ShopBCD = [pygame.image.load("BCD.jpg"), 300, 120, 100, 100, 0, 0, True]
+        ShopBCD = [pygame.image.load("BCD.jpg"), 250, 120, 100, 100, 0, 0, True]
         draw(ShopBCD)
-        if clicked(ShopBCD):
+        if MONEY > BCDprice and clicked(ShopBCD):
             equipment[2] = 1
             MONEY = MONEY - BCDprice
     else:
-        ShopBCD = [pygame.image.load("BCD.jpg"), 300, 620, 50, 50, 0, 0, True]
+        ShopBCD = [pygame.image.load("BCD.jpg"), 250, 600, 50, 50, 0, 0, True]
         draw(ShopBCD)   
         
     ### Fins ###
-    Finsprice = 100
-    Finstext = pricefont.render('Fins: $' + str(Finsprice), 1, (255, 255, 255))
-    screen.blit(Finstext, (460, 220))
+    Finsprice = 200
+    Finstext = pricefont.render('Fins: $' + str(Finsprice), 1, (pricecolor))
+    screen.blit(Finstext, (420, 220))
     if equipment[3] == 0:
-        ShopFins = [pygame.image.load("Fins.jpg"), 460, 120, 100, 100, 0, 0, True]
+        ShopFins = [pygame.image.load("Fins.jpg"), 420, 120, 100, 100, 0, 0, True]
         draw(ShopFins)
-        if clicked(ShopFins):
+        if MONEY > Finsprice and clicked(ShopFins):
             equipment[3] = 1
             MONEY = MONEY - Finsprice
     else:
-        ShopFins = [pygame.image.load("Fins.jpg"), 460, 620, 50, 50, 0, 0, True]
+        ShopFins = [pygame.image.load("Fins.jpg"), 420, 600, 50, 50, 0, 0, True]
         draw(ShopFins)   
          
     ### Regulator ###
-    Regulatorprice = 100
-    Regulatortext = pricefont.render('Regulator: $' + str(Regulatorprice), 1, (255, 255, 255))
-    screen.blit(Regulatortext, (620, 220))
+    Regulatorprice = 200
+    Regulatortext = pricefont.render('Regulator: $' + str(Regulatorprice), 1, (pricecolor))
+    screen.blit(Regulatortext, (590, 220))
     if equipment[4] == 0:
-        ShopRegulator = [pygame.image.load("Regulator.jpg"), 620, 120, 100, 100, 0, 0, True]
+        ShopRegulator = [pygame.image.load("Regulator.jpg"), 590, 120, 100, 100, 0, 0, True]
         draw(ShopRegulator)
-        if clicked(ShopRegulator):
+        if MONEY > Regulatorprice and clicked(ShopRegulator):
             equipment[4] = 1
             MONEY = MONEY - Regulatorprice
     else:
-        ShopRegulator = [pygame.image.load("Regulator.jpg"), 620, 620, 50, 50, 0, 0, True]
+        ShopRegulator = [pygame.image.load("Regulator.jpg"), 590, 600, 50, 50, 0, 0, True]
         draw(ShopRegulator)   
+       
+    ### ExtraRegulator ###
+    ExtraRegulatorprice = 200
+    ExtraRegulatortext = pricefont.render('2nd Regulator: $' + str(ExtraRegulatorprice), 1, (pricecolor))
+    screen.blit(ExtraRegulatortext, (590, 560))
+    if equipment[5] == 0:
+        ShopExtraRegulator = [pygame.image.load("ExtraRegulator.jpg"), 590, 460, 100, 100, 0, 0, True]
+        draw(ShopExtraRegulator)
+        if MONEY > ExtraRegulatorprice and clicked(ShopExtraRegulator):
+            equipment[5] = 1
+            MONEY = MONEY - ExtraRegulatorprice
+    else:
+        ShopExtraRegulator = [pygame.image.load("ExtraRegulator.jpg"), 590, 700, 50, 50, 0, 0, True]
+        draw(ShopExtraRegulator)
+        
+    ### AirTank ###
+    AirTankprice = 250
+    AirTanktext = pricefont.render('Air Tank: $' + str(AirTankprice), 1, (pricecolor))
+    screen.blit(AirTanktext, (420, 560))
+    if equipment[6] == 0:
+        ShopAirTank = [pygame.image.load("AirTank.jpg"), 420, 460, 100, 100, 0, 0, True]
+        draw(ShopAirTank)
+        if MONEY > AirTankprice and clicked(ShopAirTank):
+            equipment[6] = 1
+            MONEY = MONEY - AirTankprice
+    else:
+        ShopAirTank = [pygame.image.load("AirTank.jpg"), 420, 700, 50, 50, 0, 0, True]
+        draw(ShopAirTank)      
 
+    ### Gauges ###
+    Gaugesprice = 150
+    Gaugestext = pricefont.render('Gauges: $' + str(Gaugesprice), 1, (pricecolor))
+    screen.blit(Gaugestext, (250, 560))
+    if equipment[7] == 0:
+        ShopGauges = [pygame.image.load("Gauges.jpg"), 250, 460, 100, 100, 0, 0, True]
+        draw(ShopGauges)
+        if MONEY > Gaugesprice and clicked(ShopGauges):
+            equipment[7] = 1
+            MONEY = MONEY - Gaugesprice
+    else:
+        ShopGauges = [pygame.image.load("Gauges.jpg"), 250, 700, 50, 50, 0, 0, True]
+        draw(ShopGauges)
+             
+    ### Wetsuit ###
+    Wetsuitprice = 200
+    Wetsuittext = pricefont.render('Wetsuit: $' + str(Wetsuitprice), 1, (pricecolor))
+    screen.blit(Wetsuittext, (101, 280))
+    if equipment[8] == 0:
+        ShopWetsuit = [pygame.image.load("Wetsuit.jpg"), 101, 180, 100, 100, 0, 0, True]
+        draw(ShopWetsuit)
+        if MONEY > Wetsuitprice and clicked(ShopWetsuit):
+            equipment[8] = 1
+            MONEY = MONEY - Wetsuitprice
+    else:
+        ShopWetsuit = [pygame.image.load("Wetsuit.jpg"), 101, 600, 50, 50, 0, 0, True]
+        draw(ShopWetsuit)   
+        
+    ### Drysuit ###
+    Drysuitprice = 900
+    Drysuittext = pricefont.render('Drysuit: $' + str(Drysuitprice), 1, (pricecolor))
+    screen.blit(Drysuittext, (101, 480))
+    if equipment[9] == 0:
+        ShopDrysuit = [pygame.image.load("Drysuit.jpg"), 101, 380, 100, 100, 0, 0, True]
+        draw(ShopDrysuit)
+        if MONEY > Drysuitprice and clicked(ShopDrysuit):
+            equipment[9] = 1
+            MONEY = MONEY - Drysuitprice
+    else:
+        ShopDrysuit = [pygame.image.load("Drysuit.jpg"), 101, 650, 50, 50, 0, 0, True]
+        draw(ShopDrysuit)   
+        
+    ### Slate ###
+    Slateprice = 10
+    Slatetext = pricefont.render('Slate: $' + str(Slateprice), 1, (pricecolor))
+    screen.blit(Slatetext, (101, 680))
+    if equipment[10] == 0:
+        ShopSlate = [pygame.image.load("Slate.jpg"), 101, 580, 100, 100, 0, 0, True]
+        draw(ShopSlate)
+        if MONEY > Slateprice and clicked(ShopSlate):
+            equipment[10] = 1
+            MONEY = MONEY - Slateprice
+    else:
+        ShopSlate = [pygame.image.load("Slate.jpg"), 101, 700, 50, 50, 0, 0, True]
+        draw(ShopSlate)   
+
+    ### Glowstick ###
+    Glowstickprice = 5
+    Glowsticktext = pricefont.render('Glowstick: $' + str(Glowstickprice), 1, (pricecolor))
+    screen.blit(Glowsticktext, (840, 280))
+    if equipment[12] == 0:
+        ShopGlowstick = [pygame.image.load("Glowstick.jpg"), 840, 180, 100, 100, 0, 0, True]
+        draw(ShopGlowstick)
+        if MONEY > Glowstickprice and clicked(ShopGlowstick):
+            equipment[12] = 1
+            MONEY = MONEY - Glowstickprice
+    else:
+        ShopGlowstick = [pygame.image.load("Glowstick.jpg"), 840, 600, 50, 50, 0, 0, True]
+        draw(ShopGlowstick)   
+        
+    ### Scooter ###
+    Scooterprice = 2000
+    Scootertext = pricefont.render('Scooter: $' + str(Scooterprice), 1, (pricecolor))
+    screen.blit(Scootertext, (840, 480))
+    if equipment[13] == 0:
+        ShopScooter = [pygame.image.load("Scooter.jpg"), 840, 380, 100, 100, 0, 0, True]
+        draw(ShopScooter)
+        if MONEY > Scooterprice and clicked(ShopScooter):
+            equipment[13] = 1
+            MONEY = MONEY - Scooterprice
+    else:
+        ShopScooter = [pygame.image.load("Scooter.jpg"), 840, 650, 50, 50, 0, 0, True]
+        draw(ShopScooter)   
+        
+    ### ExtraFlashlight ###
+    ExtraFlashlightprice = 40
+    ExtraFlashlighttext = pricefont.render('2nd Light: $' + str(ExtraFlashlightprice), 1, (pricecolor))
+    screen.blit(ExtraFlashlighttext, (840, 680))
+    if equipment[14] == 0:
+        ShopExtraFlashlight = [pygame.image.load("ExtraFlashlight.jpg"), 840, 580, 100, 100, 0, 0, True]
+        draw(ShopExtraFlashlight)
+        if MONEY > ExtraFlashlightprice and clicked(ShopExtraFlashlight):
+            equipment[14] = 1
+            MONEY = MONEY - ExtraFlashlightprice
+    else:
+        ShopExtraFlashlight = [pygame.image.load("ExtraFlashlight.jpg"), 840, 700, 50, 50, 0, 0, True]
+        draw(ShopExtraFlashlight)
 
                 
     moneyfont = pygame.font.SysFont("monospace", 30, "bold")
@@ -1104,8 +1230,8 @@ def nothing():
 #### Surface Variables #######################################################################
 # list = [image, x, y, x size, y size, x speed, y speed, right]
 ### Equipment #####
-equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
-# Snorkel, Goggles, BCD, Fins, Regulator, Extra Regulator, Air Tank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Underwater Scooter 
+equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+# Snorkel, Goggles, BCD, Fins, Regulator, ExtraRegulator, AirTank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Scooter, ExtraFlashlight 
 
 
 Snorkel = [[pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True], # 0
@@ -1671,7 +1797,7 @@ while done == False:
         if equipment[0] == 1:
             if Greendiver[7] == False: ## In front
                 rowdraw(Snorkel, 1)
-        if equipment[10] == 1:
+        if equipment[11] == 1:
             rowdraw(Flashlight, 1)
             
         animatedorange()
@@ -1681,7 +1807,7 @@ while done == False:
         if equipment[0] == 1 and orangedead == False:
             if Orangediver[7] == False: ## In front
                 rowdraw(Snorkel, 0)
-        if equipment[10] == 1 and orangedead == False:
+        if equipment[11] == 1 and orangedead == False:
             rowdraw(Flashlight, 0)
       
         if greenrise == False:
@@ -1766,7 +1892,7 @@ while done == False:
 ########################################################
 ################# Key West Level 11 ###############################
         if level == 11:
-            if equipment[10] == 0:
+            if equipment[11] == 0:
                 screen.fill([0,0,0]) 
                 darkfont = pygame.font.SysFont("monospace", 30, "bold")
                 darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
