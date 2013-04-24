@@ -335,8 +335,9 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     global y_min_edge
     global y_max_edge
     global orangedead
+    global accel
     
-    accel = 0.5 #0.2
+    #accel = 0.5 #0.2
     kickaccel = 0.5
     
     start_x = pic[1]
@@ -1535,6 +1536,8 @@ y_max_edge = False
 
 wintime = 0
 MONEY = 1000
+accel = 0.5 #0.2
+    
 
 #edges = [0, 0, 2000, 1000]
 levels = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
