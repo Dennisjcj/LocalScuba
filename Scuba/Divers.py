@@ -6,7 +6,6 @@ Created on Mar 29, 2013
 import pygame
 import csv#from PIL import GIFImage
 import random
-import math
 
 def load(savefile):
     with open(savefile, 'rt') as f:
@@ -336,8 +335,8 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     global y_min_edge
     global y_max_edge
     global orangedead
-    #global accel
-    accel = 0.5
+    global accel
+    
     kickaccel = 0.5
     
     start_x = pic[1]
@@ -1302,8 +1301,8 @@ Snorkel = [[pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0
 Goggles = [[pygame.image.load("Gogglesdiver.png"), 0, 0, 63, 40, 0, 0, True], # 1
               [pygame.image.load("Gogglesdiver.png"), 0, 0, 63, 40, 0, 0, True]]
 
-BCD = [[pygame.image.load("BCDdiver.png"), 0, 0, 70, 41, 0, 0, True], # 2
-              [pygame.image.load("BCDdiver.png"), 0, 0, 70, 41, 0, 0, True]]
+BCD = [[pygame.image.load("BCDdiver.png"), 0, 0, 70, 50, 0, 0, True], # 2
+              [pygame.image.load("BCDdiver.png"), 0, 0, 70, 50, 0, 0, True]]
 
 Fins = [[pygame.image.load("Finsdiver.png"), 0, 0, 97, 160, 0, 0, True], # 3
               [pygame.image.load("Finsdiver.png"), 0, 0, 97, 160, 0, 0, True]]
@@ -1321,7 +1320,7 @@ Gauges = [[pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True], # 7
               [pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True]]
 
 Wetsuit = [[pygame.image.load("Wetsuitdiver.png"), 0, 0, 212, 186, 0, 0, True], # 8
-              [pygame.image.load("Wetsuitdiver.png"), 0, 0, 212, 286, 0, 0, True]]
+              [pygame.image.load("Wetsuitdiver2.png"), 0, 0, 212, 186, 0, 0, True]]
 
 #Drysuit = [[pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True], # 9
 #            [pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True]]
@@ -1345,10 +1344,12 @@ Flashlight = [[pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True],
 #######################
 Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 212, 186, 10, 10, True]
 Orangediverkick = [pygame.image.load("Orangediverkick.png"), 200, 212, 286, 200, 10, 10, True]
-Orangediverdead = [pygame.image.load("Orangediverdead.png"), Orangediver[1], Orangediver[2], 230, 145, Orangediver[5], Orangediver[6], Orangediver[7]]
+Orangediverdead = [pygame.transform.flip(pygame.image.load("Orangediver.png"), False, True), Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[6], Orangediver[7]]
 
-Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
-Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 224, 188, 10, 10, True]
+#Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
+#Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 224, 188, 10, 10, True]
+Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 212, 186, 10, 10, True]
+Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 212, 186, 10, 10, True]
 
 Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
        [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
@@ -1633,7 +1634,7 @@ while done == False:
             
             Orangediver = [pygame.image.load("Orangediver.png"), 400, 200, 212, 186, 10, 10, True]
             Orangediverkick = [pygame.image.load("Orangediverkick.png"), 400, 212, 286, 200, 10, 10, True]
-            Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
+            Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 212, 186, 10, 10, True]
             Orangediver[5] = 0
             Orangediver[6] = 0
             orangedead = False
@@ -1736,13 +1737,13 @@ while done == False:
             Greendiver = movebackground(Greendiver, Orangediver)
         elif greenrise == True:
             if Orangediver[7] == True:
-                ox1 = 129
-                ox2 = 160
+                ox1 = 155 #129
+                ox2 = 160 #160
             else:
-                ox1 = 95
-                ox2 = 64
-            oy1 = 118
-            oy2 = 31
+                ox1 = 64 #95
+                ox2 = 64 #64
+            oy1 = 146 #118
+            oy2 = 31 #31
             offerness = 5
             if fancycollision(Greendiver, Orangediver, ox1, oy1, ox2, oy2, offerness) == False:
                 if Greendiver[1] + ox1 + offerness < Orangediver[1] + ox2 - offerness:
@@ -1824,7 +1825,6 @@ while done == False:
         ##############################################################3
         ################################################################
         ##########################################################
-            
         Snorkel[1][7] = Greendiver[7]
         Snorkel[1][3] = 75
         Snorkel[1][4] = 75
@@ -1881,30 +1881,29 @@ while done == False:
             Gauges[1][1] = Greendiver[1] + 70
             Wetsuit[1][1] = Greendiver[1]
             Flashlight[1][1] = Greendiver[1] + 56
-            ######################################################
-            ######################################################
-                
+   
+            
         #####################################################
         rowdraw(Boat, 0)        
         for n in range(10):
             if greenrise == False:
-                Wave[n] = rowmovebackground(Wave, n, Greendiver)
+                Wave[n] = rowmovebackground(Wave, n, Orangediver)
             rowdraw(Wave, n)
         for n in range(40):
             if greenrise == False:
-                Underwave[n] = rowmovebackground(Underwave, n, Greendiver)
+                Underwave[n] = rowmovebackground(Underwave, n, Orangediver)
             rowdraw(Underwave, n)
         for n in range(20):
             if greenrise == False:
-                Rock0[n] = rowmovebackground(Rock0, n, Greendiver)
+                Rock0[n] = rowmovebackground(Rock0, n, Orangediver)
             rowdraw(Rock0, n)
         for n in range(10):
             if greenrise == False:
-                Coral0[n] = rowmovebackground(Coral0, n, Greendiver)
+                Coral0[n] = rowmovebackground(Coral0, n, Orangediver)
             rowdraw(Coral0, n)
         if greenrise == False:
-            Boat[0] = rowmovebackground(Boat, 0, Greendiver)
-            Treasurechest[0] = rowmovebackground(Treasurechest, 0, Greendiver)
+            Boat[0] = rowmovebackground(Boat, 0, Orangediver)
+            Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
 
         #########################################################
         #### Level Initialization and Fish ############
@@ -1986,11 +1985,11 @@ while done == False:
                 rowdraw(Snorkel, 1)
         animatedgreen()
         if equipment[8] == 1:
-            rowdraw(Wetsuit, 1)
+                rowdraw(Wetsuit, 1)
         movebubbles(Greendiver, 4, 40)
         if equipment[0] == 1:
-            if Greendiver[7] == False: ## In front
-                rowdraw(Snorkel, 1)
+                if Greendiver[7] == False: ## In front
+                    rowdraw(Snorkel, 1)
         if equipment[1] == 1:
             rowdraw(Goggles, 1)
         if equipment[2] == 1:
@@ -2007,8 +2006,6 @@ while done == False:
             rowdraw(Gauges, 1)
         if equipment[11] == 1:
             rowdraw(Flashlight, 1)
-  
-
      
         #######################
         ### Draw Equipment ###
