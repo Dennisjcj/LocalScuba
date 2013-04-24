@@ -1764,123 +1764,167 @@ while done == False:
         ######### Equipment coordinates ############
         ##############################################3
         ################################################
+        # Snorkel, Goggles, BCD, Fins, Regulator, ExtraRegulator, AirTank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Scooter, ExtraFlashlight 
+
         if orangedead == False:
-            Snorkel[0][7] = Orangediver[7]
-            Snorkel[0][3] = 75
-            Snorkel[0][4] = 75
-            Snorkel[0][2] = Orangediver[2] - 10
-            
-            Goggles[0][7] = Orangediver[7]
-            Goggles[0][2] = Orangediver[2] + 8
-        
-            BCD[0][7] = Orangediver[7]
-            BCD[0][2] = Orangediver[2] + 50
-            
-            Fins[0][7] = Orangediver[7]
-            Fins[0][2] = Orangediver[2] + 50
-            
-            Regulator[0][7] = Orangediver[7]
-            Regulator[0][2] = Orangediver[2] + 40
-            
-            ExtraRegulator[0][7] = Orangediver[7]
-            ExtraRegulator[0][2] = Orangediver[2] + 40
-            
-            AirTank[0][7] = Orangediver[7]
-            AirTank[0][2] = Orangediver[2] + 34
-            
-            Gauges[0][7] = Orangediver[7]
-            Gauges[0][2] = Orangediver[2] + 42
-            
-            Wetsuit[0][7] = Orangediver[7]
-            Wetsuit[0][2] = Orangediver[2]
-            
-            Flashlight[0][7] = Orangediver[7]
-            Flashlight[0][3] = 60
-            Flashlight[0][4] = 40
-            Flashlight[0][2] = Orangediver[2] + 145
-            
+            if equipment[0] == 1:
+                Snorkel[0][7] = Orangediver[7]
+                Snorkel[0][3] = 75
+                Snorkel[0][4] = 75
+                Snorkel[0][2] = Orangediver[2] - 10
+            if equipment[1] == 1:
+                Goggles[0][7] = Orangediver[7]
+                Goggles[0][2] = Orangediver[2] + 8
+            if equipment[2] == 1:
+                BCD[0][7] = Orangediver[7]
+                BCD[0][2] = Orangediver[2] + 50
+            if equipment[3] == 1:
+                Fins[0][7] = Orangediver[7]
+                Fins[0][2] = Orangediver[2] + 50
+            if equipment[4] == 1:
+                Regulator[0][7] = Orangediver[7]
+                Regulator[0][2] = Orangediver[2] + 40
+            if equipment[5] == 1:      
+                ExtraRegulator[0][7] = Orangediver[7]
+                ExtraRegulator[0][2] = Orangediver[2] + 40
+            if equipment[6] == 1:                
+                AirTank[0][7] = Orangediver[7]
+                AirTank[0][2] = Orangediver[2] + 34
+            if equipment[7] == 1:
+                Gauges[0][7] = Orangediver[7]
+                Gauges[0][2] = Orangediver[2] + 42
+            if equipment[8] == 1:
+                Wetsuit[0][7] = Orangediver[7]
+                Wetsuit[0][2] = Orangediver[2]
+            if equipment[11] == 1:
+                Flashlight[0][7] = Orangediver[7]
+                Flashlight[0][3] = 60
+                Flashlight[0][4] = 40
+                Flashlight[0][2] = Orangediver[2] + 145
+                
             if Orangediver[7] == True:
-                Snorkel[0][1] = Orangediver[1] + Orangediver[3] - Snorkel[0][3] - 10
-                Goggles[0][1] = Orangediver[1] + Orangediver[3] - Goggles[0][3] - 10
-                BCD[0][1] = Orangediver[1] + Orangediver[3] - BCD[0][3] - 51
-                Fins[0][1] = Orangediver[1] + Orangediver[3] - Fins[0][3] - 142
-                Regulator[0][1] = Orangediver[1] + Orangediver[3] - Regulator[0][3] - 27
-                ExtraRegulator[0][1] = Orangediver[1] + Orangediver[3] - ExtraRegulator[0][3] - 65
-                AirTank[0][1] = Orangediver[1] + Orangediver[3] - AirTank[0][3] - 70
-                Gauges[0][1] = Orangediver[1] + Orangediver[3] - Gauges[0][3] - 70
-                Wetsuit[0][1] = Orangediver[1] + Orangediver[3] - Wetsuit[0][3]
-                Flashlight[0][1] = Orangediver[1] + Orangediver[3] - Flashlight[0][3] - 56
+                if equipment[0] == 1:
+                    Snorkel[0][1] = Orangediver[1] + Orangediver[3] - Snorkel[0][3] - 10
+                if equipment[1] == 1:
+                    Goggles[0][1] = Orangediver[1] + Orangediver[3] - Goggles[0][3] - 10
+                if equipment[2] == 1:
+                    BCD[0][1] = Orangediver[1] + Orangediver[3] - BCD[0][3] - 51
+                if equipment[3] == 1:
+                    Fins[0][1] = Orangediver[1] + Orangediver[3] - Fins[0][3] - 142
+                if equipment[4] == 1:
+                    Regulator[0][1] = Orangediver[1] + Orangediver[3] - Regulator[0][3] - 27
+                if equipment[5] == 1:
+                    ExtraRegulator[0][1] = Orangediver[1] + Orangediver[3] - ExtraRegulator[0][3] - 65
+                if equipment[6] == 1:
+                    AirTank[0][1] = Orangediver[1] + Orangediver[3] - AirTank[0][3] - 70
+                if equipment[7] == 1:
+                    Gauges[0][1] = Orangediver[1] + Orangediver[3] - Gauges[0][3] - 70
+                if equipment[8] == 1:
+                    Wetsuit[0][1] = Orangediver[1] + Orangediver[3] - Wetsuit[0][3]
+                if equipment[11] == 1:
+                    Flashlight[0][1] = Orangediver[1] + Orangediver[3] - Flashlight[0][3] - 56
             else:
-                Snorkel[0][1] = Orangediver[1] + 10
-                Goggles[0][1] = Orangediver[1] + 10
-                BCD[0][1] = Orangediver[1] + 51
-                Fins[0][1] = Orangediver[1] + 142
-                Regulator[0][1] = Orangediver[1] + 27
-                ExtraRegulator[0][1] = Orangediver[1] + 65
-                AirTank[0][1] = Orangediver[1] + 70
-                Gauges[0][1] = Orangediver[1] + 70
-                Wetsuit[0][1] = Orangediver[1]
-                Flashlight[0][1] = Orangediver[1] + 56
+                if equipment[0] == 1:
+                    Snorkel[0][1] = Orangediver[1] + 10
+                if equipment[1] == 1:
+                    Goggles[0][1] = Orangediver[1] + 10
+                if equipment[2] == 1:
+                    BCD[0][1] = Orangediver[1] + 51
+                if equipment[3] == 1:
+                    Fins[0][1] = Orangediver[1] + 142
+                if equipment[4] == 1:
+                    Regulator[0][1] = Orangediver[1] + 27
+                if equipment[5] == 1:
+                    ExtraRegulator[0][1] = Orangediver[1] + 65
+                if equipment[6] == 1:
+                    AirTank[0][1] = Orangediver[1] + 70
+                if equipment[7] == 1:
+                    Gauges[0][1] = Orangediver[1] + 70
+                if equipment[8] == 1:
+                    Wetsuit[0][1] = Orangediver[1]
+                if equipment[11] == 1:
+                    Flashlight[0][1] = Orangediver[1] + 56
             
         ##############################################################3
         ################################################################
         ##########################################################
-        Snorkel[1][7] = Greendiver[7]
-        Snorkel[1][3] = 75
-        Snorkel[1][4] = 75
-        Snorkel[1][2] = Greendiver[2] - 10
-        
-        Goggles[1][7] = Greendiver[7]
-        Goggles[1][2] = Greendiver[2] + 8
-    
-        BCD[1][7] = Greendiver[7]
-        BCD[1][2] = Greendiver[2] + 50
-        
-        Fins[1][7] = Greendiver[7]
-        Fins[1][2] = Greendiver[2] + 50
-        
-        Regulator[1][7] = Greendiver[7]
-        Regulator[1][2] = Greendiver[2] + 40
-        
-        ExtraRegulator[1][7] = Greendiver[7]
-        ExtraRegulator[1][2] = Greendiver[2] + 40
-        
-        AirTank[1][7] = Greendiver[7]
-        AirTank[1][2] = Greendiver[2] + 34
-        
-        Gauges[1][7] = Greendiver[7]
-        Gauges[1][2] = Greendiver[2] + 42
-        
-        Wetsuit[1][7] = Greendiver[7]
-        Wetsuit[1][2] = Greendiver[2]
-        
-        Flashlight[1][7] = Greendiver[7]
-        Flashlight[1][3] = 60
-        Flashlight[1][4] = 40
-        Flashlight[1][2] = Greendiver[2] + 145
-        
+        if equipment[0] == 1:
+            Snorkel[1][7] = Greendiver[7]
+            Snorkel[1][3] = 75
+            Snorkel[1][4] = 75
+            Snorkel[1][2] = Greendiver[2] - 10
+        if equipment[1] == 1:
+            Goggles[1][7] = Greendiver[7]
+            Goggles[1][2] = Greendiver[2] + 8
+        if equipment[2] == 1:
+            BCD[1][7] = Greendiver[7]
+            BCD[1][2] = Greendiver[2] + 50
+        if equipment[3] == 1:
+            Fins[1][7] = Greendiver[7]
+            Fins[1][2] = Greendiver[2] + 50
+        if equipment[4] == 1:
+            Regulator[1][7] = Greendiver[7]
+            Regulator[1][2] = Greendiver[2] + 40
+        if equipment[5] == 1:      
+            ExtraRegulator[1][7] = Greendiver[7]
+            ExtraRegulator[1][2] = Greendiver[2] + 40
+        if equipment[6] == 1:                
+            AirTank[1][7] = Greendiver[7]
+            AirTank[1][2] = Greendiver[2] + 34
+        if equipment[7] == 1:
+            Gauges[1][7] = Greendiver[7]
+            Gauges[1][2] = Greendiver[2] + 42
+        if equipment[8] == 1:
+            Wetsuit[1][7] = Greendiver[7]
+            Wetsuit[1][2] = Greendiver[2]
+        if equipment[11] == 1:
+            Flashlight[1][7] = Greendiver[7]
+            Flashlight[1][3] = 60
+            Flashlight[1][4] = 40
+            Flashlight[1][2] = Greendiver[2] + 145
+            
         if Greendiver[7] == True:
-            Snorkel[1][1] = Greendiver[1] + Greendiver[3] - Snorkel[1][3] - 10
-            Goggles[1][1] = Greendiver[1] + Greendiver[3] - Goggles[1][3] - 10
-            BCD[1][1] = Greendiver[1] + Greendiver[3] - BCD[1][3] - 51
-            Fins[1][1] = Greendiver[1] + Greendiver[3] - Fins[1][3] - 142
-            Regulator[1][1] = Greendiver[1] + Greendiver[3] - Regulator[1][3] - 27
-            ExtraRegulator[1][1] = Greendiver[1] + Greendiver[3] - ExtraRegulator[1][3] - 65
-            AirTank[1][1] = Greendiver[1] + Greendiver[3] - AirTank[1][3] - 70
-            Gauges[1][1] = Greendiver[1] + Greendiver[3] - Gauges[1][3] - 70
-            Wetsuit[1][1] = Greendiver[1] + Greendiver[3] - Wetsuit[1][3]
-            Flashlight[1][1] = Greendiver[1] + Greendiver[3] - Flashlight[1][3] - 56
+            if equipment[0] == 1:
+                Snorkel[1][1] = Greendiver[1] + Greendiver[3] - Snorkel[1][3] - 10
+            if equipment[1] == 1:
+                Goggles[1][1] = Greendiver[1] + Greendiver[3] - Goggles[1][3] - 10
+            if equipment[2] == 1:
+                BCD[1][1] = Greendiver[1] + Greendiver[3] - BCD[1][3] - 51
+            if equipment[3] == 1:
+                Fins[1][1] = Greendiver[1] + Greendiver[3] - Fins[1][3] - 142
+            if equipment[4] == 1:
+                Regulator[1][1] = Greendiver[1] + Greendiver[3] - Regulator[1][3] - 27
+            if equipment[5] == 1:
+                ExtraRegulator[1][1] = Greendiver[1] + Greendiver[3] - ExtraRegulator[1][3] - 65
+            if equipment[6] == 1:
+                AirTank[1][1] = Greendiver[1] + Greendiver[3] - AirTank[1][3] - 70
+            if equipment[7] == 1:
+                Gauges[1][1] = Greendiver[1] + Greendiver[3] - Gauges[1][3] - 70
+            if equipment[8] == 1:
+                Wetsuit[1][1] = Greendiver[1] + Greendiver[3] - Wetsuit[1][3]
+            if equipment[11] == 1:
+                Flashlight[1][1] = Greendiver[1] + Greendiver[3] - Flashlight[1][3] - 56
         else:
-            Snorkel[1][1] = Greendiver[1] + 10
-            Goggles[1][1] = Greendiver[1] + 10
-            BCD[1][1] = Greendiver[1] + 51
-            Fins[1][1] = Greendiver[1] + 142
-            Regulator[1][1] = Greendiver[1] + 27
-            ExtraRegulator[1][1] = Greendiver[1] + 65
-            AirTank[1][1] = Greendiver[1] + 70
-            Gauges[1][1] = Greendiver[1] + 70
-            Wetsuit[1][1] = Greendiver[1]
-            Flashlight[1][1] = Greendiver[1] + 56
+            if equipment[0] == 1:
+                Snorkel[1][1] = Greendiver[1] + 10
+            if equipment[1] == 1:
+                Goggles[1][1] = Greendiver[1] + 10
+            if equipment[2] == 1:
+                BCD[1][1] = Greendiver[1] + 51
+            if equipment[3] == 1:
+                Fins[1][1] = Greendiver[1] + 142
+            if equipment[4] == 1:
+                Regulator[1][1] = Greendiver[1] + 27
+            if equipment[5] == 1:
+                ExtraRegulator[1][1] = Greendiver[1] + 65
+            if equipment[6] == 1:
+                AirTank[1][1] = Greendiver[1] + 70
+            if equipment[7] == 1:
+                Gauges[1][1] = Greendiver[1] + 70
+            if equipment[8] == 1:
+                Wetsuit[1][1] = Greendiver[1]
+            if equipment[11] == 1:
+                Flashlight[1][1] = Greendiver[1] + 56
    
             
         #####################################################
@@ -1985,11 +2029,11 @@ while done == False:
                 rowdraw(Snorkel, 1)
         animatedgreen()
         if equipment[8] == 1:
-                rowdraw(Wetsuit, 1)
+            rowdraw(Wetsuit, 1)
         movebubbles(Greendiver, 4, 40)
         if equipment[0] == 1:
-                if Greendiver[7] == False: ## In front
-                    rowdraw(Snorkel, 1)
+            if Greendiver[7] == False: ## In front
+                rowdraw(Snorkel, 1)
         if equipment[1] == 1:
             rowdraw(Goggles, 1)
         if equipment[2] == 1:
@@ -2010,30 +2054,30 @@ while done == False:
         #######################
         ### Draw Equipment ###
         animatedorange()
-        if orangedead == False:
-            if equipment[8] == 1:
-                rowdraw(Wetsuit, 0)
-            movebubbles(Orangediver, 0, 0)
-            if equipment[0] == 1:
-                if Orangediver[7] == False: ## In front
-                    rowdraw(Snorkel, 0)
-            if equipment[1] == 1:
-                rowdraw(Goggles, 0)
-            if equipment[2] == 1:
-                rowdraw(BCD, 0)
-            if equipment[3] == 1:
-                rowdraw(Fins, 0)
-            if equipment[4] == 1:
-                rowdraw(Regulator, 0)
-            if equipment[5] == 1:
-                rowdraw(ExtraRegulator, 0)
-            if equipment[6] == 1:
-                rowdraw(AirTank, 0)
-            if equipment[7] == 1:
-                rowdraw(Gauges, 0)
-            if equipment[11] == 1:
-                rowdraw(Flashlight, 0)
-      
+        #if orangedead == False:
+        if equipment[8] == 1:
+            rowdraw(Wetsuit, 0)
+        movebubbles(Orangediver, 0, 0)
+        if equipment[0] == 1:
+            if Orangediver[7] == False: ## In front
+                rowdraw(Snorkel, 0)
+        if equipment[1] == 1:
+            rowdraw(Goggles, 0)
+        if equipment[2] == 1:
+            rowdraw(BCD, 0)
+        if equipment[3] == 1:
+            rowdraw(Fins, 0)
+        if equipment[4] == 1:
+            rowdraw(Regulator, 0)
+        if equipment[5] == 1:
+            rowdraw(ExtraRegulator, 0)
+        if equipment[6] == 1:
+            rowdraw(AirTank, 0)
+        if equipment[7] == 1:
+            rowdraw(Gauges, 0)
+        if equipment[11] == 1:
+            rowdraw(Flashlight, 0)
+  
         if greenrise == False:
             binddiver()
         
