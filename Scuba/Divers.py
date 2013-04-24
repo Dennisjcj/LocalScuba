@@ -127,6 +127,7 @@ def clicked(pic): # must go under a for event in pygame.event.get
                 return True
             else:
                 return False
+
 def mouseover(pic): # must go under a for event in pygame.event.get
         x = pic[1]
         y = pic[2]
@@ -335,8 +336,8 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     global y_min_edge
     global y_max_edge
     global orangedead
-    global accel
-    
+    #global accel
+    accel = 0.5
     kickaccel = 0.5
     
     start_x = pic[1]
@@ -1824,29 +1825,86 @@ while done == False:
         ################################################################
         ##########################################################
             
-       
+        Snorkel[1][7] = Greendiver[7]
+        Snorkel[1][3] = 75
+        Snorkel[1][4] = 75
+        Snorkel[1][2] = Greendiver[2] - 10
+        
+        Goggles[1][7] = Greendiver[7]
+        Goggles[1][2] = Greendiver[2] + 8
+    
+        BCD[1][7] = Greendiver[7]
+        BCD[1][2] = Greendiver[2] + 50
+        
+        Fins[1][7] = Greendiver[7]
+        Fins[1][2] = Greendiver[2] + 50
+        
+        Regulator[1][7] = Greendiver[7]
+        Regulator[1][2] = Greendiver[2] + 40
+        
+        ExtraRegulator[1][7] = Greendiver[7]
+        ExtraRegulator[1][2] = Greendiver[2] + 40
+        
+        AirTank[1][7] = Greendiver[7]
+        AirTank[1][2] = Greendiver[2] + 34
+        
+        Gauges[1][7] = Greendiver[7]
+        Gauges[1][2] = Greendiver[2] + 42
+        
+        Wetsuit[1][7] = Greendiver[7]
+        Wetsuit[1][2] = Greendiver[2]
+        
+        Flashlight[1][7] = Greendiver[7]
+        Flashlight[1][3] = 60
+        Flashlight[1][4] = 40
+        Flashlight[1][2] = Greendiver[2] + 145
+        
+        if Greendiver[7] == True:
+            Snorkel[1][1] = Greendiver[1] + Greendiver[3] - Snorkel[1][3] - 10
+            Goggles[1][1] = Greendiver[1] + Greendiver[3] - Goggles[1][3] - 10
+            BCD[1][1] = Greendiver[1] + Greendiver[3] - BCD[1][3] - 51
+            Fins[1][1] = Greendiver[1] + Greendiver[3] - Fins[1][3] - 142
+            Regulator[1][1] = Greendiver[1] + Greendiver[3] - Regulator[1][3] - 27
+            ExtraRegulator[1][1] = Greendiver[1] + Greendiver[3] - ExtraRegulator[1][3] - 65
+            AirTank[1][1] = Greendiver[1] + Greendiver[3] - AirTank[1][3] - 70
+            Gauges[1][1] = Greendiver[1] + Greendiver[3] - Gauges[1][3] - 70
+            Wetsuit[1][1] = Greendiver[1] + Greendiver[3] - Wetsuit[1][3]
+            Flashlight[1][1] = Greendiver[1] + Greendiver[3] - Flashlight[1][3] - 56
+        else:
+            Snorkel[1][1] = Greendiver[1] + 10
+            Goggles[1][1] = Greendiver[1] + 10
+            BCD[1][1] = Greendiver[1] + 51
+            Fins[1][1] = Greendiver[1] + 142
+            Regulator[1][1] = Greendiver[1] + 27
+            ExtraRegulator[1][1] = Greendiver[1] + 65
+            AirTank[1][1] = Greendiver[1] + 70
+            Gauges[1][1] = Greendiver[1] + 70
+            Wetsuit[1][1] = Greendiver[1]
+            Flashlight[1][1] = Greendiver[1] + 56
+            ######################################################
+            ######################################################
                 
         #####################################################
         rowdraw(Boat, 0)        
         for n in range(10):
             if greenrise == False:
-                Wave[n] = rowmovebackground(Wave, n, Orangediver)
+                Wave[n] = rowmovebackground(Wave, n, Greendiver)
             rowdraw(Wave, n)
         for n in range(40):
             if greenrise == False:
-                Underwave[n] = rowmovebackground(Underwave, n, Orangediver)
+                Underwave[n] = rowmovebackground(Underwave, n, Greendiver)
             rowdraw(Underwave, n)
         for n in range(20):
             if greenrise == False:
-                Rock0[n] = rowmovebackground(Rock0, n, Orangediver)
+                Rock0[n] = rowmovebackground(Rock0, n, Greendiver)
             rowdraw(Rock0, n)
         for n in range(10):
             if greenrise == False:
-                Coral0[n] = rowmovebackground(Coral0, n, Orangediver)
+                Coral0[n] = rowmovebackground(Coral0, n, Greendiver)
             rowdraw(Coral0, n)
         if greenrise == False:
-            Boat[0] = rowmovebackground(Boat, 0, Orangediver)
-            Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
+            Boat[0] = rowmovebackground(Boat, 0, Greendiver)
+            Treasurechest[0] = rowmovebackground(Treasurechest, 0, Greendiver)
 
         #########################################################
         #### Level Initialization and Fish ############
@@ -1924,8 +1982,32 @@ while done == False:
             if Orangediver[7]: ## Behind
                 if orangedead == False:
                     rowdraw(Snorkel, 0)
+            if Greendiver[7]: ## Behind
+                rowdraw(Snorkel, 1)
         animatedgreen()
+        if equipment[8] == 1:
+            rowdraw(Wetsuit, 1)
         movebubbles(Greendiver, 4, 40)
+        if equipment[0] == 1:
+            if Greendiver[7] == False: ## In front
+                rowdraw(Snorkel, 1)
+        if equipment[1] == 1:
+            rowdraw(Goggles, 1)
+        if equipment[2] == 1:
+            rowdraw(BCD, 1)
+        if equipment[3] == 1:
+            rowdraw(Fins, 1)
+        if equipment[4] == 1:
+            rowdraw(Regulator, 1)
+        if equipment[5] == 1:
+            rowdraw(ExtraRegulator, 1)
+        if equipment[6] == 1:
+            rowdraw(AirTank, 1)
+        if equipment[7] == 1:
+            rowdraw(Gauges, 1)
+        if equipment[11] == 1:
+            rowdraw(Flashlight, 1)
+  
 
      
         #######################
