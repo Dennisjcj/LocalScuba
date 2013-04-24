@@ -1574,7 +1574,7 @@ x_max_edge = False
 y_max_edge = False
 
 wintime = 0
-MONEY = 1000
+MONEY = 2000
 accel = 0.5
 
 #edges = [0, 0, 2000, 1000]
