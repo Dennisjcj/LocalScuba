@@ -916,8 +916,8 @@ def restart_fish():
     Gauges = [[pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True], # 7
                   [pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True]]
     
-    Wetsuit = [[pygame.image.load("Wetsuitdiver.png"), 0, 0, 212, 186, 0, 0, True], # 8
-                  [pygame.image.load("Wetsuitdiver2.png"), 0, 0, 212, 186, 0, 0, True]]
+    Wetsuit = [[pygame.image.load("Wetsuitdiver.png"), 0, 0, 260, 186, 0, 0, True], # 8
+                  [pygame.image.load("Wetsuitdiver2.png"), 0, 0, 260, 186, 0, 0, True]]
     
     #Drysuit = [[pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True], # 9
     #            [pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True]]
@@ -1099,6 +1099,9 @@ def Level8():
     else:
         ShopSnorkel = [pygame.image.load("Snorkel.png"), 320, 650, 50, 50, 0, 0, True]
         draw(ShopSnorkel)
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice
     if mouseover(ShopSnorkel):
         snorkelinfotext = infofont.render('Snorkels allow you to conserve air at the surface', 1, (infocolor))
         screen.blit(snorkelinfotext, (infopos))
@@ -1116,6 +1119,9 @@ def Level8():
     else:
         ShopGoggles = [pygame.image.load("Goggles.jpg"), 480, 650, 50, 50, 0, 0, True]
         draw(ShopGoggles)
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice
     if mouseover(ShopGoggles):
         Gogglesinfotext = infofont.render('You need goggles to see underwater', 1, (infocolor))
         screen.blit(Gogglesinfotext, (infopos))  
@@ -1133,6 +1139,9 @@ def Level8():
     else:
         ShopFlashlight = [pygame.image.load("Flashlight.png"), 640, 650, 50, 50, 0, 0, True] # 11
         draw(ShopFlashlight)  
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice
     if mouseover(ShopFlashlight):
         Flashlightinfotext = infofont.render('You need a flashlight when night diving', 1, (infocolor))
         screen.blit(Flashlightinfotext, (infopos))
@@ -1150,6 +1159,9 @@ def Level8():
     else:
         ShopBCD = [pygame.image.load("BCD.jpg"), 250, 600, 50, 50, 0, 0, True]
         draw(ShopBCD)   
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice
     if mouseover(ShopBCD):
         BCDinfotext = infofont.render('Buoyancy Control Devices control your buoyancy', 1, (infocolor))
         screen.blit(BCDinfotext, (infopos))
@@ -1167,6 +1179,9 @@ def Level8():
     else:
         ShopFins = [pygame.image.load("Fins.jpg"), 420, 600, 50, 50, 0, 0, True]
         draw(ShopFins)   
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice
     if mouseover(ShopFins):
         Finsinfotext = infofont.render('You need fins to swim', 1, (infocolor))
         screen.blit(Finsinfotext, (infopos))
@@ -1184,6 +1199,9 @@ def Level8():
     else:
         ShopRegulator = [pygame.image.load("Regulator.jpg"), 590, 600, 50, 50, 0, 0, True]
         draw(ShopRegulator)
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice
     if mouseover(ShopRegulator):
         Regulatorinfotext = infofont.render('You need a regulator to breathe', 1, (infocolor))
         screen.blit(Regulatorinfotext, (infopos))   
@@ -1201,6 +1219,9 @@ def Level8():
     else:
         ShopExtraRegulator = [pygame.image.load("ExtraRegulator.jpg"), 590, 700, 50, 50, 0, 0, True]
         draw(ShopExtraRegulator)
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice
     if mouseover(ShopExtraRegulator):
         ExtraRegulatorinfotext = infofont.render('You need an extra regulator just in case', 1, (infocolor))
         screen.blit(ExtraRegulatorinfotext, (infopos))
@@ -1217,7 +1238,10 @@ def Level8():
             MONEY = MONEY - AirTankprice
     else:
         ShopAirTank = [pygame.image.load("AirTank.jpg"), 420, 700, 50, 50, 0, 0, True]
-        draw(ShopAirTank)     
+        draw(ShopAirTank)   
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice  
     if mouseover(ShopAirTank):
         AirTankinfotext = infofont.render('You need an Air Tank for air', 1, (infocolor))
         screen.blit(AirTankinfotext, (infopos)) 
@@ -1235,6 +1259,9 @@ def Level8():
     else:
         ShopGauges = [pygame.image.load("Gauges.jpg"), 250, 700, 50, 50, 0, 0, True]
         draw(ShopGauges)
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice
     if mouseover(ShopGauges):
         Gaugesinfotext = infofont.render('Gauges display depth and tank pressure', 1, (infocolor))
         screen.blit(Gaugesinfotext, (infopos))
@@ -1252,6 +1279,9 @@ def Level8():
     else:
         ShopWetsuit = [pygame.image.load("Wetsuit.jpg"), 101, 600, 50, 50, 0, 0, True]
         draw(ShopWetsuit)  
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice
     if mouseover(ShopWetsuit):
         Wetsuitinfotext = infofont.render('Wet suits keep you warm and prevent scratches', 1, (infocolor))
         screen.blit(Wetsuitinfotext, (infopos)) 
@@ -1269,6 +1299,9 @@ def Level8():
     else:
         ShopDrysuit = [pygame.image.load("Drysuit.jpg"), 101, 650, 50, 50, 0, 0, True]
         draw(ShopDrysuit)  
+        if clicked(ShopSnorkel):
+            equipment[0] = 0
+            MONEY = MONEY + snorkelprice
     if mouseover(ShopDrysuit):
         Drysuitinfotext = infofont.render('Dry Suits are for extremely cold environments', 1, (infocolor))
         screen.blit(Drysuitinfotext, (infopos)) 
@@ -1285,7 +1318,10 @@ def Level8():
             MONEY = MONEY - Slateprice
     else:
         ShopSlate = [pygame.image.load("Slate.jpg"), 101, 700, 50, 50, 0, 0, True]
-        draw(ShopSlate)   
+        draw(ShopSlate) 
+        if clicked(ShopSlate):
+            equipment[10] = 0
+            MONEY = MONEY + Slateprice  
     if mouseover(ShopSlate):
         Slateinfotext = infofont.render('Slates let you write messages to your buddy', 1, (infocolor))
         screen.blit(Slateinfotext, (infopos)) 
@@ -1303,6 +1339,9 @@ def Level8():
     else:
         ShopGlowstick = [pygame.image.load("Glowstick.jpg"), 840, 600, 50, 50, 0, 0, True]
         draw(ShopGlowstick) 
+        if clicked(ShopGlowstick):
+            equipment[12] = 0
+            MONEY = MONEY + Glowstickprice
     if mouseover(ShopGlowstick):
         Glowstickinfotext = infofont.render('Glow Sticks let you keep you buddy in sight on night dives', 1, (infocolor))
         screen.blit(Glowstickinfotext, (infopos))  
@@ -1320,6 +1359,9 @@ def Level8():
     else:
         ShopScooter = [pygame.image.load("Scooter.jpg"), 840, 650, 50, 50, 0, 0, True]
         draw(ShopScooter)   
+        if clicked(ShopScooter):
+            equipment[13] = 0
+            MONEY = MONEY + Scooterprice
     if mouseover(ShopScooter):
         Scooterinfotext = infofont.render('Under water scooters can be a lot of fun', 1, (infocolor))
         screen.blit(Scooterinfotext, (infopos))
@@ -1337,6 +1379,9 @@ def Level8():
     else:
         ShopExtraFlashlight = [pygame.image.load("ExtraFlashlight.jpg"), 840, 700, 50, 50, 0, 0, True]
         draw(ShopExtraFlashlight)
+        if clicked(ShopExtraFlashlight):
+            equipment[11] = 0
+            MONEY = MONEY + ExtraFlashlightprice
     if mouseover(ShopExtraFlashlight):
         ExtraFlashlightinfotext = infofont.render('Carry an extra light on night dives', 1, (infocolor))
         screen.blit(ExtraFlashlightinfotext, (infopos))
@@ -1380,8 +1425,8 @@ AirTank = [[pygame.image.load("AirTankdiver.png"), 0, 0, 70, 25, 0, 0, True], # 
 Gauges = [[pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True], # 7
               [pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True]]
 
-Wetsuit = [[pygame.image.load("Wetsuitdiver.png"), 0, 0, 212, 186, 0, 0, True], # 8
-              [pygame.image.load("Wetsuitdiver2.png"), 0, 0, 212, 186, 0, 0, True]]
+Wetsuit = [[pygame.image.load("Wetsuitdiver.png"), 0, 0, 260, 186, 0, 0, True], # 8
+              [pygame.image.load("Wetsuitdiver2.png"), 0, 0, 260, 186, 0, 0, True]]
 
 #Drysuit = [[pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True], # 9
 #            [pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True]]
@@ -1403,14 +1448,14 @@ Flashlight = [[pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True],
 
 
 #######################
-Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 212, 186, 10, 10, True]
-Orangediverkick = [pygame.image.load("Orangediverkick.png"), 200, 212, 286, 200, 10, 10, True]
+Orangediver = [pygame.image.load("Orangediver.png"), 200, 200, 260, 186, 10, 10, True]
+Orangediverkick = [pygame.image.load("Orangediverkick.png"), 200, 260, 286, 200, 10, 10, True]
 Orangediverdead = [pygame.transform.flip(pygame.image.load("Orangediver.png"), False, True), Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[6], Orangediver[7]]
 
 #Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 224, 188, 10, 10, True]
 #Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 224, 188, 10, 10, True]
-Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 212, 186, 10, 10, True]
-Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 212, 186, 10, 10, True]
+Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 260, 186, 10, 10, True]
+Greendiverkick = [pygame.image.load("Greendiverkick.png"), 0, 200, 260, 186, 10, 10, True]
 
 Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
        [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
@@ -1693,9 +1738,9 @@ while done == False:
             left = False
             right = False
             
-            Orangediver = [pygame.image.load("Orangediver.png"), 400, 200, 212, 186, 10, 10, True]
-            Orangediverkick = [pygame.image.load("Orangediverkick.png"), 400, 212, 286, 200, 10, 10, True]
-            Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 212, 186, 10, 10, True]
+            Orangediver = [pygame.image.load("Orangediver.png"), 400, 200, 260, 186, 10, 10, True]
+            Orangediverkick = [pygame.image.load("Orangediverkick.png"), 400, 260, 286, 200, 10, 10, True]
+            Greendiver = [pygame.image.load("Greendiver.png"), 0, 200, 260, 186, 10, 10, True]
             Orangediver[5] = 0
             Orangediver[6] = 0
             orangedead = False
