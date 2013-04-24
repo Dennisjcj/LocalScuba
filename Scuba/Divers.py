@@ -876,11 +876,73 @@ def restart_fish():
     global greenrise
     global fish_collected
     global Shark
+    global Snorkel
+    global Goggles
+    global BCD
+    global Fins
+    global Regulator
+    global ExtraRegulator
+    global AirTank
+    global Gauges
+    global Wetsuit
+    #global Drysuit
+    #global Slate
+    global Flashlight
+    #global Glowstick
+    #global Scooter
+    #global ExtraFlashlight
+
+    Snorkel = [[pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True], # 0
+           [pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True]]
+
+    Goggles = [[pygame.image.load("Gogglesdiver.png"), 0, 0, 63, 40, 0, 0, True], # 1
+                  [pygame.image.load("Gogglesdiver.png"), 0, 0, 63, 40, 0, 0, True]]
+    
+    BCD = [[pygame.image.load("BCDdiver.png"), 0, 0, 70, 50, 0, 0, True], # 2
+                  [pygame.image.load("BCDdiver.png"), 0, 0, 70, 50, 0, 0, True]]
+    
+    Fins = [[pygame.image.load("Finsdiver.png"), 0, 0, 97, 160, 0, 0, True], # 3
+                  [pygame.image.load("Finsdiver.png"), 0, 0, 97, 160, 0, 0, True]]
+    
+    Regulator = [[pygame.image.load("Regulatordiver.png"), 0, 0, 45, 20, 0, 0, True], # 4
+                  [pygame.image.load("Regulatordiver.png"), 0, 0, 45, 20, 0, 0, True]]
+    
+    ExtraRegulator = [[pygame.image.load("ExtraRegulatordiver.png"), 0, 0, 50, 45, 0, 0, True], # 5
+                  [pygame.image.load("ExtraRegulatordiver.png"), 0, 0, 50, 45, 0, 0, True]]
+    
+    AirTank = [[pygame.image.load("AirTankdiver.png"), 0, 0, 70, 25, 0, 0, True], # 6
+                  [pygame.image.load("AirTankdiver.png"), 0, 0, 70, 25, 0, 0, True]]
+    
+    Gauges = [[pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True], # 7
+                  [pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True]]
+    
+    Wetsuit = [[pygame.image.load("Wetsuitdiver.png"), 0, 0, 212, 186, 0, 0, True], # 8
+                  [pygame.image.load("Wetsuitdiver2.png"), 0, 0, 212, 186, 0, 0, True]]
+    
+    #Drysuit = [[pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True], # 9
+    #            [pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True]]
+    
+    #Slate = [[pygame.image.load("Slatediver.png"), 0, 0, 100, 100, 0, 0, True], # 10
+    #              [pygame.image.load("Slatediver.png"), 0, 0, 100, 100, 0, 0, True]]
+    
+    Flashlight = [[pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True], # 11
+                  [pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True]]
+    
+    #Glowstick = [[pygame.image.load("Glowstickdiver.png"), 0, 0, 100, 100, 0, 0, True], # 12
+    #              [pygame.image.load("Glowstickdiver.png"), 0, 0, 100, 100, 0, 0, True]]
+    
+    #Scooter = [[pygame.image.load("Scooterdiver.png"), 0, 0, 100, 100, 0, 0, True], # 13
+    #              [pygame.image.load("Scooterdiver.png"), 0, 0, 100, 100, 0, 0, True]]
+    
+    #ExtraFlashlight = [[pygame.image.load("ExtraFlashlightdiver.png"), 0, 0, 100, 100, 0, 0, True], # 14
+    #              [pygame.image.load("ExtraFlashlightdiver.png"), 0, 0, 100, 100, 0, 0, True]]
+    
+
     
     orangedead = False
     greenrise = False
     fish_collected = 0
-        
+    
     Eel = [[pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
            [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
            [pygame.image.load("Eel.png"), -1000, -1000, 300, 100, 2, 2, True, False],
@@ -1293,7 +1355,6 @@ def nothing():
 ### Equipment #####
 equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
 # Snorkel, Goggles, BCD, Fins, Regulator, ExtraRegulator, AirTank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Scooter, ExtraFlashlight 
-
 
 Snorkel = [[pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True], # 0
            [pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True]]
@@ -1713,6 +1774,7 @@ while done == False:
                 Rock0[n][1] = x_max + 175  - 100 - 150 + windowoffset
                 Rock0[n][2] = initial_Rock0_y2
                 initial_Rock0_y2 = initial_Rock0_y2 + 250
+                
         ##  Initialized #########################################################3 
 
         screen.fill(ocean)   
@@ -1820,7 +1882,97 @@ while done == False:
                 if equipment[7] == 1:
                     Gauges[0][1] = Orangediver[1] + Orangediver[3] - Gauges[0][3] - 70
                 if equipment[8] == 1:
-                    Wetsuit[0][1] = Orangediver[1] + Orangediver[3] - Wetsuit[0][3]
+                    Wetsuit[0][1] = Orangediver[1]#Orangediver[1] + Orangediver[3] - Wetsuit[0][3]
+                if equipment[11] == 1:
+                    Flashlight[0][1] = Orangediver[1] + Orangediver[3] - Flashlight[0][3] - 56
+            else:
+                if equipment[0] == 1:
+                    Snorkel[0][1] = Orangediver[1] + 10
+                if equipment[1] == 1:
+                    Goggles[0][1] = Orangediver[1] + 10
+                if equipment[2] == 1:
+                    BCD[0][1] = Orangediver[1] + 51
+                if equipment[3] == 1:
+                    Fins[0][1] = Orangediver[1] + 142
+                if equipment[4] == 1:
+                    Regulator[0][1] = Orangediver[1] + 27
+                if equipment[5] == 1:
+                    ExtraRegulator[0][1] = Orangediver[1] + 65
+                if equipment[6] == 1:
+                    AirTank[0][1] = Orangediver[1] + 70
+                if equipment[7] == 1:
+                    Gauges[0][1] = Orangediver[1] + 70
+                if equipment[8] == 1:
+                    Wetsuit[0][1] = Orangediver[1]
+                if equipment[11] == 1:
+                    Flashlight[0][1] = Orangediver[1] + 56
+###################### DEAD #############################################################
+        else:
+            upsdown = 50
+            if equipment[0] == 1:
+                Snorkel[0][0] = pygame.transform.flip(pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), False, True)
+                Snorkel[0][7] = Orangediver[7]
+                Snorkel[0][3] = 75
+                Snorkel[0][4] = 75
+                Snorkel[0][2] = Orangediver[2] - 1 + Orangediver[4] - Snorkel[0][4] + 10
+            if equipment[1] == 1:
+                Goggles[0][0] = pygame.transform.flip(pygame.image.load("Gogglesdiver.png"), False, True)
+                Goggles[0][7] = Orangediver[7]
+                Goggles[0][2] = Orangediver[2] + 8 + Orangediver[4] - Goggles[0][4] - 15
+            if equipment[2] == 1:
+                BCD[0][0] = pygame.transform.flip(pygame.image.load("BCDdiver.png"), False, True)
+                BCD[0][7] = Orangediver[7]
+                BCD[0][2] = Orangediver[2] + 88
+            if equipment[3] == 1:
+                Fins[0][0] = pygame.transform.flip(pygame.image.load("Finsdiver.png"), False, True)
+                Fins[0][7] = Orangediver[7]
+                Fins[0][2] = Orangediver[2] - 27
+            if equipment[4] == 1:
+                Regulator[0][0] = pygame.transform.flip(pygame.image.load("Regulatordiver.png"), False, True)
+                Regulator[0][7] = Orangediver[7]
+                Regulator[0][2] = Orangediver[2] + 126
+            if equipment[5] == 1:  
+                ExtraRegulator[0][0] = pygame.transform.flip(pygame.image.load("ExtraRegulatordiver.png"), False, True) 
+                ExtraRegulator[0][7] = Orangediver[7]
+                ExtraRegulator[0][2] = Orangediver[2] + 100
+            if equipment[6] == 1:
+                AirTank[0][0] = pygame.transform.flip(pygame.image.load("AirTankdiver.png"), False, True)              
+                AirTank[0][7] = Orangediver[7]
+                AirTank[0][2] = Orangediver[2] + 124
+            if equipment[7] == 1:
+                Gauges[0][0] = pygame.transform.flip(pygame.image.load("Gaugesdiver.png"), False, True)
+                Gauges[0][7] = Orangediver[7]
+                Gauges[0][2] = Orangediver[2] + 92
+            if equipment[8] == 1:
+                Wetsuit[0][0] = pygame.transform.flip(pygame.image.load("Wetsuitdiver.png"), False, True)
+                Wetsuit[0][7] = Orangediver[7]
+                Wetsuit[0][2] = Orangediver[2]
+            if equipment[11] == 1:
+                Flashlight[0][0] = pygame.transform.flip(pygame.image.load("Flashlight.png"), False, True)
+                Flashlight[0][7] = Orangediver[7]
+                Flashlight[0][3] = 60
+                Flashlight[0][4] = 40
+                Flashlight[0][2] = Orangediver[2]
+                
+            if Orangediver[7] == True:
+                if equipment[0] == 1:
+                    Snorkel[0][1] = Orangediver[1] + Orangediver[3] - Snorkel[0][3] - 10
+                if equipment[1] == 1:
+                    Goggles[0][1] = Orangediver[1] + Orangediver[3] - Goggles[0][3] - 10
+                if equipment[2] == 1:
+                    BCD[0][1] = Orangediver[1] + Orangediver[3] - BCD[0][3] - 51
+                if equipment[3] == 1:
+                    Fins[0][1] = Orangediver[1] + Orangediver[3] - Fins[0][3] - 142
+                if equipment[4] == 1:
+                    Regulator[0][1] = Orangediver[1] + Orangediver[3] - Regulator[0][3] - 27
+                if equipment[5] == 1:
+                    ExtraRegulator[0][1] = Orangediver[1] + Orangediver[3] - ExtraRegulator[0][3] - 65
+                if equipment[6] == 1:
+                    AirTank[0][1] = Orangediver[1] + Orangediver[3] - AirTank[0][3] - 70
+                if equipment[7] == 1:
+                    Gauges[0][1] = Orangediver[1] + Orangediver[3] - Gauges[0][3] - 70
+                if equipment[8] == 1:
+                    Wetsuit[0][1] = Orangediver[1]
                 if equipment[11] == 1:
                     Flashlight[0][1] = Orangediver[1] + Orangediver[3] - Flashlight[0][3] - 56
             else:
@@ -2023,7 +2175,7 @@ while done == False:
             
         if equipment[0] == 1: 
             if Orangediver[7]: ## Behind
-                if orangedead == False:
+                #if orangedead == False:
                     rowdraw(Snorkel, 0)
             if Greendiver[7]: ## Behind
                 rowdraw(Snorkel, 1)
@@ -2081,7 +2233,7 @@ while done == False:
         if greenrise == False:
             binddiver()
         
-        if Orangediver[6] < -15:
+        if Orangediver[6] < -17:
             orangedead = True
             bubbleskilled = True
     
