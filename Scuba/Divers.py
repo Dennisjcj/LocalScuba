@@ -945,6 +945,8 @@ def airSetup():
     
     global totalAir
     global airRate
+    global degrees
+    degrees = 0
     #global Pressuregauge 
     totalAir = 180
     airRate = 1
@@ -979,6 +981,7 @@ def consumeAir():
     
     if totalAir <= 0:
         orangedead = True
+  
 #################################################
 #################################################################
 
