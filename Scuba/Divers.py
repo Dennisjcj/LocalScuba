@@ -180,6 +180,7 @@ def keys():
                 level_initialized = False
                 level_1_initialized = False
                 level_2_initialized = False
+                pygame.time.set_timer(pygame.USEREVENT+1, 0)
             if orangedead == False:
                 if event.key == pygame.K_a: 
                     left = True
@@ -925,7 +926,49 @@ def restart_fish():
 
 
 ########Air Consumption##########################
+########Air Consumption##########################
+totalAir = 0
+airRate = 0
+degrees = 0
 
+#Notes for rotation: Radius is 150
+########Air Consumption##########################
+def airSetup():
+    
+    global totalAir
+    global airRate 
+    totalAir = 180
+    airRate = 1
+    pygame.time.set_timer(pygame.USEREVENT+1, 1000)
+    print("Air Setup Called"+str(totalAir) +str(airRate))
+    global gaugerect
+    gaugerect = Pressuregauge[0].get_rect()
+    global needle
+    pygame.draw.line(Pressuregauge[0], (120,0,0), (gaugerect.centerx, gaugerect.centery), (gaugerect.centerx+150, gaugerect.centery), 5)
+ 
+
+def consumeAir():
+    global totalAir
+    global airRate
+    global gaugerect
+    global needle
+    global orangedead
+    global degrees
+    pi = 3.141592653589793238462643383279502884197169399375
+    radius = 150 #Radius of gauge, if time try to make that actually use the gauge rect to calculate width
+    print("ConsumeAir Called"+str(totalAir)+str(airRate))
+    totalAir -= airRate
+    degrees += airRate
+    startx = gaugerect.centerx
+    starty = gaugerect.centery
+    endx = 150*math.cos((degrees*pi)/180.0) + startx
+    endy = -150*math.sin((degrees*pi)/180.0)+starty
+    #Pressuregauge[0].fill((0,0,0))
+    
+    pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
+    
+    if totalAir <= 0:
+        orangedead = True
 #################################################
 #################################################################
 
@@ -1458,10 +1501,10 @@ Bottomsea = [pygame.image.load("Bottomsea.png"), 0, 0, 1024, 768, 0, 0, True]
 
 Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
 Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 0, 0, True]
-Pressuregauge = [pygame.image.load("Pressuregauge.png"), 200, 200, 100, 100, 10, 10, True]
+#Pressuregauge = [pygame.image.load("Pressuregauge.png"), 200, 200, 100, 100, 10, 10, True]
+Pressuregauge = [pygame.image.load("Pressuregauge.png"),  0, 0, 150, 150, 0, 0, True]
 Depthgauge = [pygame.image.load("Depthgauge.png"), 0, 0, 150, 150, 0, 0, True]
 Shelves = [pygame.image.load("Shelves.png"), 0, 0, 1024, 768, 0, 0, True]
-
 
 Islandbutton = [pygame.image.load("Islandbutton.png"), 200, 200, 100, 100, 10, 10, True]
 Menubutton = [pygame.image.load("Menubutton.png"), 200, 200, 100, 100, 10, 10, True]
@@ -1543,6 +1586,7 @@ accel = 0.5 #0.2
 levels = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 levelsdone = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 windowoffset = 200
+airSetup()
 #################################################################
 # -------- Main Program Loop -----------
 while done == False:
@@ -1808,7 +1852,7 @@ while done == False:
         #########################################################
         
        
-        draw(Depthgauge)
+        draw(Pressuregauge)
 
         depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
         screen.blit(depthtext, (1024 - 240, 10))
