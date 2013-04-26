@@ -1869,8 +1869,8 @@ while done == False:
         
             
         #########################################################
-        
-        draw(Pressuregauge)
+        if equipment[7] == 1:
+            draw(Pressuregauge)
         
         depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
         screen.blit(depthtext, (1024 - 240, 10))
