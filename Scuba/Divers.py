@@ -938,15 +938,16 @@ def restart_fish():
 totalAir = 0
 airRate = 0
 degrees = 0
-
+gauge_image = pygame.image.load("Pressuregauge.png") #For redrawing
 #Notes for rotation: Radius is 150
 ########Air Consumption##########################
 def airSetup():
-    
+   
     global totalAir
     global airRate
     global degrees
-    global Pressuregauge
+    global gauge_image
+    Pressuregauge[0] = gauge_image
     degrees = 0
     totalAir = 180
     airRate = 10
@@ -965,7 +966,7 @@ def consumeAir():
     global needle
     global orangedead
     global degrees
-    gauge_image = pygame.image.load("Pressuregauge.png") 
+    global gauge_image
     pi = 3.141592653589793238462643383279502884197169399375
     radius = 150 #Radius of gauge, if time try to make that actually use the gauge rect to calculate width
     print("ConsumeAir Called"+str(totalAir)+str(airRate))
@@ -978,10 +979,9 @@ def consumeAir():
     #Pressuregauge[0].fill
     #Pressuregauge[0].set_alpha(255)
     #draw(Pressuregauge)
+    
     Pressuregauge[0] = gauge_image
    # Pressuregauge[0].blit(gauge_image, (0,0))
-    
-    pygame.display.flip()
     pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
     
     if totalAir <= 0:
