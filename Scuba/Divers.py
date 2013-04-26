@@ -1955,7 +1955,10 @@ while done == False:
                 eeldeadfont = pygame.font.SysFont("monospace", 30, "bold")
                 eeldeadtext = eeldeadfont.render('Watch out for dangerous fish.', 1, (255, 255, 0))
                 screen.blit(eeldeadtext, (200, 450))
-                
+            if totalAir == 0:
+                deadairfont = pygame.font.SysFont("monospace", 30, "bold")
+                deadairtext = deadairfont.render('Keep an eye on your air gauge.', 1, (255, 255, 0))
+                screen.blit(deadairtext, (300, 500))  
         
     
 
