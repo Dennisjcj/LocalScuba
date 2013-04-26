@@ -946,8 +946,8 @@ def airSetup():
     global totalAir
     global airRate
     global degrees
+    global Pressuregauge
     degrees = 0
-    #global Pressuregauge 
     totalAir = 180
     airRate = 1
     pygame.time.set_timer(pygame.USEREVENT+1, 1000)
@@ -965,7 +965,6 @@ def consumeAir():
     global needle
     global orangedead
     global degrees
-    #global Pressuregauge
     pi = 3.141592653589793238462643383279502884197169399375
     radius = 150 #Radius of gauge, if time try to make that actually use the gauge rect to calculate width
     print("ConsumeAir Called"+str(totalAir)+str(airRate))
