@@ -168,6 +168,7 @@ def keys():
     global ud_just_pressed
     global event
     global orangedead
+    global airRate
     for event in pygame.event.get():
         if event.type == pygame.USEREVENT+1 and orangedead == False:
             consumeAir() 
@@ -183,6 +184,7 @@ def keys():
                 level_2_initialized = False
                 pygame.time.set_timer(pygame.USEREVENT+1, 0)
             if orangedead == False:
+                airRate = 2
                 if event.key == pygame.K_a: 
                     left = True
                     lr_just_pressed = 1
@@ -201,13 +203,18 @@ def keys():
                 level_2_initialized = False
         if event.type == pygame.KEYUP:
             if orangedead == False:
+                airRate = 1
                 if event.key == pygame.K_a:
+                    airRate = 1
                     left = False
                 if event.key == pygame.K_d:
+                    airRate = 1
                     right = False
                 if event.key == pygame.K_w:
+                    airRate = 1
                     up = False
                 if event.key == pygame.K_s:
+                    airRate = 1
                     down = False
             
 def move(pic, xs, ys):
@@ -1233,7 +1240,7 @@ def Level8():
             equipment[8] = 1
             MONEY = MONEY - Wetsuitprice
     else:
-        ShopWetsuit = [pygame.image.load("Wet Suit.jpg"), 101, 600, 50, 50, 0, 0, True]
+        ShopWetsuit = [pygame.image.load("WetSuit.jpg"), 101, 600, 50, 50, 0, 0, True]
         draw(ShopWetsuit)  
     if mouseover(ShopWetsuit):
         Wetsuitinfotext = infofont.render('Wet suits keep you warm and prevent scratches', 1, (infocolor))
