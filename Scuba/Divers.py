@@ -949,7 +949,7 @@ def airSetup():
     global Pressuregauge
     degrees = 0
     totalAir = 180
-    airRate = 1
+    airRate = 10
     pygame.time.set_timer(pygame.USEREVENT+1, 1000)
     print("Air Setup Called"+str(totalAir) +str(airRate))
     global gaugerect
@@ -974,8 +974,9 @@ def consumeAir():
     starty = gaugerect.centery
     endx = 150*math.cos((degrees*pi)/180.0) + startx
     endy = -150*math.sin((degrees*pi)/180.0)+starty
-    #Pressuregauge[0].fill((0,0,0))
-    
+    Pressuregauge[0].fill((0,0,0))
+    draw(Pressuregauge)
+    pygame.display.flip()
     pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
     
     if totalAir <= 0:
