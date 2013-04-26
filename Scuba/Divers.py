@@ -336,6 +336,10 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     global y_max_edge
     global orangedead
     global accel
+    global equipment
+    
+
+            
     
     kickaccel = 0.5
     
@@ -344,6 +348,10 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     x_move_speed = pic[5]
     y_move_speed = pic[6]
     move_direction = pic[7]
+    
+    ## NO BCD ##
+    if equipment[2] == 0:
+        y_move_speed = y_move_speed + 0.07
     
     if left == True and right == False and x_min_edge == False:
         x_move_speed = x_move_speed - accel
@@ -462,7 +470,13 @@ def animatedorange():
         global equipment
         global Fins
         global orangedead
+        global aircap
+        global kk
+        global downair
         if orangekicking == False:
+            if kk == True and orangedead == False:
+                downair = True
+                kk = False
             Orangediverkick = [Orangediverkick[0], Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[6], Orangediver[7]]
             draw(Orangediverkick)
             if equipment[3] == 1:
@@ -472,6 +486,7 @@ def animatedorange():
                 orangekicking = True
                 orangecycles = 0
         else:
+            kk = True
             draw(Orangediver)
             if equipment[3] == 1:
                 rowdraw(Fins, 0)
@@ -1705,6 +1720,8 @@ MONEY = 2000
 accel = 0.5
 
 aircap = 200
+kk = False
+downair = False
 
 #edges = [0, 0, 2000, 1000]
 levels = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -1725,8 +1742,10 @@ while done == False:
     ############### Game Levels ###################################################
     else:
         if level_initialized == False:
-            
-            aircap = 200
+            if equipment[6] and equipment[4]:
+                aircap = 200
+            else:
+                aircap = 20
             
             x_min = 0
             y_min = 0
@@ -2196,7 +2215,8 @@ while done == False:
         
        
         draw(Depthguage)
-
+        aircaptext = myfont.render("Air=" + str(aircap), 1, (255, 255, 0))
+        screen.blit(aircaptext, (1024 - 240 - 300, 10))
         depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
         screen.blit(depthtext, (1024 - 240, 10))
         scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
@@ -2269,7 +2289,8 @@ while done == False:
         #######################
         ### Draw Equipment ###
         animatedorange()
-        movebubbles(Orangediver, 0, 0)
+        if orangedead == False:
+            movebubbles(Orangediver, 0, 0)
         if equipment[0] == 1:
             if Orangediver[7] == False: ## In front
                 rowdraw(Snorkel, 0)
@@ -2295,7 +2316,7 @@ while done == False:
         
         if Orangediver[6] < -17:
             orangedead = True
-            justdied
+            justdied = True
             bubbleskilled = True
     
         if orangedead == True and greenrise == True:
@@ -2307,10 +2328,25 @@ while done == False:
                 eeldeadfont = pygame.font.SysFont("monospace", 30, "bold")
                 eeldeadtext = eeldeadfont.render('Watch out for dangerous fish.', 1, (255, 255, 0))
                 screen.blit(eeldeadtext, (200, 450))
-                
-        
-        aircap = aircap - 1
+       
+        ##### Equipment Consequences #####
+        if equipment[0] == 1 and depth < 10: #Snorkel lets conserve air at the surface
+            aircap = aircap
+        elif downair == True:
+            aircap = aircap - 1
+        if equipment[1] == 0: # No goggles and you cannot see
+            screen.fill(ocean) 
+            darkfont = pygame.font.SysFont("monospace", 30, "bold")
+            darktext = darkfont.render('Hard to see without goggles.', 1, (255, 255, 0))
+            screen.blit(darktext, (250, 450))    
+        ### No BCD pulls player down.  See Key accell
+        if equipment[3] == 1: # No fins and its hard to move
+            accel = 0.5
+        else:
+            accel = 0.1
+        # Regulator and air tank are required for more air.  Up in level intialization
         if aircap < 0:
+            aircap = 0
             orangedead = True
             justdied = True
             airdeadfont = pygame.font.SysFont("monospace", 30, "bold")
@@ -2397,6 +2433,7 @@ while done == False:
             AirTank[0][0] = pygame.transform.flip(AirTank[1][0], False, True)              
             Gauges[0][0] = pygame.transform.flip(Gauges[1][0], False, True)
             Flashlight[0][0] = pygame.transform.flip(Flashlight[1][0], False, True)
+        downair = False
 
 ####  END   ############################################   
     pygame.display.flip()
