@@ -459,18 +459,29 @@ def animatedorange():
         global orangelength
         global Orangediver
         global Orangediverkick
+        global equipment
+        global Fins
+        global orangedead
         if orangekicking == False:
             Orangediverkick = [Orangediverkick[0], Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[6], Orangediver[7]]
             draw(Orangediverkick)
+            if equipment[3] == 1:
+                if orangedead == False:
+                    rowdraw(Fins, 1)
             if orangecycles > orangelength:
                 orangekicking = True
                 orangecycles = 0
         else:
             draw(Orangediver)
+            if equipment[3] == 1:
+                rowdraw(Fins, 0)
             if orangecycles > orangelength:
                 orangekicking = False
                 orangecycles = 0
         orangecycles = orangecycles + 1
+        if equipment[3] == 1:
+            if orangedead:
+                rowdraw(Fins, 0)
         
 def animatedgreen():
         global greenkicking
@@ -481,11 +492,15 @@ def animatedgreen():
         if greenkicking:
             Greendiverkick = [Greendiverkick[0], Greendiver[1], Greendiver[2], Greendiver[3], Greendiver[4], Greendiver[5], Greendiver[5], Greendiver[7]]
             draw(Greendiverkick)
+            if equipment[3] == 1:
+                rowdraw(Fins, 3)
             if greencycles > greenlength:
                 greenkicking = False
                 greencycles = 0
         else:
             draw(Greendiver)
+            if equipment[3] == 1:
+                rowdraw(Fins, 2)
             if greencycles > greenlength:
                 greenkicking = True
                 greencycles = 0
@@ -901,9 +916,11 @@ def restart_fish():
     BCD = [[pygame.image.load("BCDdiver.png"), 0, 0, 70, 50, 0, 0, True], # 2
                   [pygame.image.load("BCDdiver.png"), 0, 0, 70, 50, 0, 0, True]]
     
-    Fins = [[pygame.image.load("Finsdiver.png"), 0, 0, 97, 160, 0, 0, True], # 3
-                  [pygame.image.load("Finsdiver.png"), 0, 0, 97, 160, 0, 0, True]]
-    
+    Fins = [[pygame.image.load("Finsdiver1.png"), 0, 0, 53, 89, 0, 0, True], # 3
+            [pygame.image.load("Finsdiver2.png"), 0, 0, 97, 160, 0, 0, True],
+            [pygame.image.load("Finsdiver1.png"), 0, 0, 53, 89, 0, 0, True],
+            [pygame.image.load("Finsdiver2.png"), 0, 0, 97, 160, 0, 0, True]]
+
     Regulator = [[pygame.image.load("Regulatordiver.png"), 0, 0, 45, 20, 0, 0, True], # 4
                   [pygame.image.load("Regulatordiver.png"), 0, 0, 45, 20, 0, 0, True]]
     
@@ -916,7 +933,7 @@ def restart_fish():
     Gauges = [[pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True], # 7
                   [pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True]]
     
-    Wetsuit = [[pygame.image.load("Wetsuitdiver.png"), 0, 0, 260, 186, 0, 0, True], # 8
+    Wetsuit = [[pygame.image.load("Wetsuitdiver1.png"), 0, 0, 260, 186, 0, 0, True], # 8
                   [pygame.image.load("Wetsuitdiver2.png"), 0, 0, 260, 186, 0, 0, True]]
     
     #Drysuit = [[pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True], # 9
@@ -1425,8 +1442,10 @@ AirTank = [[pygame.image.load("AirTankdiver.png"), 0, 0, 70, 25, 0, 0, True], # 
 Gauges = [[pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True], # 7
               [pygame.image.load("Gaugesdiver.png"), 0, 0, 97, 51, 0, 0, True]]
 
-Wetsuit = [[pygame.image.load("Wetsuitdiver.png"), 0, 0, 260, 186, 0, 0, True], # 8
-              [pygame.image.load("Wetsuitdiver2.png"), 0, 0, 260, 186, 0, 0, True]]
+Wetsuit = [[pygame.image.load("Wetsuitdiver1.png"), 0, 0, 260, 186, 0, 0, True], # 8
+           [pygame.image.load("Wetsuitdiver2.png"), 0, 0, 260, 186, 0, 0, True],
+           [pygame.image.load("Wetsuitdiver3.png"), 0, 0, 260, 186, 0, 0, True], # 8
+           [pygame.image.load("Wetsuitdiver4.png"), 0, 0, 260, 186, 0, 0, True]]
 
 #Drysuit = [[pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True], # 9
 #            [pygame.image.load("Drysuitdiver.png"), 0, 0, 100, 100, 0, 0, True]]
@@ -1685,6 +1704,8 @@ wintime = 0
 MONEY = 2000
 accel = 0.5
 
+aircap = 200
+
 #edges = [0, 0, 2000, 1000]
 levels = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 levelsdone = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -1704,6 +1725,8 @@ while done == False:
     ############### Game Levels ###################################################
     else:
         if level_initialized == False:
+            
+            aircap = 200
             
             x_min = 0
             y_min = 0
@@ -1750,7 +1773,19 @@ while done == False:
             orangekicking = True
             orangecycles = 0
             orangelength = 20 
-            
+            if equipment[8] == 1:
+                Orangediver[0] = pygame.image.load("Wetsuitdiver1.png")
+                Orangediverkick[0] = pygame.image.load("Wetsuitdiver2.png")
+                Greendiver[0] = pygame.image.load("Wetsuitdiver3.png")
+                Greendiverkick[0] = pygame.image.load("Wetsuitdiver4.png")
+                Orangediverdead[0] = pygame.transform.flip(pygame.image.load("Wetsuitdiver1.png"), False, True)
+            else:
+                Orangediver[0] = pygame.image.load("Orangediver.png")
+                Orangediverkick[0] = pygame.image.load("Orangediverkick.png")
+                Greendiver[0] = pygame.image.load("Greendiver.png")
+                Greendiverkick[0] = pygame.image.load("Greendiverkick.png")
+                Orangediverdead[0] = pygame.transform.flip(pygame.image.load("Orangediver.png"), False, True)
+                
             bubblecycles = [0, 0, 0, 0, 0, 0, 0, 0]
             scroll = Orangediver[1]  
             depth = Orangediver[2]
@@ -1887,7 +1922,9 @@ while done == False:
                 BCD[0][2] = Orangediver[2] + 50
             if equipment[3] == 1:
                 Fins[0][7] = Orangediver[7]
-                Fins[0][2] = Orangediver[2] + 50
+                Fins[0][2] = Orangediver[2] + 58
+                Fins[1][7] = Orangediver[7]
+                Fins[1][2] = Orangediver[2] + 50
             if equipment[4] == 1:
                 Regulator[0][7] = Orangediver[7]
                 Regulator[0][2] = Orangediver[2] + 40
@@ -1900,9 +1937,6 @@ while done == False:
             if equipment[7] == 1:
                 Gauges[0][7] = Orangediver[7]
                 Gauges[0][2] = Orangediver[2] + 42
-            if equipment[8] == 1:
-                Wetsuit[0][7] = Orangediver[7]
-                Wetsuit[0][2] = Orangediver[2]
             if equipment[11] == 1:
                 Flashlight[0][7] = Orangediver[7]
                 Flashlight[0][3] = 60
@@ -1917,7 +1951,8 @@ while done == False:
                 if equipment[2] == 1:
                     BCD[0][1] = Orangediver[1] + Orangediver[3] - BCD[0][3] - 51
                 if equipment[3] == 1:
-                    Fins[0][1] = Orangediver[1] + Orangediver[3] - Fins[0][3] - 142
+                    Fins[0][1] = Orangediver[1] + Orangediver[3] - Fins[0][3] - 209
+                    Fins[1][1] = Orangediver[1] + Orangediver[3] - Fins[1][3] - 144
                 if equipment[4] == 1:
                     Regulator[0][1] = Orangediver[1] + Orangediver[3] - Regulator[0][3] - 27
                 if equipment[5] == 1:
@@ -1926,8 +1961,6 @@ while done == False:
                     AirTank[0][1] = Orangediver[1] + Orangediver[3] - AirTank[0][3] - 70
                 if equipment[7] == 1:
                     Gauges[0][1] = Orangediver[1] + Orangediver[3] - Gauges[0][3] - 70
-                if equipment[8] == 1:
-                    Wetsuit[0][1] = Orangediver[1]#Orangediver[1] + Orangediver[3] - Wetsuit[0][3]
                 if equipment[11] == 1:
                     Flashlight[0][1] = Orangediver[1] + Orangediver[3] - Flashlight[0][3] - 56
             else:
@@ -1938,7 +1971,8 @@ while done == False:
                 if equipment[2] == 1:
                     BCD[0][1] = Orangediver[1] + 51
                 if equipment[3] == 1:
-                    Fins[0][1] = Orangediver[1] + 142
+                    Fins[0][1] = Orangediver[1] + 209
+                    Fins[1][1] = Orangediver[1] + 144
                 if equipment[4] == 1:
                     Regulator[0][1] = Orangediver[1] + 27
                 if equipment[5] == 1:
@@ -1947,8 +1981,6 @@ while done == False:
                     AirTank[0][1] = Orangediver[1] + 70
                 if equipment[7] == 1:
                     Gauges[0][1] = Orangediver[1] + 70
-                if equipment[8] == 1:
-                    Wetsuit[0][1] = Orangediver[1]
                 if equipment[11] == 1:
                     Flashlight[0][1] = Orangediver[1] + 56
 ###################### DEAD #############################################################
@@ -1969,9 +2001,9 @@ while done == False:
                 BCD[0][7] = Orangediver[7]
                 BCD[0][2] = Orangediver[2] + 88
             if equipment[3] == 1:
-                Fins[0][0] = pygame.transform.flip(pygame.image.load("Finsdiver.png"), False, True)
+                Fins[0][0] = pygame.transform.flip(pygame.image.load("Finsdiver1.png"), False, True)
                 Fins[0][7] = Orangediver[7]
-                Fins[0][2] = Orangediver[2] - 27
+                Fins[0][2] = Orangediver[2] + 41
             if equipment[4] == 1:
                 Regulator[0][0] = pygame.transform.flip(pygame.image.load("Regulatordiver.png"), False, True)
                 Regulator[0][7] = Orangediver[7]
@@ -1988,10 +2020,6 @@ while done == False:
                 Gauges[0][0] = pygame.transform.flip(pygame.image.load("Gaugesdiver.png"), False, True)
                 Gauges[0][7] = Orangediver[7]
                 Gauges[0][2] = Orangediver[2] + 92
-            if equipment[8] == 1:
-                Wetsuit[0][0] = pygame.transform.flip(pygame.image.load("Wetsuitdiver.png"), False, True)
-                Wetsuit[0][7] = Orangediver[7]
-                Wetsuit[0][2] = Orangediver[2]
             if equipment[11] == 1:
                 Flashlight[0][0] = pygame.transform.flip(pygame.image.load("Flashlight.png"), False, True)
                 Flashlight[0][7] = Orangediver[7]
@@ -2007,7 +2035,7 @@ while done == False:
                 if equipment[2] == 1:
                     BCD[0][1] = Orangediver[1] + Orangediver[3] - BCD[0][3] - 51
                 if equipment[3] == 1:
-                    Fins[0][1] = Orangediver[1] + Orangediver[3] - Fins[0][3] - 142
+                    Fins[0][1] = Orangediver[1] + Orangediver[3] - Fins[0][3] - 209
                 if equipment[4] == 1:
                     Regulator[0][1] = Orangediver[1] + Orangediver[3] - Regulator[0][3] - 27
                 if equipment[5] == 1:
@@ -2016,8 +2044,6 @@ while done == False:
                     AirTank[0][1] = Orangediver[1] + Orangediver[3] - AirTank[0][3] - 70
                 if equipment[7] == 1:
                     Gauges[0][1] = Orangediver[1] + Orangediver[3] - Gauges[0][3] - 70
-                if equipment[8] == 1:
-                    Wetsuit[0][1] = Orangediver[1]
                 if equipment[11] == 1:
                     Flashlight[0][1] = Orangediver[1] + Orangediver[3] - Flashlight[0][3] - 56
             else:
@@ -2028,7 +2054,7 @@ while done == False:
                 if equipment[2] == 1:
                     BCD[0][1] = Orangediver[1] + 51
                 if equipment[3] == 1:
-                    Fins[0][1] = Orangediver[1] + 142
+                    Fins[0][1] = Orangediver[1] + 209
                 if equipment[4] == 1:
                     Regulator[0][1] = Orangediver[1] + 27
                 if equipment[5] == 1:
@@ -2037,8 +2063,6 @@ while done == False:
                     AirTank[0][1] = Orangediver[1] + 70
                 if equipment[7] == 1:
                     Gauges[0][1] = Orangediver[1] + 70
-                if equipment[8] == 1:
-                    Wetsuit[0][1] = Orangediver[1]
                 if equipment[11] == 1:
                     Flashlight[0][1] = Orangediver[1] + 56
             
@@ -2057,8 +2081,10 @@ while done == False:
             BCD[1][7] = Greendiver[7]
             BCD[1][2] = Greendiver[2] + 50
         if equipment[3] == 1:
-            Fins[1][7] = Greendiver[7]
-            Fins[1][2] = Greendiver[2] + 50
+            Fins[2][7] = Greendiver[7]
+            Fins[2][2] = Greendiver[2] + 58
+            Fins[3][7] = Greendiver[7]
+            Fins[3][2] = Greendiver[2] + 50
         if equipment[4] == 1:
             Regulator[1][7] = Greendiver[7]
             Regulator[1][2] = Greendiver[2] + 40
@@ -2088,7 +2114,8 @@ while done == False:
             if equipment[2] == 1:
                 BCD[1][1] = Greendiver[1] + Greendiver[3] - BCD[1][3] - 51
             if equipment[3] == 1:
-                Fins[1][1] = Greendiver[1] + Greendiver[3] - Fins[1][3] - 142
+                Fins[2][1] = Greendiver[1] + Greendiver[3] - Fins[2][3] - 209
+                Fins[3][1] = Greendiver[1] + Greendiver[3] - Fins[3][3] - 144
             if equipment[4] == 1:
                 Regulator[1][1] = Greendiver[1] + Greendiver[3] - Regulator[1][3] - 27
             if equipment[5] == 1:
@@ -2109,7 +2136,8 @@ while done == False:
             if equipment[2] == 1:
                 BCD[1][1] = Greendiver[1] + 51
             if equipment[3] == 1:
-                Fins[1][1] = Greendiver[1] + 142
+                Fins[2][1] = Greendiver[1] + 209
+                Fins[3][1] = Greendiver[1] + 144
             if equipment[4] == 1:
                 Regulator[1][1] = Greendiver[1] + 27
             if equipment[5] == 1:
@@ -2220,13 +2248,10 @@ while done == False:
             
         if equipment[0] == 1: 
             if Orangediver[7]: ## Behind
-                #if orangedead == False:
-                    rowdraw(Snorkel, 0)
+                rowdraw(Snorkel, 0)
             if Greendiver[7]: ## Behind
                 rowdraw(Snorkel, 1)
         animatedgreen()
-        if equipment[8] == 1:
-            rowdraw(Wetsuit, 1)
         movebubbles(Greendiver, 4, 40)
         if equipment[0] == 1:
             if Greendiver[7] == False: ## In front
@@ -2235,8 +2260,8 @@ while done == False:
             rowdraw(Goggles, 1)
         if equipment[2] == 1:
             rowdraw(BCD, 1)
-        if equipment[3] == 1:
-            rowdraw(Fins, 1)
+        #if equipment[3] == 1:
+           # rowdraw(Fins, 1)
         if equipment[4] == 1:
             rowdraw(Regulator, 1)
         if equipment[5] == 1:
@@ -2251,9 +2276,6 @@ while done == False:
         #######################
         ### Draw Equipment ###
         animatedorange()
-        #if orangedead == False:
-        if equipment[8] == 1:
-            rowdraw(Wetsuit, 0)
         movebubbles(Orangediver, 0, 0)
         if equipment[0] == 1:
             if Orangediver[7] == False: ## In front
@@ -2262,8 +2284,8 @@ while done == False:
             rowdraw(Goggles, 0)
         if equipment[2] == 1:
             rowdraw(BCD, 0)
-        if equipment[3] == 1:
-            rowdraw(Fins, 0)
+      #  if equipment[3] == 1:
+           # rowdraw(Fins, 0)
         if equipment[4] == 1:
             rowdraw(Regulator, 0)
         if equipment[5] == 1:
@@ -2293,7 +2315,12 @@ while done == False:
                 screen.blit(eeldeadtext, (200, 450))
                 
         
-    
+        aircap = aircap - 1
+        if aircap < 0:
+            orangedead = True
+            airdeadfont = pygame.font.SysFont("monospace", 30, "bold")
+            airdeadtext = airdeadfont.render('Crap air is gone.', 1, (255, 255, 0))
+            screen.blit(airdeadtext, (300, 550))
 
 #### Level Gameplay
 ################# Outer Banks Level 1 ###############################
