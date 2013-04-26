@@ -155,6 +155,7 @@ def keys():
             if event.key == pygame.K_BACKSPACE:
                 level = 0
                 level_initialized = False
+                pygame.time.set_timer(pygame.USEREVENT+1, 0)
             if orangedead == False:
                 if event.key == pygame.K_a: 
                     airRate = 2
@@ -912,7 +913,7 @@ degrees = 0
 #Notes for rotation: Radius is 150
 ########Air Consumption##########################
 def airSetup():
-    draw(Pressuregauge)
+    
     global totalAir
     global airRate 
     totalAir = 180
@@ -923,7 +924,7 @@ def airSetup():
     gaugerect = Pressuregauge[0].get_rect()
     global needle
     pygame.draw.line(Pressuregauge[0], (120,0,0), (gaugerect.centerx, gaugerect.centery), (gaugerect.centerx+150, gaugerect.centery), 5)
-    
+ 
 
 def consumeAir():
     global totalAir
@@ -941,8 +942,10 @@ def consumeAir():
     starty = gaugerect.centery
     endx = 150*math.cos((degrees*pi)/180.0) + startx
     endy = -150*math.sin((degrees*pi)/180.0)+starty
-    draw(Pressuregauge)
+    #Pressuregauge[0].fill((0,0,0))
+    
     pygame.draw.line(Pressuregauge[0], (120,0,0), (startx, starty), (endx, endy), 5)
+    
     if totalAir <= 0:
         orangedead = True
 #def gaugeLinedraw():
@@ -1206,8 +1209,9 @@ y_max_edge = False
 wintime = 0
 
 #edges = [0, 0, 2000, 1000]
-airSetup()
+
 windowoffset = 200
+
 #################################################################
 # -------- Main Program Loop -----------
 while done == False:
@@ -1219,7 +1223,7 @@ while done == False:
     ##################################################################
     else:
         if level_initialized == False:
-            
+            airSetup()
             x_min = 0
             y_min = 0
             x_max = 3500
@@ -1485,9 +1489,9 @@ while done == False:
                 deadairfont = pygame.font.SysFont("monospace", 30, "bold")
                 deadairtext = deadairfont.render('Keep an eye on your air gauge.', 1, (255, 255, 0))
                 screen.blit(deadairtext, (300, 500))
-            
-       
-
+        
+        draw(Pressuregauge)
+                  
 ################# Seafloor Level 1 ###############################
 
         if level == 1:
@@ -1507,7 +1511,7 @@ while done == False:
         
             if collision(Boat[0], Orangediver, 0) and Treasurechest[0][8] == True:
                     level_complete = True
-            
+           
         #Level1()
        
                 
