@@ -948,8 +948,10 @@ def airSetup():
     global airRate
     global degrees
     degrees = 0
-    totalAir = 180
-    airRate = 10
+    if equipment[6] == 1 and equipment[4] == 1 or equipment[5] == 1:
+        totalAir = 180
+    else: totalAir = 10
+    airRate = 1
     pygame.time.set_timer(pygame.USEREVENT+1, 1000)
     print("Air Setup Called"+str(totalAir) +str(airRate))
     global gaugerect
@@ -969,7 +971,8 @@ def consumeAir():
     radius = 150 #Radius of gauge, if time try to make that actually use the gauge rect to calculate width
     print("ConsumeAir Called"+str(totalAir)+str(airRate))
     totalAir -= airRate
-    degrees += airRate
+    if equipment[4] == 1 or equipment[5] == 1:
+        degrees += airRate
     startx = gaugerect.centerx
     starty = gaugerect.centery
     endx = 150*math.cos((degrees*pi)/180.0) + startx
@@ -1869,7 +1872,7 @@ while done == False:
         
             
         #########################################################
-        if equipment[7] == 1:
+        if equipment[7] == 1 and equipment[6] == 1:
             draw(Pressuregauge)
         
         depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
