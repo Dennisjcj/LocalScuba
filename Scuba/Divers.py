@@ -942,7 +942,8 @@ degrees = 0
 #Notes for rotation: Radius is 150
 ########Air Consumption##########################
 def airSetup():
-   
+    gauge_image = pygame.image.load("Pressuregauge.png") #For redrawing
+    Pressuregauge[0] = gauge_image
     global totalAir
     global airRate
     global degrees
