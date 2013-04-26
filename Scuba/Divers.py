@@ -1458,8 +1458,8 @@ Bottomsea = [pygame.image.load("Bottomsea.png"), 0, 0, 1024, 768, 0, 0, True]
 
 Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
 Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 0, 0, True]
-Pressureguage = [pygame.image.load("Pressureguage.png"), 200, 200, 100, 100, 10, 10, True]
-Depthguage = [pygame.image.load("Depthguage.png"), 0, 0, 150, 150, 0, 0, True]
+Pressuregauge = [pygame.image.load("Pressuregauge.png"), 200, 200, 100, 100, 10, 10, True]
+Depthgauge = [pygame.image.load("Depthgauge.png"), 0, 0, 150, 150, 0, 0, True]
 Shelves = [pygame.image.load("Shelves.png"), 0, 0, 1024, 768, 0, 0, True]
 
 
@@ -1808,7 +1808,7 @@ while done == False:
         #########################################################
         
        
-        draw(Depthguage)
+        draw(Depthgauge)
 
         depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
         screen.blit(depthtext, (1024 - 240, 10))
