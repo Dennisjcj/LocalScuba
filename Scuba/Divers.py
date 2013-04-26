@@ -169,7 +169,8 @@ def keys():
     global event
     global orangedead
     for event in pygame.event.get():
-        
+        if event.type == pygame.USEREVENT+1 and orangedead == False:
+            consumeAir() 
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
@@ -1586,7 +1587,7 @@ accel = 0.5 #0.2
 levels = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 levelsdone = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 windowoffset = 200
-airSetup()
+
 #################################################################
 # -------- Main Program Loop -----------
 while done == False:
@@ -1602,7 +1603,7 @@ while done == False:
     ############### Game Levels ###################################################
     else:
         if level_initialized == False:
-            
+            airSetup()
             x_min = 0
             y_min = 0
             x_max = 3500
@@ -1851,9 +1852,8 @@ while done == False:
             
         #########################################################
         
-       
         draw(Pressuregauge)
-
+        
         depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
         screen.blit(depthtext, (1024 - 240, 10))
         scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
