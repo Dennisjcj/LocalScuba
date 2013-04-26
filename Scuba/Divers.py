@@ -1328,13 +1328,13 @@ def Level8():
     Slatetext = pricefont.render('Slate: $' + str(Slateprice), 1, (pricecolor))
     screen.blit(Slatetext, (101, 680))
     if equipment[10] == 0:
-        ShopSlate = [pygame.image.load("Slate.jpg"), 101, 580, 100, 100, 0, 0, True]
+        ShopSlate = [pygame.image.load("Slate.jpg"), 101, 580, 75, 100, 0, 0, True]
         draw(ShopSlate)
         if MONEY >= Slateprice and clicked(ShopSlate):
             equipment[10] = 1
             MONEY = MONEY - Slateprice
     else:
-        ShopSlate = [pygame.image.load("Slate.jpg"), 11, 700, 50, 50, 0, 0, True]
+        ShopSlate = [pygame.image.load("Slate.jpg"), 11, 700, 30, 50, 0, 0, True]
         draw(ShopSlate) 
         if clicked(ShopSlate):
             equipment[10] = 0
@@ -1348,13 +1348,13 @@ def Level8():
     Glowsticktext = pricefont.render('Glowstick: $' + str(Glowstickprice), 1, (pricecolor))
     screen.blit(Glowsticktext, (840, 280))
     if equipment[12] == 0:
-        ShopGlowstick = [pygame.image.load("Glowstick.jpg"), 840, 180, 100, 100, 0, 0, True]
+        ShopGlowstick = [pygame.image.load("Glowstick.jpg"), 840 + 25, 180, 30, 100, 0, 0, True]
         draw(ShopGlowstick)
         if MONEY >= Glowstickprice and clicked(ShopGlowstick):
             equipment[12] = 1
             MONEY = MONEY - Glowstickprice
     else:
-        ShopGlowstick = [pygame.image.load("Glowstick.jpg"), 1024 - 50 - 11, 600, 50, 50, 0, 0, True]
+        ShopGlowstick = [pygame.image.load("Glowstick.jpg"), 1024 - 50 - 11, 600, 15, 50, 0, 0, True]
         draw(ShopGlowstick) 
         if clicked(ShopGlowstick):
             equipment[12] = 0
@@ -1388,7 +1388,7 @@ def Level8():
     ExtraFlashlighttext = pricefont.render('2nd Light: $' + str(ExtraFlashlightprice), 1, (pricecolor))
     screen.blit(ExtraFlashlighttext, (840, 680))
     if equipment[14] == 0:
-        ShopExtraFlashlight = [pygame.transform.flip(pygame.image.load("Flashlight.png"), True, True), 840, 580, 75, 75, 0, 0, True]
+        ShopExtraFlashlight = [pygame.transform.flip(pygame.image.load("Flashlight.png"), True, True), 840 + 20, 580, 75, 75, 0, 0, True]
         draw(ShopExtraFlashlight)
         if MONEY >= ExtraFlashlightprice and clicked(ShopExtraFlashlight):
             equipment[14] = 1
