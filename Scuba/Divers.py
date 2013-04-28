@@ -1029,6 +1029,14 @@ def Level0():
     global Treasuremap
     pygame.mouse.set_visible(1)
     draw(Treasuremap)
+    Controls = [Islandbutton[0], 10, 10, 100, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(Controls)
+    if clicked(Controls):
+        level = -2
+        pygame.mouse.set_visible(0)
+    controlsfont = pygame.font.SysFont("monospace", 20, "bold")
+    controlstext = controlsfont.render('Controls', 1, (0, 0, 0))
+    screen.blit(controlstext, (10, 40))
     Outerbanks = [Islandbutton[0], 245, 330, 25, 25, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Outerbanks)
     if clicked(Outerbanks):
@@ -1435,7 +1443,9 @@ def nothing():
 #### Surface Variables #######################################################################
 # list = [image, x, y, x size, y size, x speed, y speed, right]
 ### Equipment #####
-equipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
+equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+#equipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
+
 # Snorkel, Goggles, BCD, Fins, Regulator, ExtraRegulator, AirTank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Scooter, ExtraFlashlight 
 
 Snorkel = [[pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True], # 0
@@ -1644,6 +1654,8 @@ Bottomsea = [pygame.image.load("Bottomsea.png"), 0, 0, 1024, 768, 0, 0, True]
 
 Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
 Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 0, 0, True]
+Introscreen = [pygame.image.load("Introscreen.png"), 150, 0, 756, 791, 0, 0, True]
+Endscreen = [pygame.image.load("Endscreen.png"), 0, 0, 1024, 768, 0, 0, True]
 
 Airgauge = [pygame.image.load("Airgauge.png"), 1024 - 200, 0, 200, 200, 0, 0, True]
 Depthgauge = [pygame.image.load("Depthgauge.png"), 1024 - 400, 0, 200, 200, 0, 0, True]
@@ -1677,7 +1689,7 @@ fish_collected = 0
 holding_a_fish = False
 #################################################################
 ### Universal Variables #########################################
-level = 7
+level = -1
 done=False
 left = False
 right = False
@@ -1742,9 +1754,23 @@ windowoffset = 200
 # -------- Main Program Loop -----------
 while done == False:
     keys()
-    
+    if level == -2:
+        screen.fill(ocean)   
+        controlsfont = pygame.font.SysFont("monospace", 30, "bold")
+        controlstext1 = controlsfont.render('W, A, S, D = Up, Left, Down, Right', 1, (255, 255, 0))
+        screen.blit(controlstext1, (100, 100))
+        controlstext2 = controlsfont.render('Spacebar = Restart Level', 1, (255, 255, 0))
+        screen.blit(controlstext2, (100, 140))
+        controlstext3 = controlsfont.render('Backspace = World Map', 1, (255, 255, 0))
+        screen.blit(controlstext3, (100, 180))
+    elif level == -1:
+        pygame.mouse.set_visible(1)
+        screen.fill(ocean)   
+        draw(Introscreen)
+        if clicked(Introscreen):
+            level = 0
     ################# Map Level 0 ###########################
-    if level == 0:
+    elif level == 0:
         Level0()
     ################# Dive Shop Level 8
     elif level == 8:
@@ -1807,7 +1833,15 @@ while done == False:
             orangekicking = True
             orangecycles = 0
             orangelength = 20 
-            if equipment[8] == 1:
+            if equipment[9] == 1:
+                Orangediver[0] = pygame.image.load("Wetsuitdiverdry1.png")
+                Orangediverkick[0] = pygame.image.load("Wetsuitdiverdry2.png")
+                Greendiver[0] = pygame.image.load("Wetsuitdiverdry3.png")
+                Greendiverkick[0] = pygame.image.load("Wetsuitdiverdry4.png")
+                Orangediverdead[0] = pygame.transform.flip(pygame.image.load("Wetsuitdiver1.png"), False, True)
+                Fins[1][3] = 101
+                Fins[3][3] = 101
+            elif equipment[8] == 1:
                 Orangediver[0] = pygame.image.load("Wetsuitdiver1.png")
                 Orangediverkick[0] = pygame.image.load("Wetsuitdiver2.png")
                 Greendiver[0] = pygame.image.load("Wetsuitdiver3.png")
@@ -1905,6 +1939,7 @@ while done == False:
             up = False
             left = False
             right  = False
+            
             Orangediver = keyaccel(Orangediver)
             Orangediver[0] = Orangediverdead[0]
             Orangediver[3] = Orangediverdead[3]
