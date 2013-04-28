@@ -6,6 +6,7 @@ Created on Mar 29, 2013
 import pygame
 import csv#from PIL import GIFImage
 import random
+import math
 
 def load(savefile):
     with open(savefile, 'rt') as f:
@@ -1088,7 +1089,9 @@ def Level0():
     if clicked(Unknown):
         level = 12
         pygame.mouse.set_visible(0)
+        
 
+  
 def Level8():
     global level
     global Islandbutton
@@ -1422,6 +1425,8 @@ def Level8():
     moneyfont = pygame.font.SysFont("monospace", 30, "bold")
     moneytext = moneyfont.render('Wallet = $' + str(MONEY), 1, (0, 0, 0))
     screen.blit(moneytext, (350, 5))
+    
+    
 
 def nothing():
     cool = True
@@ -1430,7 +1435,7 @@ def nothing():
 #### Surface Variables #######################################################################
 # list = [image, x, y, x size, y size, x speed, y speed, right]
 ### Equipment #####
-equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+equipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
 # Snorkel, Goggles, BCD, Fins, Regulator, ExtraRegulator, AirTank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Scooter, ExtraFlashlight 
 
 Snorkel = [[pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True], # 0
@@ -1639,8 +1644,10 @@ Bottomsea = [pygame.image.load("Bottomsea.png"), 0, 0, 1024, 768, 0, 0, True]
 
 Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
 Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 0, 0, True]
-Pressureguage = [pygame.image.load("Pressureguage.png"), 200, 200, 100, 100, 10, 10, True]
-Depthguage = [pygame.image.load("Depthguage.png"), 0, 0, 150, 150, 0, 0, True]
+
+Airgauge = [pygame.image.load("Airgauge.png"), 1024 - 200, 0, 200, 200, 0, 0, True]
+Depthgauge = [pygame.image.load("Depthgauge.png"), 1024 - 400, 0, 200, 200, 0, 0, True]
+
 Shelves = [pygame.image.load("Shelves.png"), 0, 0, 1024, 768, 0, 0, True]
 
 
@@ -1670,7 +1677,7 @@ fish_collected = 0
 holding_a_fish = False
 #################################################################
 ### Universal Variables #########################################
-level = 8
+level = 7
 done=False
 left = False
 right = False
@@ -1722,6 +1729,10 @@ accel = 0.5
 aircap = 200
 kk = False
 downair = False
+air_step = 1
+airdegrees = 0
+depthdegrees = 0
+real_depth = 0
 
 #edges = [0, 0, 2000, 1000]
 levels = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -1743,14 +1754,18 @@ while done == False:
     else:
         if level_initialized == False:
             if equipment[6] and equipment[4]:
-                aircap = 200
+                aircap = 3000
             else:
-                aircap = 20
+                aircap = 30
             
             x_min = 0
             y_min = 0
-            x_max = 3500
-            y_max = 1800
+            if level == 7:
+                x_max = 3500
+                y_max = 9900 
+            else:
+                x_max = 3500
+                y_max = 1800
             y_min_edge = False
             y_max_edge = False
             x_min_edge = False
@@ -1926,6 +1941,7 @@ while done == False:
                 Greendiver = move(Greendiver, 0, -5)
                 Orangediver = move(Orangediver, 0, -5)
                 
+        
         ######### Equipment coordinates ############
         ##############################################3
         ################################################
@@ -1995,7 +2011,7 @@ while done == False:
                     BCD[0][1] = Orangediver[1] + 51
                 if equipment[3] == 1:
                     Fins[0][1] = Orangediver[1] + 209
-                    Fins[1][1] = Orangediver[1] + 144
+                    Fins[1][1] = Orangediver[1] + 144 - 5
                 if equipment[4] == 1:
                     Regulator[0][1] = Orangediver[1] + 27
                 if equipment[5] == 1:
@@ -2147,7 +2163,7 @@ while done == False:
                 BCD[1][1] = Greendiver[1] + 51
             if equipment[3] == 1:
                 Fins[2][1] = Greendiver[1] + 209
-                Fins[3][1] = Greendiver[1] + 144
+                Fins[3][1] = Greendiver[1] + 144 - 5
             if equipment[4] == 1:
                 Regulator[1][1] = Greendiver[1] + 27
             if equipment[5] == 1:
@@ -2213,14 +2229,51 @@ while done == False:
             
         #########################################################
         
-       
-        draw(Depthguage)
+        ### Air Gauge stuff ###
+        if equipment[7]:
+            draw(Airgauge)
+        step_step = 5
+        air_step = (step_step)*real_depth/33 + step_step
+        #5000:-10 2500:90 0:190 -10-190/5000-0=-0.04 y=mx+b y=-0.04x+b b=y+0.04x = 90+0.04*2500 = 190
+        airdegrees = -0.04*aircap + 190
+        pi = 3.141592653589793238462643383279502884197169399375
+        gaugeradius = 200 #radius of gauge, if time try to make that actually use the gauge rect to calculate width
+        air_gaugerect = Airgauge[0].get_rect()
+        pygame.draw.line(Airgauge[0], (120,0,0), (air_gaugerect.centerx, air_gaugerect.centery), (air_gaugerect.centerx+200, air_gaugerect.centery), 5)
+        air_startx = air_gaugerect.centerx
+        air_starty = air_gaugerect.centery
+        air_endx = 200*math.cos((airdegrees*pi)/180.0) + air_startx
+        air_endy = -200*math.sin((airdegrees*pi)/180.0)+ air_starty
+        Airgauge[0].fill
+        Airgauge[0].set_alpha(255)
+        air_gauge_image = pygame.image.load("Airgauge.png") #For redrawing
+        Airgauge[0] = air_gauge_image
+        pygame.draw.line(Airgauge[0], (120,0,0), (air_startx, air_starty), (air_endx, air_endy), 5)
+        
+        ### Depth Gauge stuff ###
+        if equipment[7]:
+            draw(Depthgauge)
+        real_depth = depth/100
+        #105:0 67:90 27:180 0-180/105-27=-2.31 y=mx+b y=-2.31x+b b=y+2.31x = 90+2.31*67 = 245
+        depthdegrees = -2.31*real_depth + 245
+        depth_gaugerect = Depthgauge[0].get_rect()
+        pygame.draw.line(Depthgauge[0], (120,0,0), (depth_gaugerect.centerx, depth_gaugerect.centery), (depth_gaugerect.centerx+200, depth_gaugerect.centery), 5)
+        depth_startx = depth_gaugerect.centerx
+        depth_starty = depth_gaugerect.centery
+        depth_endx = 200*math.cos((depthdegrees*pi)/180.0) + depth_startx
+        depth_endy = -200*math.sin((depthdegrees*pi)/180.0)+depth_starty
+        Depthgauge[0].fill
+        Depthgauge[0].set_alpha(255)
+        depth_gauge_image = pygame.image.load("Depthgauge.png") #For redrawing
+        Depthgauge[0] = depth_gauge_image
+        pygame.draw.line(Depthgauge[0], (120,0,0), (depth_startx, depth_starty), (depth_endx, depth_endy), 5)
+
         aircaptext = myfont.render("Air=" + str(aircap), 1, (255, 255, 0))
-        screen.blit(aircaptext, (1024 - 240 - 300, 10))
-        depthtext = myfont.render("Y=" + str(depth), 1, (255, 255, 0))
-        screen.blit(depthtext, (1024 - 240, 10))
+        screen.blit(aircaptext, (10, 100))
+        depthtext = myfont.render("Y=" + str(real_depth), 1, (255, 255, 0))
+        screen.blit(depthtext, (10, 10))
         scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
-        screen.blit(scrolltext, (1024 - 240, 50))
+        screen.blit(scrolltext, (10, 50))
         
         for n in range(4):
             if collision(Eel[n], Orangediver, 75):
@@ -2235,7 +2288,7 @@ while done == False:
                 sharkskilled = True
                 
         for n in range(4):
-            if collision(Jellyfish[n], Orangediver, 75):
+            if collision(Jellyfish[n], Orangediver, 75) and equipment[8] == 0 and equipment[9] == 0: # Wetsuit protects against Jellyfish
                 orangedead = True
                 justdied = True
                 jellyskilled = True
@@ -2328,12 +2381,13 @@ while done == False:
                 eeldeadfont = pygame.font.SysFont("monospace", 30, "bold")
                 eeldeadtext = eeldeadfont.render('Watch out for dangerous fish.', 1, (255, 255, 0))
                 screen.blit(eeldeadtext, (200, 450))
-       
+        
+        
         ##### Equipment Consequences #####
         if equipment[0] == 1 and depth < 10: #Snorkel lets conserve air at the surface
             aircap = aircap
         elif downair == True:
-            aircap = aircap - 1
+            aircap = aircap - air_step
         if equipment[1] == 0: # No goggles and you cannot see
             screen.fill(ocean) 
             darkfont = pygame.font.SysFont("monospace", 30, "bold")
@@ -2345,6 +2399,8 @@ while done == False:
         else:
             accel = 0.1
         # Regulator and air tank are required for more air.  Up in level intialization
+        # If not gauges, you cannot see your gauges
+        
         if aircap < 0:
             aircap = 0
             orangedead = True
