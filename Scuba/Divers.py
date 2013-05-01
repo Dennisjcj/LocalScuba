@@ -159,8 +159,19 @@ def keys():
     global done
     global level
     global level_initialized
+    
     global level_1_initialized
     global level_2_initialized
+    global level_3_initialized
+    global level_4_initialized
+    global level_5_initialized
+    global level_6_initialized
+    global level_7_initialized
+    global level_9_initialized
+    global level_10_initialized
+    global level_11_initialized
+    global level_12_initialized
+       
     global left
     global right
     global up
@@ -181,6 +192,16 @@ def keys():
                 level_initialized = False
                 level_1_initialized = False
                 level_2_initialized = False
+                level_3_initialized = False
+                level_4_initialized = False
+                level_5_initialized = False
+                level_6_initialized = False
+                level_7_initialized = False
+                level_9_initialized = False
+                level_10_initialized = False
+                level_11_initialized = False
+                level_12_initialized = False
+                
             if orangedead == False:
                 if event.key == pygame.K_a: 
                     left = True
@@ -198,6 +219,15 @@ def keys():
                 level_initialized = False
                 level_1_initialized = False
                 level_2_initialized = False
+                level_3_initialized = False
+                level_4_initialized = False
+                level_5_initialized = False
+                level_6_initialized = False
+                level_7_initialized = False
+                level_9_initialized = False
+                level_10_initialized = False
+                level_11_initialized = False
+                level_12_initialized = False
         if event.type == pygame.KEYUP:
             if orangedead == False:
                 if event.key == pygame.K_a:
@@ -339,6 +369,10 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     global accel
     global equipment
     
+    global numnum
+    
+    numnum = orangelength*6
+    
     kickaccel = 0.5
     
     start_x = pic[1]
@@ -471,6 +505,7 @@ def animatedorange():
         global aircap
         global kk
         global downair
+
         if orangekicking == False:
             if kk == True and orangedead == False:
                 downair = True
@@ -708,6 +743,7 @@ def greenfollow():
 def movebubbles(pic, first, offstep):
     global bubblecycles
     global Orangediver
+    global numnum
     bubblemax = 0
     if bubblecycles[first] == 0 + offstep:
         if pic[7] == False:
@@ -717,14 +753,14 @@ def movebubbles(pic, first, offstep):
             Bubbles[first][1] = pic[1] - 55 + pic[3]
             Bubbles[first][2] = pic[2] + 60 - 51
     bubblecycles[first] = bubblecycles[first] + 1
-    if bubblecycles[first] > 360:
+    if bubblecycles[first] > 4*numnum:
         bubblecycles[first] = 0
     Bubbles[first][2] = Bubbles[first][2] - Bubbles[first][6]
     bubbledepth = depth - (Orangediver[2] - Bubbles[first][2])
     if bubbledepth < bubblemax:
         Bubbles[first][2] = -10000
 
-    if bubblecycles[first + 1] == 90 + offstep:
+    if bubblecycles[first + 1] == numnum + offstep:
         if pic[7] == False:
             Bubbles[first + 1][1] = pic[1] + 55 - 30
             Bubbles[first + 1][2] = pic[2] + 60 - 51
@@ -732,14 +768,14 @@ def movebubbles(pic, first, offstep):
             Bubbles[first + 1][1] = pic[1] - 55 + pic[3]
             Bubbles[first + 1][2] = pic[2] + 60 - 51
     bubblecycles[first + 1] = bubblecycles[first + 1] + 1
-    if bubblecycles[first + 1] > 455:
-        bubblecycles[first + 1] = 90
+    if bubblecycles[first + 1] > 5*numnum:
+        bubblecycles[first + 1] = numnum
     Bubbles[first + 1][2] = Bubbles[first + 1][2] - Bubbles[first + 1][6]
     bubbledepth = depth - (Orangediver[2] - Bubbles[first + 1][2])
     if bubbledepth < bubblemax:
         Bubbles[first + 1][2] = -10000
         
-    if bubblecycles[first + 2] == 180 + offstep:
+    if bubblecycles[first + 2] == 2*numnum + offstep:
         if pic[7] == False:
             Bubbles[first + 2][1] = pic[1] + 55 - 30
             Bubbles[first + 2][2] = pic[2] + 60 - 51
@@ -747,13 +783,13 @@ def movebubbles(pic, first, offstep):
             Bubbles[first + 2][1] = pic[1] - 55 + pic[3]
             Bubbles[first + 2][2] = pic[2] + 60 - 51
     bubblecycles[first + 2] = bubblecycles[first + 2] + 1
-    if bubblecycles[first + 2] > 540:
-        bubblecycles[first + 2] = 180
+    if bubblecycles[first + 2] > 6*numnum:
+        bubblecycles[first + 2] = 2*numnum
     Bubbles[first + 2][2] = Bubbles[first + 2][2] - Bubbles[first + 2][6]        
     bubbledepth = depth - (Orangediver[2] - Bubbles[first + 2][2])
     if bubbledepth < bubblemax:
         Bubbles[first + 2][2] = -10000
-    if bubblecycles[first + 3] == 270 + offstep:
+    if bubblecycles[first + 3] == 3*numnum + offstep:
         if pic[7] == False:
             Bubbles[first + 3][1] = pic[1] + 55 - 30
             Bubbles[first + 3][2] = pic[2] + 60 - 51
@@ -761,8 +797,8 @@ def movebubbles(pic, first, offstep):
             Bubbles[first + 3][1] = pic[1] - 55 + pic[3]
             Bubbles[first + 3][2] = pic[2] + 60 - 51
     bubblecycles[first + 3] = bubblecycles[first + 3] + 1
-    if bubblecycles[first + 3] > 630:
-        bubblecycles[first + 3] = 270
+    if bubblecycles[first + 3] > 7*numnum:
+        bubblecycles[first + 3] = 3*numnum
     Bubbles[first + 3][2] = Bubbles[first + 3][2] - Bubbles[first + 3][6] 
     bubbledepth = depth - (Orangediver[2] - Bubbles[first + 3][2])
     if bubbledepth < bubblemax:
@@ -773,6 +809,24 @@ def movebubbles(pic, first, offstep):
             Bubbles[b] = rowmovebackground(Bubbles, b, Orangediver)
         rowdraw(Bubbles, b)
 
+onbubble = 0
+def newbubbles(pic, bubblepic):
+    global bubblecycles
+    global Orangediver
+    global onbubble
+    bubblemax = 0
+    if pic[7] == False:
+        bubblepic[onbubble][1] = pic[1] + 55 - 30
+        bubblepic[onbubble][2] = pic[2] + 60 - 51
+    else:
+        bubblepic[onbubble][1] = pic[1] - 55 + pic[3]
+        bubblepic[onbubble][2] = pic[2] + 60 - 51
+    onbubble = onbubble + 1
+    if onbubble > 7:
+        onbubble = 0
+    
+
+    
 def random_direction_move(pic, row, speed): # speed must be even
     sx = speed
     sy = speed
@@ -899,7 +953,8 @@ def restart_fish():
     global Lanturnfish
     global Jellyfish
     global Bubble
-    global Bubbles
+    global orangeBubbles
+    global greenBubbles
     global orangedead
     global greenrise
     global fish_collected
@@ -1006,14 +1061,31 @@ def restart_fish():
     Bubble = [pygame.image.load("Bubble.png"), 200, 200, 100, 100, 10, 10, True]
     
     Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-               [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False]]
-
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False]]
+    
+    orangeBubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False]]
+    
+    greenBubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False]]
 
 ########Air Consumption##########################
 
@@ -1034,10 +1106,57 @@ def Level0():
         MONEY = MONEY + 100
         levels[1] = 0
         levelsdone[1] = levelsdone[1] + 1
+        
     if levels[2] == 1 and levelsdone[2] < 1000:
         MONEY = MONEY + 50
         levels[2] = 0
         levelsdone[2] = levelsdone[2] + 1
+   
+    if levels[3] == 1 and levelsdone[3] < levellimit:
+        MONEY = MONEY + 100
+        levels[3] = 0
+        levelsdone[3] = levelsdone[3] + 1
+        
+    if levels[4] == 1 and levelsdone[4] < levellimit:
+        MONEY = MONEY + 100
+        levels[4] = 0
+        levelsdone[4] = levelsdone[4] + 1
+        
+    if levels[5] == 1 and levelsdone[5] < levellimit:
+        MONEY = MONEY + 100
+        levels[5] = 0
+        levelsdone[5] = levelsdone[5] + 1
+    
+    if levels[6] == 1 and levelsdone[6] < levellimit:
+        MONEY = MONEY + 200
+        levels[6] = 0
+        levelsdone[6] = levelsdone[6] + 1
+    
+    if levels[7] == 1 and levelsdone[7] < levellimit:
+        MONEY = MONEY + 100
+        levels[7] = 0
+        levelsdone[7] = levelsdone[7] + 1
+    
+    if levels[9] == 1 and levelsdone[9] < levellimit:
+        MONEY = MONEY + 200
+        levels[9] = 0
+        levelsdone[9] = levelsdone[9] + 1
+    
+    if levels[10] == 1 and levelsdone[10] < levellimit:
+        MONEY = MONEY + 500
+        levels[10] = 0
+        levelsdone[10] = levelsdone[10] + 1
+    
+    if levels[11] == 1 and levelsdone[11] < levellimit:
+        MONEY = MONEY + 300
+        levels[11] = 0
+        levelsdone[11] = levelsdone[11] + 1
+    
+    if levels[12] == 1 and levelsdone[12] < levellimit:
+        MONEY = MONEY + 100000
+        levels[12] = 0
+        levelsdone[12] = levelsdone[12] + 1
+        
         
     pygame.mouse.set_visible(1)
     draw(Treasuremap)
@@ -1060,61 +1179,73 @@ def Level0():
     Outerbanks = [Islandbutton[0], 245, 330, 25, 25, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Outerbanks)
     if clicked(Outerbanks):
+        MONEY = MONEY - 100
         level = 1
         pygame.mouse.set_visible(0)
     Singapore = [Islandbutton[0], 760, 425, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Singapore)
     if clicked(Singapore):
+        MONEY = MONEY - 100
         level = 2
         pygame.mouse.set_visible(0)
     Sydney = [Islandbutton[0], 885, 560, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Sydney)
     if clicked(Sydney):
+        MONEY = MONEY - 100
         level = 3
         pygame.mouse.set_visible(0)
     Panama = [Islandbutton[0], 260, 415, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Panama)
     if clicked(Panama):
+        MONEY = MONEY - 100
         level = 4
         pygame.mouse.set_visible(0)
     SanDiego = [Islandbutton[0], 155, 335, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(SanDiego)
     if clicked(SanDiego):
+        MONEY = MONEY - 100
         level = 5
         pygame.mouse.set_visible(0)
     Tokyo = [Islandbutton[0], 860, 325, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Tokyo)
     if clicked(Tokyo):
+        MONEY = MONEY - 100
         level = 6
         pygame.mouse.set_visible(0)
     CapeTown = [Islandbutton[0], 535, 555, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(CapeTown)
     if clicked(CapeTown):
+        MONEY = MONEY - 100
         level = 7
         pygame.mouse.set_visible(0)
     DiveShop = [Islandbutton[0], 475, 275, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(DiveShop)
     if clicked(DiveShop):
+        MONEY = MONEY - 100
         level = 8
         pygame.mouse.set_visible(0)
     Santiago = [Islandbutton[0], 290, 550, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Santiago)
     if clicked(Santiago):
+        MONEY = MONEY - 100
         level = 9
         pygame.mouse.set_visible(0)
     Antarctica = [Islandbutton[0], 630, 695, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Antarctica)
     if clicked(Antarctica):
+        MONEY = MONEY - 100
         level = 10
         pygame.mouse.set_visible(0)
     KeyWest = [Islandbutton[0], 243, 363, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(KeyWest)
     if clicked(KeyWest):
+        MONEY = MONEY - 100
         level = 11
         pygame.mouse.set_visible(0)
     Unknown = [Islandbutton[0], 123, 567, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Unknown)
     if clicked(Unknown):
+        MONEY = MONEY - 100
         level = 12
         pygame.mouse.set_visible(0)
 
@@ -1470,8 +1601,6 @@ def Level8():
     global MONEY
     global levels
     
-   
-
     pygame.mouse.set_visible(1)
     draw(Shelves)
     pricefont = pygame.font.SysFont("monospace", 15, "bold")
@@ -1793,10 +1922,10 @@ def Level8():
 def underwavestartup():
     global underwave
     s = 0
-    e = 40
-    d = 500
+    e = 12
+    d = 600
     checkersset = True
-    for a in range(10):
+    for a in range(20):
         if checkersset == True:
             initial_Underwave_x = -100 - windowoffset
             checkersset = False
@@ -1808,11 +1937,11 @@ def underwavestartup():
             Underwave[n][4] = 100
             Underwave[n][1] = initial_Underwave_x
             Underwave[n][2] = y_min + d - windowoffset
-            initial_Underwave_x = initial_Underwave_x + 536
+            initial_Underwave_x = initial_Underwave_x + 1000
         a = a
-        s = s + 40
-        e = e + 40
-        d = d + 500
+        s = s + 12
+        e = e + 12
+        d = d + 600
         
 def nothing():
     cool = True
@@ -1923,13 +2052,31 @@ Dolphin = [[pygame.image.load("Dolphin.png"), -1000, -1000, 400, 300, 8, 8, True
 Bubble = [pygame.image.load("Bubble.png"), 200, 200, 100, 100, 10, 10, True, False]
 
 Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
-           [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False]]
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                     [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False]]
+    
+orangeBubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                 [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                 [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                 [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                 [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                 [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                 [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                 [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False]]
+
+greenBubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False],
+                [pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True, False]]
 
 
 Coral0 = [[pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
@@ -1964,30 +2111,8 @@ Coral0 = [[pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
-          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False]]
-
+          
 Coral1 = [pygame.image.load("Coral1.png"), 200, 200, 100, 100, 10, 10, True]
 Coral2 = [pygame.image.load("Coral2.png"), 200, 200, 100, 100, 10, 10, True]
 Coral3 = [pygame.image.load("Coral3.png"), 200, 200, 100, 100, 10, 10, True]
@@ -2117,82 +2242,8 @@ Rock0 = [[pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, Fals
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
-         [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False],
          [pygame.image.load("Rock5.png"), 200, 200, 250, 350, 10, 10, True, False]]
-
+         
 Rock1 = [pygame.image.load("Rock1.png"), 200, 200, 100, 100, 10, 10, True]
 Rock2 = [pygame.image.load("Rock2.png"), 200, 200, 100, 100, 10, 10, True]
 Rock3 = [pygame.image.load("Rock3.png"), 200, 200, 100, 100, 10, 10, True]
@@ -2202,7 +2253,7 @@ Rock5 = [pygame.image.load("Rock5.png"), 200, 200, 100, 100, 10, 10, True]
 
 Boat = [[pygame.image.load("Boat.png"), 0, 0, 800, 500, 0, 0, True, False]]
 Bottle = [[pygame.image.load("Bottle.jpg"), -10000, -10000, 250, 200, 10, 10, True, False]]
-sdd = [[pygame.image.load("Bottle.jpg"), -10000, -10000, 250, 200, 10, 10, True, False]]
+Treasurechest = [[pygame.image.load("Treasurechest.png"), -10000, -10000, 250, 200, 10, 10, True, False]]
 
 Wave = [[pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
@@ -2228,1725 +2279,250 @@ Wave = [[pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
-        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False]]
-
 ########################################################Underwave = [[pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False]]
 #underwavemaker()
 Underwave = [[pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
-                 [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False]]
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False],
+             [pygame.image.load("Wave.gif"), 0, 0, 200, 50, 0, 0, True, False]]
+
 
 Sandcastle = [pygame.image.load("Sandcastle.png"), 0, 0, 6000, 768, 10, 0, True]
 Seafloor = [pygame.image.load("Seafloor.png"), 0, 0, 6000, 768, 10, 0, True]
@@ -3982,6 +2558,16 @@ level_complete = False
 #################################################################
 ### Level 1 Variables ###########################################
 level_1_initialized = False
+level_2_initialized = False
+level_3_initialized = False
+level_4_initialized = False
+level_5_initialized = False
+level_6_initialized = False
+level_7_initialized = False
+level_9_initialized = False
+level_10_initialized = False
+level_11_initialized = False
+level_12_initialized = False
 #################################################################
 ### Level 2 Variables ###########################################
 level_2_initialized = False
@@ -4007,7 +2593,7 @@ greenrise = False
 orangekicking = True
 orangecycles = 0
 orangelength = 20
-
+gacount = 0
 orangedead = False
 depth = 0
 scroll = 0
@@ -4017,6 +2603,7 @@ ocean = [0, 100, 255]
 red = [255, 0, 0]
 
 bubblecycles = [0, 0, 0, 0, 0, 0, 0, 0] # for more bubbles, add more zeros
+numnum = 50
 
 bubbleskilled = False
 eelskilled = False
@@ -4041,6 +2628,7 @@ accel = 0.5
 aircap = 200
 kk = False
 downair = False
+greendownair = False
 air_step = 1
 airdegrees = 0
 depthdegrees = 0
@@ -4077,6 +2665,7 @@ while done == False:
         #    level = 0
     ################# Map Level 0 ###########################
     elif level == 0:
+        wintime = 0
         Level0()
     ################# Closet Level 50 ###########################
     elif level == 50:
@@ -4089,7 +2678,7 @@ while done == False:
     else:
         if level_initialized == False:
             if equipment[6] and equipment[4]:
-                aircap = 10000#3000
+                aircap = 3000
             else:
                 aircap = 30
             
@@ -4128,8 +2717,8 @@ while done == False:
                 x_max = 99*50
                 y_max = 99*50     
             elif level == 12:
-                x_max = 99*200
-                y_max = 99*200 #120    
+                x_max = 99*120
+                y_max = 99*120    
             
             y_min_edge = False
             y_max_edge = False
@@ -4204,7 +2793,7 @@ while done == False:
             underwavestartup()
             
             initial_Coral0_x = -100 - windowoffset
-            for n in range(55):
+            for n in range(33):
                 Coral0[n][3] = 600
                 Coral0[n][4] = 400
                 Coral0[n][1] = initial_Coral0_x
@@ -4212,14 +2801,21 @@ while done == False:
                 initial_Coral0_x = initial_Coral0_x + 400
             
             initial_Rock0_y = -windowoffset - 100
-            for n in range(100):
+            for n in range(60):
                 Rock0[n][3] = 400
                 Rock0[n][1] = x_min - 200 + 100 - windowoffset
                 Rock0[n][2] = initial_Rock0_y
                 initial_Rock0_y = initial_Rock0_y + 250
+            
+            initial_Rock0_y2 = -windowoffset - 100
+            for n in range(60, 120):
+                Rock0[n][3] = 400
+                Rock0[n][1] = x_max + 175  - 100 - 150 + windowoffset
+                Rock0[n][2] = initial_Rock0_y2
+                initial_Rock0_y2 = initial_Rock0_y2 + 250
                 
             initial_Wave_x = -100 - windowoffset
-            for n in range(40):
+            for n in range(25):
                 Wave[n][3] = 600
                 Wave[n][4] = 400
                 Wave[n][1] = initial_Wave_x
@@ -4230,8 +2826,12 @@ while done == False:
                 
             
         ##  Initialized #########################################################3 
-        
-        screen.fill(ocean)   
+        if level == 6 or level == 11 or level == 12:
+            screen.fill([100, 90, 150])   
+        elif level == 10:
+            screen.fill([19, 189, 232])   
+        else:
+            screen.fill(ocean)   
         justdied = False
         if orangedead == False:
             Orangediver = keyaccel(Orangediver)
@@ -4515,25 +3115,43 @@ while done == False:
             
         #####################################################
         rowdraw(Boat, 0)        
-        for n in range(40):
+        for n in range(25):
             if greenrise == False:
                 Wave[n] = rowmovebackground(Wave, n, Orangediver)
             rowdraw(Wave, n)
-        for n in range(160):
+        for n in range(240):
             if greenrise == False:
                 Underwave[n] = rowmovebackground(Underwave, n, Orangediver)
             rowdraw(Underwave, n)
-        for n in range(200):
+        for n in range(120):
             if greenrise == False:
                 Rock0[n] = rowmovebackground(Rock0, n, Orangediver)
             rowdraw(Rock0, n)
-        for n in range(55):
+        for n in range(33):
             if greenrise == False:
                 Coral0[n] = rowmovebackground(Coral0, n, Orangediver)
             rowdraw(Coral0, n)
         if greenrise == False:
             Boat[0] = rowmovebackground(Boat, 0, Orangediver)
             Bottle[0] = rowmovebackground(Bottle, 0, Orangediver)
+            Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
+            
+        for b in range(8):
+            if greenrise == False:
+                orangeBubbles[b][2] = orangeBubbles[b][2] - orangeBubbles[b][6]
+                orangeBubbles[b] = rowmovebackground(orangeBubbles, b, Orangediver)
+                
+                obubbledepth = depth - (Orangediver[2] - orangeBubbles[b][2])
+                if obubbledepth < 0:
+                    orangeBubbles[b][2] = -10000 
+                gbubbledepth = depth - (Orangediver[2] - greenBubbles[b][2])
+                if gbubbledepth < 0:
+                    greenBubbles[b][2] = -10000 
+                           
+            greenBubbles[b][2] = greenBubbles[b][2] - greenBubbles[b][6]
+            greenBubbles[b] = rowmovebackground(greenBubbles, b, Orangediver)
+            rowdraw(orangeBubbles, b)
+            rowdraw(greenBubbles, b)
 
         #########################################################
         #### Level Initialization and Fish ############
@@ -4542,28 +3160,141 @@ while done == False:
             if level_1_initialized == False:
                 level_1_initialized = True
                 Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
-                for n in range(55):
+                for n in range(33):
                     Coral0[n][0] = Coral1[0]
-                for n in range(200):
+                for n in range(120):
                     Rock0[n][0] = Rock5[0]
-            multifish(Dolphin, 4, 3, 75)
-            multifish(Jellyfish, 4, 1, 75)
-            multifish(Shark, 4, 4, 75)
+            multifish(Dolphin, 4, 3, 100*0.75)
+            multifish(Jellyfish, 4, 1, 100*0.75)
+            multifish(Shark, 4, 4, 100*0.75)
         
         if level == 2: # Singapore
             if level_2_initialized == False:
                 level_2_initialized = True
-                for n in range(55):
+                for n in range(33):
                     Coral0[n][0] = Coral2[0]
-                for n in range(200):
+                for n in range(120):
                     Rock0[n][0] = Rock4[0]
-            multifish(Eel, 4, 2, 1600)
-            multifish(Clownfish, 4, 5, 200)
-            multifish(Dolphin, 4, 3, 75)
-            multifish(Jellyfish, 4, 1, 75)
-            multifish(Lanturnfish, 4, 2, 1600)
-            multifish(Shark, 4, 4, 75)
+            multifish(Eel, 4, 2, 100*16)
+            multifish(Clownfish, 4, 5, 100*2)
+            multifish(Dolphin, 4, 3, 100*0.75)
+            multifish(Shark, 4, 4, 100*0.75)
         
+        if level == 3: # Sydney
+            if level_3_initialized == False:
+                level_3_initialized = True
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                for n in range(33):
+                    Coral0[n][0] = Coral1[0]
+                for n in range(120):
+                    Rock0[n][0] = Rock5[0]
+            multifish(Clownfish, 4, 5, 100*2)
+            multifish(Jellyfish, 4, 1, 100*0.75)
+            multifish(Shark, 4, 4, 100*0.75)
+            
+        if level == 4: # Panama
+            if level_4_initialized == False:
+                level_4_initialized = True
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                for n in range(33):
+                    Coral0[n][0] = Coral1[0]
+                for n in range(120):
+                    Rock0[n][0] = Rock5[0]
+            multifish(Eel, 4, 2, 100*16)
+            multifish(Clownfish, 4, 5, 100*2)
+            multifish(Dolphin, 4, 3, 100*0.75)
+            
+        if level == 5: # SanDiego
+            if level_5_initialized == False:
+                level_5_initialized = True
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                for n in range(33):
+                    Coral0[n][0] = Coral1[0]
+                for n in range(120):
+                    Rock0[n][0] = Rock5[0]
+            multifish(Clownfish, 4, 5, 100*2)
+            multifish(Jellyfish, 4, 1, 100*0.75)
+            multifish(Shark, 4, 4, 100*0.75)
+        
+        if level == 6: # Tokyo
+            if level_6_initialized == False:
+                level_6_initialized = True
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                for n in range(33):
+                    Coral0[n][0] = Coral1[0]
+                for n in range(120):
+                    Rock0[n][0] = Rock5[0]
+            multifish(Eel, 4, 2, 100*16)
+            multifish(Clownfish, 4, 5, 100*2)
+            multifish(Jellyfish, 4, 1, 100*0.75)
+            multifish(Lanturnfish, 4, 2, 100*80)
+            multifish(Shark, 4, 4, 100*0.75)
+            
+        if level == 7: # CapeTown
+            if level_7_initialized == False:
+                level_7_initialized = True
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                for n in range(33):
+                    Coral0[n][0] = Coral1[0]
+                for n in range(120):
+                    Rock0[n][0] = Rock5[0]
+            multifish(Eel, 4, 2, 100*16)
+            multifish(Dolphin, 4, 3, 100*0.75)
+            multifish(Jellyfish, 4, 1, 100*0.75)
+            
+        if level == 9: # Santiago
+            if level_9_initialized == False:
+                level_9_initialized = True
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                for n in range(33):
+                    Coral0[n][0] = Coral1[0]
+                for n in range(120):
+                    Rock0[n][0] = Rock5[0]
+            multifish(Clownfish, 4, 5, 100*2)
+            multifish(Dolphin, 4, 3, 100*0.75)
+            multifish(Shark, 4, 4, 100*0.75)
+        
+        if level == 10: # Antarctica
+            if level_10_initialized == False:
+                level_10_initialized = True
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                for n in range(33):
+                    Coral0[n][0] = Coral1[0]
+                for n in range(120):
+                    Rock0[n][0] = Rock5[0]
+            multifish(Eel, 4, 2, 100*16)
+            multifish(Jellyfish, 4, 1, 100*0.75)
+            multifish(Lanturnfish, 4, 2, 100*30)
+            multifish(Shark, 4, 4, 100*0.75)
+
+        if level == 11: # KeyWest
+            if level_11_initialized == False:
+                level_11_initialized = True
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                for n in range(33):
+                    Coral0[n][0] = Coral1[0]
+                for n in range(120):
+                    Rock0[n][0] = Rock5[0]
+            multifish(Eel, 4, 2, 100*16)
+            multifish(Jellyfish, 4, 1, 100*0.75)
+            multifish(Lanturnfish, 4, 2, 100*30)
+            multifish(Shark, 4, 4, 100*0.75)
+            
+        if level == 12: # Unknown
+            if level_12_initialized == False:
+                level_12_initialized = True
+                Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - x_max/2, y_max, 200, 150, 0, 0, True, False]]
+                #Treasurechest = [[pygame.image.load("Treasurechest.png"), 500, 500, 200, 150, 0, 0, True, False]]
+                for n in range(33):
+                    Coral0[n][0] = Coral1[0]
+                for n in range(120):
+                    Rock0[n][0] = Rock5[0]
+            multifish(Eel, 4, 2, 100*16)
+            multifish(Clownfish, 4, 5, 100*2)
+            multifish(Dolphin, 4, 3, 100*0.75)
+            multifish(Jellyfish, 4, 1, 100*0.75)
+            multifish(Lanturnfish, 4, 2, 100*80)
+            multifish(Shark, 4, 4, 100*0.75)
             
         #########################################################
         
@@ -4631,11 +3362,11 @@ while done == False:
                 justdied = True
                 jellyskilled = True
                 
-        for n in range(4):
-            if collision(Lanturnfish[n], Orangediver, 75):
-                orangedead = True
-                justdied
-                lanturnskilled = True
+        #for n in range(4):
+        #    if collision(Lanturnfish[n], Orangediver, 75):
+        #        orangedead = True
+        #        justdied
+        #        lanturnskilled = True
 
         if level_complete == True and orangedead == False:
             winfont = pygame.font.SysFont("monospace", 100, "bold")
@@ -4643,6 +3374,18 @@ while done == False:
             screen.blit(wintext, (250, 100))
             if wintime > 75:
                 level = 0
+                level_initialized = False
+                level_1_initialized = False
+                level_2_initialized = False
+                level_3_initialized = False
+                level_4_initialized = False
+                level_5_initialized = False
+                level_6_initialized = False
+                level_7_initialized = False
+                level_9_initialized = False
+                level_10_initialized = False
+                level_11_initialized = False
+                level_12_initialized = False
             wintime = wintime + 1
             
         if orangedead == True:
@@ -4656,7 +3399,9 @@ while done == False:
             if Greendiver[7]: ## Behind
                 rowdraw(Snorkel, 1)
         animatedgreen()
-        movebubbles(Greendiver, 4, 40)
+        #movebubbles(Greendiver, 4, numnum/2)
+        if greendownair:
+            newbubbles(Greendiver, greenBubbles)
         if equipment[0] == 1:
             if Greendiver[7] == False: ## In front
                 rowdraw(Snorkel, 1)
@@ -4680,8 +3425,18 @@ while done == False:
         #######################
         ### Draw Equipment ###
         animatedorange()
+        if downair:
+            gacount = 0
+        gacount = gacount + 1
+        if gacount == 10:
+            greendownair = True
+        else:
+            greendownair = False
         if orangedead == False:
-            movebubbles(Orangediver, 0, 0)
+            #movebubbles(Orangediver, 0, 0)
+            if downair:
+                newbubbles(Orangediver, orangeBubbles)
+                #newbubbles(Greendiver, greenBubbles)
         if equipment[0] == 1:
             if Orangediver[7] == False: ## In front
                 rowdraw(Snorkel, 0)
@@ -4726,6 +3481,7 @@ while done == False:
             aircap = aircap
         elif downair == True:
             aircap = aircap - air_step
+            #newbubbles(Orangediver, Bubbles, 0)
         if equipment[1] == 0: # No goggles and you cannot see
             screen.fill(ocean) 
             darkfont = pygame.font.SysFont("monospace", 30, "bold")
@@ -4749,9 +3505,7 @@ while done == False:
 
 #### Level Gameplay
 ################# Outer Banks Level 1 ###############################
-
         if level == 1:
-
             if collision(Bottle[0], Orangediver, 50):
                 Bottle[0][8] = True
                 if greenrise == False:
@@ -4764,16 +3518,12 @@ while done == False:
                         Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 - 25
             if level_complete == False and levelsdone[1] == 0:
                 rowdraw(Bottle, 0)
-        
             if collision(Boat[0], Orangediver, 0) and Bottle[0][8] == True and levelsdone[1] == 0:
                     level_complete = True  
                     levels[1] = 1
-            
-        
 ####################################################################
 ################# Singapore Level 2 ###############################
         if level == 2:
-
             for f in range(4):
                 if collision(Clownfish[f], Orangediver, 50):
                     if holding_a_fish == False:
@@ -4792,7 +3542,7 @@ while done == False:
                     rowdraw(Clownfish, f)
                     
             fishfont = pygame.font.SysFont("monospace", 40, "bold")
-            fishtext = fishfont.render('You collected ' + str(fish_collected) + ' fish', 1, (255, 255, 0))
+            fishtext = fishfont.render('You collected ' + str(fish_collected) + ' Clownfish', 1, (255, 255, 0))
             screen.blit(fishtext, (250, 767 - 60))
             for f in range(4):
                 if collision(Boat[0], Orangediver, 75) and Clownfish[f][8] == True:
@@ -4807,13 +3557,215 @@ while done == False:
 
 
 ########################################################
-################# Key West Level 11 ###############################
+################# Sydney Level 3 ###############################
+        if level == 3:
+            if collision(Bottle[0], Orangediver, 50):
+                Bottle[0][8] = True
+                if greenrise == False:
+                    Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
+                    Bottle[0][3] = 100
+                    Bottle[0][4] = 100
+                    if Orangediver[7]:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
+                    else:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 - 25
+            if level_complete == False and levelsdone[3] == 0:
+                rowdraw(Bottle, 0)
+            if collision(Boat[0], Orangediver, 0) and Bottle[0][8] == True and levelsdone[3] == 0:
+                    level_complete = True  
+                    levels[3] = 1
+####################################################################
+################# Panama Level 4 ###############################
+        if level == 4:
+            if collision(Bottle[0], Orangediver, 50):
+                Bottle[0][8] = True
+                if greenrise == False:
+                    Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
+                    Bottle[0][3] = 100
+                    Bottle[0][4] = 100
+                    if Orangediver[7]:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
+                    else:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 - 25
+            if level_complete == False and levelsdone[4] == 0:
+                rowdraw(Bottle, 0)
+            if collision(Boat[0], Orangediver, 0) and Bottle[0][8] == True and levelsdone[4] == 0:
+                    level_complete = True  
+                    levels[4] = 1
+####################################################################
+################# SanDiego level 5 ###############################
+        if level == 5:
+            if collision(Bottle[0], Orangediver, 50):
+                Bottle[0][8] = True
+                if greenrise == False:
+                    Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
+                    Bottle[0][3] = 100
+                    Bottle[0][4] = 100
+                    if Orangediver[7]:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
+                    else:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 - 25
+            if level_complete == False and levelsdone[5] == 0:
+                rowdraw(Bottle, 0)
+            if collision(Boat[0], Orangediver, 0) and Bottle[0][8] == True and levelsdone[5] == 0:
+                level_complete = True  
+                levels[5] = 1
+####################################################################
+################# Tokyo Level 6###############################
+        if level == 6:
+            if equipment[11] == 0:
+                screen.fill([0,0,0]) 
+                darkfont = pygame.font.SysFont("monospace", 30, "bold")
+                darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
+                screen.blit(darktext, (250, 400))
+            for f in range(4):
+                if collision(Lanturnfish[f], Orangediver, 50):
+                    if holding_a_fish == False:
+                        Lanturnfish[f][8] = True
+                        holding_a_fish = True              
+                if Lanturnfish[f][8] == True:
+                    if greenrise == False:
+                        Lanturnfish[f][7] = Orangediver[7]
+                        Lanturnfish[f][2] = Orangediver[2] + Orangediver[4]/2 - Lanturnfish[f][4]/2 + 50
+                        Lanturnfish[f][3] = 150
+                        Lanturnfish[f][4] = 100
+                        if Orangediver[7]:
+                            Lanturnfish[f][1] = Orangediver[1] + Orangediver[3]/2 - Lanturnfish[f][3]/2 + 25
+                        else:
+                            Lanturnfish[f][1] = Orangediver[1] + Orangediver[3]/2 - Lanturnfish[f][3]/2 - 25
+                    rowdraw(Lanturnfish, f)
+                    
+            fishfont = pygame.font.SysFont("monospace", 40, "bold")
+            fishtext = fishfont.render('You collected ' + str(fish_collected) + ' Lanternfish', 1, (255, 255, 0))
+            screen.blit(fishtext, (250, 767 - 60))
+            for f in range(4):
+                if collision(Boat[0], Orangediver, 75) and Lanturnfish[f][8] == True:
+                    holding_a_fish = False
+                    Lanturnfish[f][8] = False
+                    Lanturnfish[f][1] = -1000
+                    Lanturnfish[f][2] = -1000
+                    fish_collected = fish_collected + 1
+            if fish_collected == 5:
+                level_complete = True
+                levels[6] = 1
+####################################################################
+################# CapeTown Level 7 ###############################
+        if level == 7:
+            if collision(Bottle[0], Orangediver, 50):
+                Bottle[0][8] = True
+                if greenrise == False:
+                    Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
+                    Bottle[0][3] = 100
+                    Bottle[0][4] = 100
+                    if Orangediver[7]:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
+                    else:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 - 25
+            if level_complete == False and levelsdone[7] == 0:
+                rowdraw(Bottle, 0)
+            if collision(Boat[0], Orangediver, 0) and Bottle[0][8] == True and levelsdone[7] == 0:
+                    level_complete = True  
+                    levels[7] = 1
+####################################################################
+################# Santiago Level 9 ###############################
+        if level == 9:
+            for f in range(4):
+                if collision(Dolphin[f], Orangediver, 50):
+                    if holding_a_fish == False:
+                        Dolphin[f][8] = True
+                        holding_a_fish = True              
+                if Dolphin[f][8] == True:
+                    if greenrise == False:
+                        Dolphin[f][7] = Orangediver[7]
+                        Dolphin[f][2] = Orangediver[2] + Orangediver[4]/2 - Dolphin[f][4]/2 + 50
+                        Dolphin[f][3] = 150
+                        Dolphin[f][4] = 100
+                        if Orangediver[7]:
+                            Dolphin[f][1] = Orangediver[1] + Orangediver[3]/2 - Dolphin[f][3]/2 + 25
+                        else:
+                            Dolphin[f][1] = Orangediver[1] + Orangediver[3]/2 - Dolphin[f][3]/2 - 25
+                    rowdraw(Dolphin, f)
+                    
+            fishfont = pygame.font.SysFont("monospace", 40, "bold")
+            fishtext = fishfont.render('You collected ' + str(fish_collected) + ' Dolphin', 1, (255, 255, 0))
+            screen.blit(fishtext, (250, 767 - 60))
+            for f in range(4):
+                if collision(Boat[0], Orangediver, 75) and Dolphin[f][8] == True:
+                    holding_a_fish = False
+                    Dolphin[f][8] = False
+                    Dolphin[f][1] = -1000
+                    Dolphin[f][2] = -1000
+                    fish_collected = fish_collected + 1
+            if fish_collected == 2:
+                level_complete = True
+                levels[9] = 1
+####################################################################
+################# Antarctica Level 10 ###############################
+        if level == 10:
+            if collision(Bottle[0], Orangediver, 50):
+                Bottle[0][8] = True
+                if greenrise == False:
+                    Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
+                    Bottle[0][3] = 100
+                    Bottle[0][4] = 100
+                    if Orangediver[7]:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
+                    else:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 - 25
+            if level_complete == False and levelsdone[10] == 0:
+                rowdraw(Bottle, 0)
+            if collision(Boat[0], Orangediver, 0) and Bottle[0][8] == True and levelsdone[10] == 0:
+                    level_complete = True  
+                    levels[10] = 1
+####################################################################
+################# KeyWest Level 11 ###############################
         if level == 11:
             if equipment[11] == 0:
                 screen.fill([0,0,0]) 
                 darkfont = pygame.font.SysFont("monospace", 30, "bold")
                 darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
                 screen.blit(darktext, (250, 400))    
+            if collision(Bottle[0], Orangediver, 50):
+                Bottle[0][8] = True
+                if greenrise == False:
+                    Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
+                    Bottle[0][3] = 100
+                    Bottle[0][4] = 100
+                    if Orangediver[7]:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
+                    else:
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 - 25
+            if level_complete == False and levelsdone[11] == 0:
+                rowdraw(Bottle, 0)
+            if collision(Boat[0], Orangediver, 0) and Bottle[0][8] == True and levelsdone[11] == 0:
+                    level_complete = True  
+                    levels[11] = 1
+####################################################################
+################# Unknown Level 12 ###############################
+        if level == 12:
+            if equipment[11] == 0:
+                screen.fill([0,0,0]) 
+                darkfont = pygame.font.SysFont("monospace", 30, "bold")
+                darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
+                screen.blit(darktext, (250, 400))
+            if levels.count(1) > 3:
+                if collision(Treasurechest[0], Orangediver, 50):
+                    Treasurechest[0][8] = True
+                    if greenrise == False:
+                        Treasurechest[0][2] = Orangediver[2] + Orangediver[4]/2 - Treasurechest[0][4]/2 + 50
+                        Treasurechest[0][3] = 200
+                        Treasurechest[0][4] = 150
+                        if Orangediver[7]:
+                            Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 + 25
+                        else:
+                            Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 - 25
+                if level_complete == False and levelsdone[12] == 0:
+                    rowdraw(Treasurechest, 0)
+                if collision(Boat[0], Orangediver, 0) and Treasurechest[0][8] == True and levelsdone[12] == 0:
+                        level_complete = True  
+                        levels[12] = 1
+####################################################################
+
 ########################################################
         if orangedead and justdied:
             justdied = False
@@ -4827,6 +3779,7 @@ while done == False:
             Gauges[0][0] = pygame.transform.flip(Gauges[1][0], False, True)
             Flashlight[0][0] = pygame.transform.flip(Flashlight[1][0], False, True)
         downair = False
+
         
         if levels[12] == True:
             level = 100
