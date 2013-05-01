@@ -4210,6 +4210,13 @@ while done == False:
                 Coral0[n][1] = initial_Coral0_x
                 Coral0[n][2] = y_max + 50 - 100 - 115 + windowoffset
                 initial_Coral0_x = initial_Coral0_x + 400
+            
+            initial_Rock0_y = -windowoffset - 100
+            for n in range(100):
+                Rock0[n][3] = 400
+                Rock0[n][1] = x_min - 200 + 100 - windowoffset
+                Rock0[n][2] = initial_Rock0_y
+                initial_Rock0_y = initial_Rock0_y + 250
                 
             initial_Wave_x = -100 - windowoffset
             for n in range(40):
