@@ -339,9 +339,6 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     global accel
     global equipment
     
-
-            
-    
     kickaccel = 0.5
     
     start_x = pic[1]
@@ -1027,6 +1024,21 @@ def Level0():
     global level
     global Islandbutton
     global Treasuremap
+    global levels
+    global MONEY
+    global levelsdone
+    
+    ## Level Limit is the number of times the player can do the level and earn money ###
+    levellimit = 1
+    if levels[1] == 1 and levelsdone[1] < levellimit:
+        MONEY = MONEY + 100
+        levels[1] = 0
+        levelsdone[1] = levelsdone[1] + 1
+    if levels[2] == 1 and levelsdone[2] < 1000:
+        MONEY = MONEY + 50
+        levels[2] = 0
+        levelsdone[2] = levelsdone[2] + 1
+        
     pygame.mouse.set_visible(1)
     draw(Treasuremap)
     Controls = [Islandbutton[0], 10, 10, 100, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
@@ -1115,6 +1127,7 @@ def Level50():
     global fakemoney
     global levels
     global boughtequipment
+    global everequipment
     
     ### Level Limit is the number of times the player can do the level and earn money ###
  
@@ -1443,10 +1456,11 @@ def Level50():
             ExtraFlashlightinfotext = infofont.render('Carry an extra light on night dives', 1, (infocolor))
             screen.blit(ExtraFlashlightinfotext, (infopos))
 
-                
+    for i in range(15):
+        if everequipment[i] == 0:
+            if equipment[i] == 1:
+                everequipment[i] = 1
 
-
-    
   
 def Level8():
     global level
@@ -1456,16 +1470,7 @@ def Level8():
     global MONEY
     global levels
     
-    ### Level Limit is the number of times the player can do the level and earn money ###
-    levellimit = 1
-    if levels[1] == 1 and levelsdone[1] < levellimit:
-        MONEY = MONEY + 100
-        levels[1] = 0
-        levelsdone[1] = levelsdone[1] + 1
-    if levels[2] == 1 and levelsdone[2] < levellimit:
-        MONEY = MONEY + 50
-        levels[2] = 0
-        levelsdone[2] = levelsdone[2] + 1
+   
 
     pygame.mouse.set_visible(1)
     draw(Shelves)
@@ -1481,7 +1486,7 @@ def Level8():
     snorkeltext = pricefont.render('Snorkel: $' + str(snorkelprice), 1, (pricecolor))
     screen.blit(snorkeltext, (320, 420))
     
-    if boughtequipment[0] == 0:
+    if boughtequipment[0] == 0 and everequipment[0] == 0:
         ShopSnorkel = [pygame.image.load("Snorkel.png"), 320, 320, 100, 100, 0, 0, True]
         draw(ShopSnorkel)
         if MONEY >= snorkelprice and clicked(ShopSnorkel):
@@ -1490,7 +1495,7 @@ def Level8():
     else:
         ShopSnorkel = [pygame.image.load("Snorkel.png"), 320, 650, 50, 50, 0, 0, True]
         draw(ShopSnorkel)
-        if clicked(ShopSnorkel):
+        if clicked(ShopSnorkel) and everequipment[0] == 0:
             boughtequipment[0] = 0
             MONEY = MONEY + snorkelprice
     if mouseover(ShopSnorkel):
@@ -1501,7 +1506,7 @@ def Level8():
     Gogglesprice = 20
     Gogglestext = pricefont.render('Goggles: $' + str(Gogglesprice), 1, (pricecolor))
     screen.blit(Gogglestext, (480, 420))
-    if boughtequipment[1] == 0:
+    if boughtequipment[1] == 0 and everequipment[1] == 0:
         ShopGoggles = [pygame.image.load("Goggles.jpg"), 480, 320, 100, 75, 0, 0, True]
         draw(ShopGoggles)
         if MONEY >= Gogglesprice and clicked(ShopGoggles):
@@ -1510,7 +1515,7 @@ def Level8():
     else:
         ShopGoggles = [pygame.image.load("Goggles.jpg"), 480, 650, 50, 30, 0, 0, True]
         draw(ShopGoggles)
-        if clicked(ShopGoggles):
+        if clicked(ShopGoggles) and everequipment[1] == 0:
             boughtequipment[1] = 0
             MONEY = MONEY + Gogglesprice
     if mouseover(ShopGoggles):
@@ -1521,7 +1526,7 @@ def Level8():
     flashlightprice = 100
     flashlighttext = pricefont.render('Light: $' + str(flashlightprice), 1, (pricecolor))
     screen.blit(flashlighttext, (640, 420))
-    if boughtequipment[11] == 0:
+    if boughtequipment[11] == 0 and everequipment[11] == 0:
         ShopFlashlight = [pygame.image.load("Flashlight.png"), 640, 320, 100, 100, 0, 0, True] # 11
         draw(ShopFlashlight)
         if MONEY >= flashlightprice and clicked(ShopFlashlight):
@@ -1530,7 +1535,7 @@ def Level8():
     else:
         ShopFlashlight = [pygame.image.load("Flashlight.png"), 640, 650, 50, 50, 0, 0, True] # 11
         draw(ShopFlashlight)  
-        if clicked(ShopFlashlight):
+        if clicked(ShopFlashlight) and everequipment[11] == 0:
             boughtequipment[11] = 0
             MONEY = MONEY + flashlightprice
     if mouseover(ShopFlashlight):
@@ -1541,7 +1546,7 @@ def Level8():
     BCDprice = 300
     BCDtext = pricefont.render('BCD: $' + str(BCDprice), 1, (pricecolor))
     screen.blit(BCDtext, (250, 220))
-    if boughtequipment[2] == 0:
+    if boughtequipment[2] == 0 and everequipment[2] == 0:
         ShopBCD = [pygame.image.load("BCD.jpg"), 250, 120 - 25, 100, 125, 0, 0, True]
         draw(ShopBCD)
         if MONEY >= BCDprice and clicked(ShopBCD):
@@ -1550,7 +1555,7 @@ def Level8():
     else:
         ShopBCD = [pygame.image.load("BCD.jpg"), 250, 600, 50, 60, 0, 0, True]
         draw(ShopBCD)   
-        if clicked(ShopBCD):
+        if clicked(ShopBCD) and everequipment[2] == 0:
             boughtequipment[2] = 0
             MONEY = MONEY + BCDprice
     if mouseover(ShopBCD):
@@ -1561,7 +1566,7 @@ def Level8():
     Finsprice = 200
     Finstext = pricefont.render('Fins: $' + str(Finsprice), 1, (pricecolor))
     screen.blit(Finstext, (420, 220))
-    if boughtequipment[3] == 0:
+    if boughtequipment[3] == 0 and everequipment[3] == 0:
         ShopFins = [pygame.image.load("Fins.jpg"), 420 - 25, 120, 150, 100, 0, 0, True]
         draw(ShopFins)
         if MONEY >= Finsprice and clicked(ShopFins):
@@ -1570,7 +1575,7 @@ def Level8():
     else:
         ShopFins = [pygame.image.load("Fins.jpg"), 420, 600, 75, 50, 0, 0, True]
         draw(ShopFins)   
-        if clicked(ShopFins):
+        if clicked(ShopFins) and everequipment[3] == 0:
             boughtequipment[3] = 0
             MONEY = MONEY + Finsprice
     if mouseover(ShopFins):
@@ -1581,7 +1586,7 @@ def Level8():
     Regulatorprice = 200
     Regulatortext = pricefont.render('Regulator: $' + str(Regulatorprice), 1, (pricecolor))
     screen.blit(Regulatortext, (590, 220))
-    if boughtequipment[4] == 0:
+    if boughtequipment[4] == 0 and everequipment[4] == 0:
         ShopRegulator = [pygame.image.load("Regulator.jpg"), 590, 120, 100, 100, 0, 0, True]
         draw(ShopRegulator)
         if MONEY >= Regulatorprice and clicked(ShopRegulator):
@@ -1590,7 +1595,7 @@ def Level8():
     else:
         ShopRegulator = [pygame.image.load("Regulator.jpg"), 590, 600, 50, 50, 0, 0, True]
         draw(ShopRegulator)
-        if clicked(ShopRegulator):
+        if clicked(ShopRegulator) and everequipment[4] == 0:
             boughtequipment[4] = 0
             MONEY = MONEY + Regulatorprice
     if mouseover(ShopRegulator):
@@ -1601,7 +1606,7 @@ def Level8():
     ExtraRegulatorprice = 200
     ExtraRegulatortext = pricefont.render('2nd Regulator: $' + str(ExtraRegulatorprice), 1, (pricecolor))
     screen.blit(ExtraRegulatortext, (590, 560))
-    if boughtequipment[5] == 0:
+    if boughtequipment[5] == 0 and everequipment[5] == 0:
         ShopExtraRegulator = [pygame.transform.flip(pygame.image.load("Regulator.jpg"), True, False), 590, 460, 100, 100, 0, 0, True]
         draw(ShopExtraRegulator)
         if MONEY >= ExtraRegulatorprice and clicked(ShopExtraRegulator):
@@ -1610,7 +1615,7 @@ def Level8():
     else:
         ShopExtraRegulator = [pygame.transform.flip(pygame.image.load("Regulator.jpg"), True, False), 590, 700, 50, 50, 0, 0, True]
         draw(ShopExtraRegulator)
-        if clicked(ShopExtraRegulator):
+        if clicked(ShopExtraRegulator) and everequipment[5] == 0:
             boughtequipment[5] = 0
             MONEY = MONEY + ExtraRegulatorprice
     if mouseover(ShopExtraRegulator):
@@ -1621,7 +1626,7 @@ def Level8():
     AirTankprice = 250
     AirTanktext = pricefont.render('Air Tank: $' + str(AirTankprice), 1, (pricecolor))
     screen.blit(AirTanktext, (420, 560))
-    if boughtequipment[6] == 0:
+    if boughtequipment[6] == 0 and everequipment[6] == 0:
         ShopAirTank = [pygame.image.load("AirTank.jpg"), 420 + 25, 460 - 25, 50, 125, 0, 0, True]
         draw(ShopAirTank)
         if MONEY >= AirTankprice and clicked(ShopAirTank):
@@ -1630,7 +1635,7 @@ def Level8():
     else:
         ShopAirTank = [pygame.image.load("AirTank.jpg"), 420, 700 - 20, 35, 75, 0, 0, True]
         draw(ShopAirTank)   
-        if clicked(ShopAirTank):
+        if clicked(ShopAirTank) and everequipment[6] == 0:
             boughtequipment[6] = 0
             MONEY = MONEY + AirTankprice  
     if mouseover(ShopAirTank):
@@ -1641,7 +1646,7 @@ def Level8():
     Gaugesprice = 150
     Gaugestext = pricefont.render('Gauges: $' + str(Gaugesprice), 1, (pricecolor))
     screen.blit(Gaugestext, (250, 560))
-    if boughtequipment[7] == 0:
+    if boughtequipment[7] == 0 and everequipment[7] == 0:
         ShopGauges = [pygame.image.load("Gauges.jpg"), 250 + 30, 460, 50, 100, 0, 0, True]
         draw(ShopGauges)
         if MONEY >= Gaugesprice and clicked(ShopGauges):
@@ -1650,7 +1655,7 @@ def Level8():
     else:
         ShopGauges = [pygame.image.load("Gauges.jpg"), 250, 700, 25, 50, 0, 0, True]
         draw(ShopGauges)
-        if clicked(ShopGauges):
+        if clicked(ShopGauges) and everequipment[7] == 0:
             boughtequipment[7] = 0
             MONEY = MONEY + Gaugesprice
     if mouseover(ShopGauges):
@@ -1661,7 +1666,7 @@ def Level8():
     Wetsuitprice = 200
     Wetsuittext = pricefont.render('Wetsuit: $' + str(Wetsuitprice), 1, (pricecolor))
     screen.blit(Wetsuittext, (101, 280))
-    if boughtequipment[8] == 0:
+    if boughtequipment[8] == 0 and everequipment[8] == 0:
         ShopWetsuit = [pygame.image.load("Wetsuit.jpg"), 101, 180 + 50, 100, 50, 0, 0, True]
         draw(ShopWetsuit)
         if MONEY >= Wetsuitprice and clicked(ShopWetsuit):
@@ -1670,7 +1675,7 @@ def Level8():
     else:
         ShopWetsuit = [pygame.image.load("Wetsuit.jpg"), 11, 600, 50, 25, 0, 0, True]
         draw(ShopWetsuit)  
-        if clicked(ShopWetsuit):
+        if clicked(ShopWetsuit) and everequipment[8] == 0:
             boughtequipment[8] = 0
             MONEY = MONEY + Wetsuitprice
     if mouseover(ShopWetsuit):
@@ -1681,7 +1686,7 @@ def Level8():
     Drysuitprice = 900
     Drysuittext = pricefont.render('Dry Suit: $' + str(Drysuitprice), 1, (pricecolor))
     screen.blit(Drysuittext, (101, 480))
-    if boughtequipment[9] == 0:
+    if boughtequipment[9] == 0 and everequipment[9] == 0:
         ShopDrysuit = [pygame.image.load("Drysuit.jpg"), 101, 380 + 50, 100, 50, 0, 0, True]
         draw(ShopDrysuit)
         if MONEY >= Drysuitprice and clicked(ShopDrysuit):
@@ -1690,7 +1695,7 @@ def Level8():
     else:
         ShopDrysuit = [pygame.image.load("Drysuit.jpg"), 11, 650, 50, 25, 0, 0, True]
         draw(ShopDrysuit)  
-        if clicked(ShopDrysuit):
+        if clicked(ShopDrysuit) and everequipment[9] == 0:
             boughtequipment[9] = 0
             MONEY = MONEY + Drysuitprice
     if mouseover(ShopDrysuit):
@@ -1701,7 +1706,7 @@ def Level8():
     Slateprice = 10
     Slatetext = pricefont.render('Slate: $' + str(Slateprice), 1, (pricecolor))
     screen.blit(Slatetext, (101, 680))
-    if boughtequipment[10] == 0:
+    if boughtequipment[10] == 0 and everequipment[10] == 0:
         ShopSlate = [pygame.image.load("Slate.jpg"), 101, 580, 75, 100, 0, 0, True]
         draw(ShopSlate)
         if MONEY >= Slateprice and clicked(ShopSlate):
@@ -1710,7 +1715,7 @@ def Level8():
     else:
         ShopSlate = [pygame.image.load("Slate.jpg"), 11, 700, 30, 50, 0, 0, True]
         draw(ShopSlate) 
-        if clicked(ShopSlate):
+        if clicked(ShopSlate) and everequipment[10] == 0:
             boughtequipment[10] = 0
             MONEY = MONEY + Slateprice  
     if mouseover(ShopSlate):
@@ -1721,7 +1726,7 @@ def Level8():
     Glowstickprice = 5
     Glowsticktext = pricefont.render('Glowstick: $' + str(Glowstickprice), 1, (pricecolor))
     screen.blit(Glowsticktext, (840, 280))
-    if boughtequipment[12] == 0:
+    if boughtequipment[12] == 0 and everequipment[12] == 0:
         ShopGlowstick = [pygame.image.load("Glowstick.jpg"), 840 + 25, 180, 30, 100, 0, 0, True]
         draw(ShopGlowstick)
         if MONEY >= Glowstickprice and clicked(ShopGlowstick):
@@ -1730,7 +1735,7 @@ def Level8():
     else:
         ShopGlowstick = [pygame.image.load("Glowstick.jpg"), 1024 - 50 - 11, 600, 15, 50, 0, 0, True]
         draw(ShopGlowstick) 
-        if clicked(ShopGlowstick):
+        if clicked(ShopGlowstick) and everequipment[12] == 0:
             boughtequipment[12] = 0
             MONEY = MONEY + Glowstickprice
     if mouseover(ShopGlowstick):
@@ -1741,7 +1746,7 @@ def Level8():
     Scooterprice = 2000
     Scootertext = pricefont.render('Scooter: $' + str(Scooterprice), 1, (pricecolor))
     screen.blit(Scootertext, (840, 480))
-    if boughtequipment[13] == 0:
+    if boughtequipment[13] == 0 and everequipment[13] == 0:
         ShopScooter = [pygame.image.load("Scooter.jpg"), 840, 380, 100, 100, 0, 0, True]
         draw(ShopScooter)
         if MONEY >= Scooterprice and clicked(ShopScooter):
@@ -1750,7 +1755,7 @@ def Level8():
     else:
         ShopScooter = [pygame.image.load("Scooter.jpg"), 1024 - 50 - 11, 650, 50, 50, 0, 0, True]
         draw(ShopScooter)   
-        if clicked(ShopScooter):
+        if clicked(ShopScooter) and everequipment[13] == 0:
             boughtequipment[13] = 0
             MONEY = MONEY + Scooterprice
     if mouseover(ShopScooter):
@@ -1761,7 +1766,7 @@ def Level8():
     ExtraFlashlightprice = 40
     ExtraFlashlighttext = pricefont.render('2nd Light: $' + str(ExtraFlashlightprice), 1, (pricecolor))
     screen.blit(ExtraFlashlighttext, (840, 680))
-    if boughtequipment[14] == 0:
+    if boughtequipment[14] == 0 and everequipment[14] == 0:
         ShopExtraFlashlight = [pygame.transform.flip(pygame.image.load("Flashlight.png"), True, True), 840 + 20, 580, 75, 75, 0, 0, True]
         draw(ShopExtraFlashlight)
         if MONEY >= ExtraFlashlightprice and clicked(ShopExtraFlashlight):
@@ -1770,7 +1775,7 @@ def Level8():
     else:
         ShopExtraFlashlight = [pygame.transform.flip(pygame.image.load("Flashlight.png"), True, True), 1024 - 50 - 11, 700, 50, 50, 0, 0, True]
         draw(ShopExtraFlashlight)
-        if clicked(ShopExtraFlashlight):
+        if clicked(ShopExtraFlashlight) and everequipment[14] == 0:
             boughtequipment[14] = 0
             MONEY = MONEY + ExtraFlashlightprice
     if mouseover(ShopExtraFlashlight):
@@ -1791,11 +1796,13 @@ def nothing():
 #### Surface Variables #######################################################################
 # list = [image, x, y, x size, y size, x speed, y speed, right]
 ### Equipment #####
-equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
-#equipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
+#equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+#boughtequipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+#everequipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
 
-boughtequipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
-#equipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
+equipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
+boughtequipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
+everequipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
 
 # Snorkel, Goggles, BCD, Fins, Regulator, ExtraRegulator, AirTank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Scooter, ExtraFlashlight 
 
@@ -1901,6 +1908,51 @@ Bubbles = [[pygame.image.load("Bubbles.gif"), -1000, -1000, 25, 51, 10, 10, True
 
 Coral0 = [[pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
+          [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False],
           [pygame.image.load("Coral1.png"), 0, 0, 484, 285, 0, 0, True, False], 
@@ -1943,9 +1995,40 @@ Rock5 = [pygame.image.load("Rock5.png"), 200, 200, 100, 100, 10, 10, True]
 
 
 Boat = [[pygame.image.load("Boat.png"), 0, 0, 800, 500, 0, 0, True, False]]
-Treasurechest = [[pygame.image.load("Treasurechest.png"), -10000, -10000, 250, 200, 10, 10, True, False]]
+Bottle = [[pygame.image.load("Bottle.jpg"), -10000, -10000, 250, 200, 10, 10, True, False]]
+sdd = [[pygame.image.load("Bottle.jpg"), -10000, -10000, 250, 200, 10, 10, True, False]]
 
 Wave = [[pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
+        [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
@@ -2032,11 +2115,9 @@ level_complete = False
 #################################################################
 ### Level 1 Variables ###########################################
 level_1_initialized = False
-level_1_complete = False
 #################################################################
 ### Level 2 Variables ###########################################
 level_2_initialized = False
-level_2_complete= False
 fish_collected = 0
 holding_a_fish = False
 #################################################################
@@ -2141,18 +2222,48 @@ while done == False:
     else:
         if level_initialized == False:
             if equipment[6] and equipment[4]:
-                aircap = 3000
+                aircap = 10000#3000
             else:
                 aircap = 30
             
             x_min = 0
             y_min = 0
-            if level == 7:
-                x_max = 3500
-                y_max = 9900 
-            else:
-                x_max = 3500
-                y_max = 1800
+            
+            ### Level Bounds
+            if level == 1:
+                x_max = 99*100
+                y_max = 99*20
+            elif level == 2:
+                x_max = 99*100
+                y_max = 99*20
+            elif level == 3:
+                x_max = 99*100
+                y_max = 99*30
+            elif level == 4:
+                x_max = 99*75
+                y_max = 99*75
+            elif level == 5:
+                x_max = 99*50
+                y_max = 99*40
+            elif level == 6:
+                x_max = 99*50
+                y_max = 99*120    
+            elif level == 7:
+                x_max = 99*100
+                y_max = 99*100
+            elif level == 9:
+                x_max = 99*50
+                y_max = 99*200  
+            elif level == 10:
+                x_max = 99*100
+                y_max = 99*60
+            elif level == 11:
+                x_max = 99*50
+                y_max = 99*50     
+            elif level == 12:
+                x_max = 99*200
+                y_max = 99*200 #120    
+            
             y_min_edge = False
             y_max_edge = False
             x_min_edge = False
@@ -2164,7 +2275,6 @@ while done == False:
             wintime = 0
             
             Boat = [[pygame.image.load("Boat.png"), 100, -400, 800, 500, 0, 0, True, False]]
-            Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - x_max/2, y_max + 120, 250, 200, 0, 0, True, False]]
             
             eelskilled = False
             bubbleskilled = False
@@ -2199,7 +2309,7 @@ while done == False:
                 Orangediverkick[0] = pygame.image.load("Wetsuitdiverdry2.png")
                 Greendiver[0] = pygame.image.load("Wetsuitdiverdry3.png")
                 Greendiverkick[0] = pygame.image.load("Wetsuitdiverdry4.png")
-                Orangediverdead[0] = pygame.transform.flip(pygame.image.load("Wetsuitdiver1.png"), False, True)
+                Orangediverdead[0] = pygame.transform.flip(pygame.image.load("Wetsuitdiverdry1.png"), False, True)
                 Fins[1][3] = 101
                 Fins[3][3] = 101
             elif equipment[8] == 1:
@@ -2227,7 +2337,7 @@ while done == False:
             
             
             initial_Coral0_x = -100 - windowoffset
-            for n in range(10):
+            for n in range(55):
                 Coral0[n][3] = 600
                 Coral0[n][4] = 400
                 Coral0[n][1] = initial_Coral0_x
@@ -2235,7 +2345,7 @@ while done == False:
                 initial_Coral0_x = initial_Coral0_x + 400
                 
             initial_Wave_x = -100 - windowoffset
-            for n in range(10):
+            for n in range(40):
                 Wave[n][3] = 600
                 Wave[n][4] = 400
                 Wave[n][1] = initial_Wave_x
@@ -2574,7 +2684,7 @@ while done == False:
             
         #####################################################
         rowdraw(Boat, 0)        
-        for n in range(10):
+        for n in range(40):
             if greenrise == False:
                 Wave[n] = rowmovebackground(Wave, n, Orangediver)
             rowdraw(Wave, n)
@@ -2586,13 +2696,13 @@ while done == False:
             if greenrise == False:
                 Rock0[n] = rowmovebackground(Rock0, n, Orangediver)
             rowdraw(Rock0, n)
-        for n in range(10):
+        for n in range(55):
             if greenrise == False:
                 Coral0[n] = rowmovebackground(Coral0, n, Orangediver)
             rowdraw(Coral0, n)
         if greenrise == False:
             Boat[0] = rowmovebackground(Boat, 0, Orangediver)
-            Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
+            Bottle[0] = rowmovebackground(Bottle, 0, Orangediver)
 
         #########################################################
         #### Level Initialization and Fish ############
@@ -2600,7 +2710,8 @@ while done == False:
         if level == 1: # Outer Banks
             if level_1_initialized == False:
                 level_1_initialized = True
-                for n in range(10):
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                for n in range(55):
                     Coral0[n][0] = Coral1[0]
                 for n in range(10):
                     Rock0[n][0] = Rock5[0]
@@ -2611,7 +2722,7 @@ while done == False:
         if level == 2: # Singapore
             if level_2_initialized == False:
                 level_2_initialized = True
-                for n in range(10):
+                for n in range(55):
                     Coral0[n][0] = Coral2[0]
                 for n in range(10):
                     Rock0[n][0] = Rock4[0]
@@ -2699,7 +2810,7 @@ while done == False:
             winfont = pygame.font.SysFont("monospace", 100, "bold")
             wintext = winfont.render('YOU WIN!', 1, (255, 255, 0))
             screen.blit(wintext, (250, 100))
-            if wintime > 1000:
+            if wintime > 75:
                 level = 0
             wintime = wintime + 1
             
@@ -2726,8 +2837,8 @@ while done == False:
            # rowdraw(Fins, 1)
         if equipment[4] == 1:
             rowdraw(Regulator, 1)
-        #if equipment[5] == 1:
-         #   rowdraw(ExtraRegulator, 1)
+        if equipment[5] == 1:
+            rowdraw(ExtraRegulator, 1)
         if equipment[6] == 1:
             rowdraw(AirTank, 1)
         if equipment[7] == 1:
@@ -2751,8 +2862,8 @@ while done == False:
            # rowdraw(Fins, 0)
         if equipment[4] == 1:
             rowdraw(Regulator, 0)
-       # if equipment[5] == 1:
-        #    rowdraw(ExtraRegulator, 0)
+        if equipment[5] == 1:
+            rowdraw(ExtraRegulator, 0)
         if equipment[6] == 1:
             rowdraw(AirTank, 0)
         if equipment[7] == 1:
@@ -2810,22 +2921,21 @@ while done == False:
 
         if level == 1:
 
-            if collision(Treasurechest[0], Orangediver, 50):
-                Treasurechest[0][8] = True
+            if collision(Bottle[0], Orangediver, 50):
+                Bottle[0][8] = True
                 if greenrise == False:
-                    Treasurechest[0][2] = Orangediver[2] + Orangediver[4]/2 - Treasurechest[0][4]/2 + 50
-                    Treasurechest[0][3] = 150
-                    Treasurechest[0][4] = 100
+                    Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
+                    Bottle[0][3] = 100
+                    Bottle[0][4] = 100
                     if Orangediver[7]:
-                        Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 + 25
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
                     else:
-                        Treasurechest[0][1] = Orangediver[1] + Orangediver[3]/2 - Treasurechest[0][3]/2 - 25
-            if level_complete == False:
-                rowdraw(Treasurechest, 0)
+                        Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 - 25
+            if level_complete == False and levelsdone[1] == 0:
+                rowdraw(Bottle, 0)
         
-            if collision(Boat[0], Orangediver, 0) and Treasurechest[0][8] == True:
+            if collision(Boat[0], Orangediver, 0) and Bottle[0][8] == True and levelsdone[1] == 0:
                     level_complete = True  
-                    level_1_complete = True
                     levels[1] = 1
             
         
@@ -2887,10 +2997,12 @@ while done == False:
             Flashlight[0][0] = pygame.transform.flip(Flashlight[1][0], False, True)
         downair = False
         
-        if level_1_complete == True:
+        if levels[12] == True:
             level = 100
 
 ####  END   ############################################   
+############################
+############################
     pygame.display.flip()
     clock.tick(30)
 pygame.quit ()
