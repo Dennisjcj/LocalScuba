@@ -2661,9 +2661,9 @@ myfont = pygame.font.SysFont("monospace", 40, "bold")
 ocean = [0, 100, 255] 
 red = [255, 0, 0]
 
-slowbub = False
-slowbubgreen = False
-slowbubtime = 1
+slowbub = 0
+slowbubgreen = 0
+slowbubtime = 2
 
 bubblecycles = [0, 0, 0, 0, 0, 0, 0, 0] # for more bubbles, add more zeros
 numnum = 50
@@ -2685,7 +2685,7 @@ x_max_edge = False
 y_max_edge = False
 
 wintime = 0
-MONEY = 1300
+MONEY = 1000000000#1300
 accel = 0.5
 
 aircap = 200
@@ -3482,7 +3482,6 @@ while done == False:
             if slowbubgreen > slowbubtime:
                 slowbubgreen = 0
                 bubblesound.play()
-                slowbubgreen = True
                 newbubbles(Greendiver, greenBubbles)
             slowbubgreen = slowbubgreen + 1
         if equipment[13] == 0:
@@ -3520,9 +3519,8 @@ while done == False:
             #movebubbles(Orangediver, 0, 0)
             if downair:
                 if slowbub > slowbubtime:
-                    slowbubgreen = 0
+                    slowbub = 0
                     breathesound.play()
-                    slowbub = True
                     newbubbles(Orangediver, orangeBubbles)
                 slowbub = slowbub + 1
                 #newbubbles(Greendiver, greenBubbles)
