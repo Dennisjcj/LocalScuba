@@ -21,7 +21,6 @@ def save(newsavearray):
     writer.writerow([newsavearray[1]])
     writer.writerow([newsavearray[2]])
 
-
 # pic = [image, x, y, x size, y size, x speed, y speed, direction]
 # direction right = True, left = false
 
