@@ -1234,7 +1234,7 @@ def Level0():
         screen.blit(cluestext2, (150, 45))
 
 
-    Closet = [Islandbutton[0], 180, 290, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    Closet = [Islandbutton2[0], 180, 290, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Closet)
     if clicked(Closet):
         level = 50
@@ -1248,7 +1248,7 @@ def Level0():
         MONEY = MONEY - 50
         level = 1
         pygame.mouse.set_visible(0)
-    Singapore = [Islandbutton[0], 760, 425, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    Singapore = [Islandbutton3[0], 760, 425, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Singapore)
     if clicked(Singapore):
         MONEY = MONEY - 50
@@ -1272,7 +1272,7 @@ def Level0():
         MONEY = MONEY - 50
         level = 5
         pygame.mouse.set_visible(0)
-    Tokyo = [Islandbutton[0], 860, 325, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    Tokyo = [Islandbutton3[0], 860, 325, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Tokyo)
     if clicked(Tokyo):
         MONEY = MONEY - 50
@@ -1284,12 +1284,12 @@ def Level0():
         MONEY = MONEY - 50
         level = 7
         pygame.mouse.set_visible(0)
-    DiveShop = [Islandbutton[0], 475, 275, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    DiveShop = [Islandbutton2[0], 475, 275, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(DiveShop)
     if clicked(DiveShop):
         level = 8
         pygame.mouse.set_visible(0)
-    Santiago = [Islandbutton[0], 290, 550, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    Santiago = [Islandbutton3[0], 290, 550, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Santiago)
     if clicked(Santiago):
         MONEY = MONEY - 50
@@ -2607,9 +2607,12 @@ Depthgauge = [pygame.image.load("Depthgauge.png"), 1024 - 400, 0, 200, 200, 0, 0
 
 Shelves = [pygame.image.load("Shelves.png"), 0, 0, 1024, 768, 0, 0, True]
 Closetshelves = [pygame.image.load("Closetshelves.png"), 0, 0, 1024, 768, 0, 0, True]
+HelpBack = [pygame.image.load("HelpBack.png"), 0, 0, 1024, 768, 0, 0, True]
 
 Clueback = [pygame.image.load("Clueback.png"), 200, 200, 100, 100, 10, 10, True]
 Islandbutton = [pygame.image.load("Islandbutton.png"), 200, 200, 100, 100, 10, 10, True]
+Islandbutton2 = [pygame.image.load("Islandbutton2.png"), 200, 200, 100, 100, 10, 10, True]
+Islandbutton3 = [pygame.image.load("Islandbutton3.png"), 200, 200, 100, 100, 10, 10, True]
 Menubutton = [pygame.image.load("Menubutton.png"), 200, 200, 100, 100, 10, 10, True]
 
 #aha = pygame.mixer.Sound("Aha.mp3")
@@ -2735,14 +2738,20 @@ delaytime = 0
 while done == False:
     keys()
     if level == -2:
-        screen.fill(ocean)   
-        controlsfont = pygame.font.SysFont("monospace", 30, "bold")
-        controlstext1 = controlsfont.render('W, A, S, D = Up, Left, Down, Right', 1, (255, 255, 0))
-        screen.blit(controlstext1, (100, 100))
-        controlstext2 = controlsfont.render('Spacebar = Restart Level', 1, (255, 255, 0))
-        screen.blit(controlstext2, (100, 140))
-        controlstext3 = controlsfont.render('Backspace = World Map', 1, (255, 255, 0))
-        screen.blit(controlstext3, (100, 180))
+        redcolor = (237, 28, 36)
+        draw(HelpBack)
+        controlsfont = pygame.font.SysFont("monospace", 25, "bold")
+        controlstext1 = controlsfont.render('W, A, S, D = Up, Left, Down, Right', 1, redcolor)
+        screen.blit(controlstext1, (250, 180))
+        controlstext2 = controlsfont.render('Spacebar = Restart Level', 1, redcolor)
+        screen.blit(controlstext2, (250, 230))
+        controlstext3 = controlsfont.render('Backspace = World Map', 1, redcolor)
+        screen.blit(controlstext3, (250, 280))
+        controlstext4 = controlsfont.render('Buy items in the Dive Shop', 1, redcolor)
+        screen.blit(controlstext4, (250, 330))
+        controlstext5 = controlsfont.render('Equip purchased items at your closet', 1, redcolor)
+        screen.blit(controlstext5, (250, 380))
+
     elif level == -1:
         pygame.mouse.set_visible(1)
         screen.fill(ocean)   
