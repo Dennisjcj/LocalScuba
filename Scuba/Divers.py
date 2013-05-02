@@ -7,6 +7,7 @@ import pygame
 import csv#from PIL import GIFImage
 import random
 import math
+#import mixer
 
 def load(savefile):
     with open(savefile, 'rt') as f:
@@ -441,16 +442,20 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
         greenlength = kickmax
     if greenlength < kickmin:
         greenlength = kickmin
-            
-
-    if x_move_speed > 20:
-        x_move_speed = 20
-    elif x_move_speed < -20:
-        x_move_speed = -20
-    if y_move_speed > 20:
-        y_move_speed = 20
-    elif y_move_speed < -20:
-        y_move_speed = 20
+    
+    #speedmaximum = 20
+    if equipment[13] == 0:
+        speedmaximum = 20
+    else:
+        speedmaximum = 30
+    if x_move_speed > speedmaximum:
+        x_move_speed = speedmaximum
+    elif x_move_speed < -speedmaximum:
+        x_move_speed = -speedmaximum
+    if y_move_speed > speedmaximum:
+        y_move_speed = speedmaximum
+    elif y_move_speed < -speedmaximum:
+        y_move_speed = -speedmaximum
     
     #if math.fabs(x_move_speed) < 5 and math.fabs(y_move_speed)  < 5:
     #    orangelength = 20
@@ -505,31 +510,37 @@ def animatedorange():
         global aircap
         global kk
         global downair
+        global equipment
 
         if orangekicking == False:
             if kk == True and orangedead == False:
                 downair = True
                 kk = False
             Orangediverkick = [Orangediverkick[0], Orangediver[1], Orangediver[2], Orangediver[3], Orangediver[4], Orangediver[5], Orangediver[6], Orangediver[7]]
-            draw(Orangediverkick)
-            if equipment[3] == 1:
-                if orangedead == False:
-                    rowdraw(Fins, 1)
+            if equipment[13] == 0:
+                draw(Orangediverkick)
+            if equipment[13] == 0:
+                if equipment[3] == 1:
+                    if orangedead == False:
+                        rowdraw(Fins, 1)
             if orangecycles > orangelength:
                 orangekicking = True
                 orangecycles = 0
         else:
             kk = True
-            draw(Orangediver)
+            if equipment[13] == 0:
+                draw(Orangediver)
             if equipment[3] == 1:
-                rowdraw(Fins, 0)
+                if equipment[13] == 0:
+                    rowdraw(Fins, 0)
             if orangecycles > orangelength:
                 orangekicking = False
                 orangecycles = 0
         orangecycles = orangecycles + 1
         if equipment[3] == 1:
             if orangedead:
-                rowdraw(Fins, 0)
+                if equipment[13] == 0:
+                    rowdraw(Fins, 0)
         
 def animatedgreen():
         global greenkicking
@@ -539,16 +550,20 @@ def animatedgreen():
         global Greendiverkick
         if greenkicking:
             Greendiverkick = [Greendiverkick[0], Greendiver[1], Greendiver[2], Greendiver[3], Greendiver[4], Greendiver[5], Greendiver[5], Greendiver[7]]
-            draw(Greendiverkick)
+            if equipment[13] == 0:
+                draw(Greendiverkick)
             if equipment[3] == 1:
-                rowdraw(Fins, 3)
+                if equipment[13] == 0:
+                    rowdraw(Fins, 3)
             if greencycles > greenlength:
                 greenkicking = False
                 greencycles = 0
         else:
-            draw(Greendiver)
+            if equipment[13] == 0:
+                draw(Greendiver)
             if equipment[3] == 1:
-                rowdraw(Fins, 2)
+                if equipment[13] == 0:
+                    rowdraw(Fins, 2)
             if greencycles > greenlength:
                 greenkicking = True
                 greencycles = 0
@@ -814,13 +829,22 @@ def newbubbles(pic, bubblepic):
     global bubblecycles
     global Orangediver
     global onbubble
-    bubblemax = 0
-    if pic[7] == False:
-        bubblepic[onbubble][1] = pic[1] + 55 - 30
-        bubblepic[onbubble][2] = pic[2] + 60 - 51
+    global equipment
+    
+    if equipment[13] == 0:
+        if pic[7] == False:
+            bubblepic[onbubble][1] = pic[1] + 55 - 30
+            bubblepic[onbubble][2] = pic[2] + 60 - 51
+        else:
+            bubblepic[onbubble][1] = pic[1] - 55 + pic[3]
+            bubblepic[onbubble][2] = pic[2] + 60 - 51
     else:
-        bubblepic[onbubble][1] = pic[1] - 55 + pic[3]
-        bubblepic[onbubble][2] = pic[2] + 60 - 51
+        if pic[7] == False:
+            bubblepic[onbubble][1] = pic[1] + 55 - 30 + 50
+            bubblepic[onbubble][2] = pic[2] + 60 - 51 + 50
+        else:
+            bubblepic[onbubble][1] = pic[1] - 55 + pic[3] - 50
+            bubblepic[onbubble][2] = pic[2] + 60 - 51 + 50
     onbubble = onbubble + 1
     if onbubble > 7:
         onbubble = 0
@@ -972,7 +996,7 @@ def restart_fish():
     #global Slate
     global Flashlight
     #global Glowstick
-    #global Scooter
+    global Scooterdiver
     #global ExtraFlashlight
 
     Snorkel = [[pygame.transform.rotate(pygame.image.load("Snorkel.png"), -30), 0, 0, 100, 100, 0, 0, True], # 0
@@ -1016,8 +1040,8 @@ def restart_fish():
     #Glowstick = [[pygame.image.load("Glowstickdiver.png"), 0, 0, 100, 100, 0, 0, True], # 12
     #              [pygame.image.load("Glowstickdiver.png"), 0, 0, 100, 100, 0, 0, True]]
     
-    #Scooter = [[pygame.image.load("Scooterdiver.png"), 0, 0, 100, 100, 0, 0, True], # 13
-    #              [pygame.image.load("Scooterdiver.png"), 0, 0, 100, 100, 0, 0, True]]
+    Scooterdiver = [[pygame.image.load("Scooterdiver.png"), 0, 0, 250, 250, 0, 0, True], # 13
+                  [pygame.image.load("Scooterdiver2.png"), 0, 0, 250, 250, 0, 0, True]]
     
     #ExtraFlashlight = [[pygame.image.load("ExtraFlashlightdiver.png"), 0, 0, 100, 100, 0, 0, True], # 14
     #              [pygame.image.load("ExtraFlashlightdiver.png"), 0, 0, 100, 100, 0, 0, True]]
@@ -1099,48 +1123,49 @@ def Level0():
     global levels
     global MONEY
     global levelsdone
+    global Clueback
     
     ## Level Limit is the number of times the player can do the level and earn money ###
     levellimit = 1
     if levels[1] == 1 and levelsdone[1] < levellimit:
-        MONEY = MONEY + 100
+        MONEY = MONEY + 200
         levels[1] = 0
         levelsdone[1] = levelsdone[1] + 1
         
     if levels[2] == 1 and levelsdone[2] < 1000:
-        MONEY = MONEY + 50
+        MONEY = MONEY + 150
         levels[2] = 0
-        levelsdone[2] = levelsdone[2] + 1
+        levelsdone[2] = 0
    
     if levels[3] == 1 and levelsdone[3] < levellimit:
-        MONEY = MONEY + 100
+        MONEY = MONEY + 200
         levels[3] = 0
         levelsdone[3] = levelsdone[3] + 1
         
     if levels[4] == 1 and levelsdone[4] < levellimit:
-        MONEY = MONEY + 100
+        MONEY = MONEY + 250
         levels[4] = 0
         levelsdone[4] = levelsdone[4] + 1
         
     if levels[5] == 1 and levelsdone[5] < levellimit:
-        MONEY = MONEY + 100
+        MONEY = MONEY + 150
         levels[5] = 0
         levelsdone[5] = levelsdone[5] + 1
     
-    if levels[6] == 1 and levelsdone[6] < levellimit:
-        MONEY = MONEY + 200
+    if levels[6] == 1 and levelsdone[6] < 1000000:
+        MONEY = MONEY + 500
         levels[6] = 0
-        levelsdone[6] = levelsdone[6] + 1
+        levelsdone[6] = 0
     
     if levels[7] == 1 and levelsdone[7] < levellimit:
-        MONEY = MONEY + 100
+        MONEY = MONEY + 150
         levels[7] = 0
         levelsdone[7] = levelsdone[7] + 1
     
-    if levels[9] == 1 and levelsdone[9] < levellimit:
-        MONEY = MONEY + 200
+    if levels[9] == 1 and levelsdone[9] < 1000000000:
+        MONEY = MONEY + 400
         levels[9] = 0
-        levelsdone[9] = levelsdone[9] + 1
+        levelsdone[9] = 0
     
     if levels[10] == 1 and levelsdone[10] < levellimit:
         MONEY = MONEY + 500
@@ -1157,7 +1182,8 @@ def Level0():
         levels[12] = 0
         levelsdone[12] = levelsdone[12] + 1
         
-        
+    
+            
     pygame.mouse.set_visible(1)
     draw(Treasuremap)
     Controls = [Islandbutton[0], 10, 10, 100, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
@@ -1167,7 +1193,36 @@ def Level0():
     controlsfont = pygame.font.SysFont("monospace", 20, "bold")
     controlstext = controlsfont.render('Controls', 1, (0, 0, 0))
     screen.blit(controlstext, (10, 40))
-    
+  
+    cluecolor = (0, 0, 0)
+    if levelsdone.count(1) == 0:
+        Clueback = [Clueback[0], 130, 0, 600, 50, 0, 0, True] 
+        draw(Clueback)
+        cluesfont = pygame.font.SysFont("monospace", 30, "bold")
+        cluestext = cluesfont.render('We need to find some clues', 1, cluecolor)
+        screen.blit(cluestext, (150, 10))
+    elif levelsdone.count(1) == 1:
+        Clueback = [Clueback[0], 130, 0, 750, 50, 0, 0, True] 
+        draw(Clueback)
+        cluesfont = pygame.font.SysFont("monospace", 30, "bold")
+        cluestext = cluesfont.render('We still need to find more clues', 1, cluecolor)
+        screen.blit(cluestext, (150, 10))
+    elif levelsdone.count(1) == 2:
+        Clueback = [Clueback[0], 130, 0, 750, 50, 0, 0, True] 
+        draw(Clueback)
+        cluesfont = pygame.font.SysFont("monospace", 30, "bold")
+        cluestext = cluesfont.render('We just need one more clue', 1, cluecolor)
+        screen.blit(cluestext, (150, 10))
+    elif levelsdone.count(1) > 2:
+        Clueback = [Clueback[0], 130, 0, 750, 90, 0, 0, True] 
+        draw(Clueback)
+        cluesfont = pygame.font.SysFont("monospace", 30, "bold")
+        cluestext = cluesfont.render('The clues point to a sight ', 1, cluecolor)
+        cluestext2 = cluesfont.render('west of Santiago', 1, cluecolor)
+        screen.blit(cluestext, (150, 10))
+        screen.blit(cluestext2, (150, 45))
+
+
     Closet = [Islandbutton[0], 180, 290, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Closet)
     if clicked(Closet):
@@ -1179,73 +1234,72 @@ def Level0():
     Outerbanks = [Islandbutton[0], 245, 330, 25, 25, 0, 0, True]  # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Outerbanks)
     if clicked(Outerbanks):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 1
         pygame.mouse.set_visible(0)
     Singapore = [Islandbutton[0], 760, 425, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Singapore)
     if clicked(Singapore):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 2
         pygame.mouse.set_visible(0)
     Sydney = [Islandbutton[0], 885, 560, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Sydney)
     if clicked(Sydney):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 3
         pygame.mouse.set_visible(0)
     Panama = [Islandbutton[0], 260, 415, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Panama)
     if clicked(Panama):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 4
         pygame.mouse.set_visible(0)
     SanDiego = [Islandbutton[0], 155, 335, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(SanDiego)
     if clicked(SanDiego):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 5
         pygame.mouse.set_visible(0)
     Tokyo = [Islandbutton[0], 860, 325, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Tokyo)
     if clicked(Tokyo):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 6
         pygame.mouse.set_visible(0)
     CapeTown = [Islandbutton[0], 535, 555, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(CapeTown)
     if clicked(CapeTown):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 7
         pygame.mouse.set_visible(0)
     DiveShop = [Islandbutton[0], 475, 275, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(DiveShop)
     if clicked(DiveShop):
-        MONEY = MONEY - 100
         level = 8
         pygame.mouse.set_visible(0)
     Santiago = [Islandbutton[0], 290, 550, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Santiago)
     if clicked(Santiago):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 9
         pygame.mouse.set_visible(0)
     Antarctica = [Islandbutton[0], 630, 695, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Antarctica)
     if clicked(Antarctica):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 10
         pygame.mouse.set_visible(0)
     KeyWest = [Islandbutton[0], 243, 363, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(KeyWest)
     if clicked(KeyWest):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 11
         pygame.mouse.set_visible(0)
     Unknown = [Islandbutton[0], 123, 567, 25, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Unknown)
     if clicked(Unknown):
-        MONEY = MONEY - 100
+        MONEY = MONEY - 50
         level = 12
         pygame.mouse.set_visible(0)
 
@@ -1954,9 +2008,9 @@ def nothing():
 #boughtequipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
 #everequipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
 
-equipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
-boughtequipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
-everequipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  
+equipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]  
+boughtequipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]  
+everequipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]  
 
 
 # Snorkel, Goggles, BCD, Fins, Regulator, ExtraRegulator, AirTank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Scooter, ExtraFlashlight 
@@ -2002,9 +2056,9 @@ Flashlight = [[pygame.image.load("Flashlight.png"), 0, 0, 100, 100, 0, 0, True],
 #Glowstick = [[pygame.image.load("Glowstickdiver.png"), 0, 0, 100, 100, 0, 0, True], # 12
 #              [pygame.image.load("Glowstickdiver.png"), 0, 0, 100, 100, 0, 0, True]]
 
-#Scooter = [[pygame.image.load("Scooterdiver.png"), 0, 0, 100, 100, 0, 0, True], # 13
-#              [pygame.image.load("Scooterdiver.png"), 0, 0, 100, 100, 0, 0, True]]
-
+Scooterdiver = [[pygame.image.load("Scooterdiver.png"), 0, 0, 250, 250, 0, 0, True], # 13
+                  [pygame.image.load("Scooterdiver.png"), 0, 0, 250, 250, 0, 0, True]]
+    
 #ExtraFlashlight = [[pygame.image.load("ExtraFlashlightdiver.png"), 0, 0, 100, 100, 0, 0, True], # 14
 #              [pygame.image.load("ExtraFlashlightdiver.png"), 0, 0, 100, 100, 0, 0, True]]
 
@@ -2250,9 +2304,9 @@ Rock3 = [pygame.image.load("Rock3.png"), 200, 200, 100, 100, 10, 10, True]
 Rock4 = [pygame.image.load("Rock4.png"), 200, 200, 100, 100, 10, 10, True]
 Rock5 = [pygame.image.load("Rock5.png"), 200, 200, 100, 100, 10, 10, True]
 
-
+Shipwreck = [[pygame.image.load("Shipwreck.png"), -10000, -10000, 800, 500, 0, 0, True, False]]
 Boat = [[pygame.image.load("Boat.png"), 0, 0, 800, 500, 0, 0, True, False]]
-Bottle = [[pygame.image.load("Bottle.jpg"), -10000, -10000, 250, 200, 10, 10, True, False]]
+Bottle = [[pygame.image.load("Bottle.jpg"), -10000, -10000, 50, 100, 10, 10, True, False]]
 Treasurechest = [[pygame.image.load("Treasurechest.png"), -10000, -10000, 250, 200, 10, 10, True, False]]
 
 Wave = [[pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
@@ -2540,12 +2594,17 @@ Depthgauge = [pygame.image.load("Depthgauge.png"), 1024 - 400, 0, 200, 200, 0, 0
 Shelves = [pygame.image.load("Shelves.png"), 0, 0, 1024, 768, 0, 0, True]
 Closetshelves = [pygame.image.load("Closetshelves.png"), 0, 0, 1024, 768, 0, 0, True]
 
-
+Clueback = [pygame.image.load("Clueback.png"), 200, 200, 100, 100, 10, 10, True]
 Islandbutton = [pygame.image.load("Islandbutton.png"), 200, 200, 100, 100, 10, 10, True]
 Menubutton = [pygame.image.load("Menubutton.png"), 200, 200, 100, 100, 10, 10, True]
+
+#aha = pygame.mixer.Sound("Aha.mp3")
+
+
 #### Surface Variables ###################################################################
 
 pygame.init()
+pygame.mixer.init()
 size=[1024,768]
 screen=pygame.display.set_mode(size)
 pygame.display.set_caption("Diver Test")
@@ -2602,6 +2661,10 @@ myfont = pygame.font.SysFont("monospace", 40, "bold")
 ocean = [0, 100, 255] 
 red = [255, 0, 0]
 
+slowbub = False
+slowbubgreen = False
+slowbubtime = 1
+
 bubblecycles = [0, 0, 0, 0, 0, 0, 0, 0] # for more bubbles, add more zeros
 numnum = 50
 
@@ -2622,7 +2685,7 @@ x_max_edge = False
 y_max_edge = False
 
 wintime = 0
-MONEY = 2000
+MONEY = 1300
 accel = 0.5
 
 aircap = 200
@@ -2633,11 +2696,17 @@ air_step = 1
 airdegrees = 0
 depthdegrees = 0
 real_depth = 0
+exreg = 0
 
 #edges = [0, 0, 2000, 1000]
 levels = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 levelsdone = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 windowoffset = 200
+
+bubblesound = pygame.mixer.Sound('bubblesound.wav')
+breathesound = pygame.mixer.Sound('breathesound.wav')
+wilhelm = pygame.mixer.Sound('wilhelm.wav')
+
 #################################################################
 # -------- Main Program Loop -----------
 while done == False:
@@ -2681,10 +2750,13 @@ while done == False:
                 aircap = 3000
             else:
                 aircap = 30
+            if equipment[13] == 1:
+                aircap = 5000
             
             x_min = 0
             y_min = 0
             
+            exreg = 0
             ### Level Bounds
             if level == 1:
                 x_max = 99*100
@@ -2709,7 +2781,7 @@ while done == False:
                 y_max = 99*100
             elif level == 9:
                 x_max = 99*50
-                y_max = 99*200  
+                y_max = 99*100  
             elif level == 10:
                 x_max = 99*100
                 y_max = 99*60
@@ -3114,7 +3186,8 @@ while done == False:
    
             
         #####################################################
-        rowdraw(Boat, 0)        
+        rowdraw(Boat, 0)
+        rowdraw(Shipwreck, 0)        
         for n in range(25):
             if greenrise == False:
                 Wave[n] = rowmovebackground(Wave, n, Orangediver)
@@ -3135,7 +3208,8 @@ while done == False:
             Boat[0] = rowmovebackground(Boat, 0, Orangediver)
             Bottle[0] = rowmovebackground(Bottle, 0, Orangediver)
             Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
-            
+            Shipwreck[0] = rowmovebackground(Shipwreck, 0, Orangediver)
+
         for b in range(8):
             if greenrise == False:
                 orangeBubbles[b][2] = orangeBubbles[b][2] - orangeBubbles[b][6]
@@ -3159,7 +3233,7 @@ while done == False:
         if level == 1: # Outer Banks
             if level_1_initialized == False:
                 level_1_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3183,7 +3257,7 @@ while done == False:
         if level == 3: # Sydney
             if level_3_initialized == False:
                 level_3_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3195,7 +3269,7 @@ while done == False:
         if level == 4: # Panama
             if level_4_initialized == False:
                 level_4_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3207,7 +3281,7 @@ while done == False:
         if level == 5: # SanDiego
             if level_5_initialized == False:
                 level_5_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3219,7 +3293,7 @@ while done == False:
         if level == 6: # Tokyo
             if level_6_initialized == False:
                 level_6_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3233,7 +3307,7 @@ while done == False:
         if level == 7: # CapeTown
             if level_7_initialized == False:
                 level_7_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3245,7 +3319,7 @@ while done == False:
         if level == 9: # Santiago
             if level_9_initialized == False:
                 level_9_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3257,7 +3331,8 @@ while done == False:
         if level == 10: # Antarctica
             if level_10_initialized == False:
                 level_10_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Shipwreck = [[pygame.image.load("Shipwreck.png"), x_max - x_max/7, y_max - 400, 1200, 900, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3270,7 +3345,8 @@ while done == False:
         if level == 11: # KeyWest
             if level_11_initialized == False:
                 level_11_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 100, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Shipwreck = [[pygame.image.load("Shipwreck.png"), x_max/4, y_max - 400, 1200, 900, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3284,6 +3360,7 @@ while done == False:
             if level_12_initialized == False:
                 level_12_initialized = True
                 Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - x_max/2, y_max, 200, 150, 0, 0, True, False]]
+                Shipwreck = [[pygame.image.load("Shipwreck.png"), x_max - x_max/3, y_max - 600, 1600, 1200, 0, 0, False, False]]
                 #Treasurechest = [[pygame.image.load("Treasurechest.png"), 500, 500, 200, 150, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
@@ -3338,29 +3415,30 @@ while done == False:
         pygame.draw.line(Depthgauge[0], (120,0,0), (depth_startx, depth_starty), (depth_endx, depth_endy), 5)
 
         aircaptext = myfont.render("Air=" + str(aircap), 1, (255, 255, 0))
-        screen.blit(aircaptext, (10, 100))
+        #screen.blit(aircaptext, (10, 100))
         depthtext = myfont.render("Y=" + str(real_depth), 1, (255, 255, 0))
-        screen.blit(depthtext, (10, 10))
+        #screen.blit(depthtext, (10, 10))
         scrolltext = myfont.render("X=" + str(scroll), 1, (255, 255, 0))
-        screen.blit(scrolltext, (10, 50))
+        #screen.blit(scrolltext, (10, 50))
         
-        for n in range(4):
-            if collision(Eel[n], Orangediver, 75):
-                orangedead = True
-                justdied = True
-                eelskilled = True
-                
-        for n in range(4):
-            if collision(Shark[n], Orangediver, 75):
-                orangedead = True
-                justdied = True
-                sharkskilled = True
-                
-        for n in range(4):
-            if collision(Jellyfish[n], Orangediver, 75) and equipment[8] == 0 and equipment[9] == 0: # Wetsuit protects against Jellyfish
-                orangedead = True
-                justdied = True
-                jellyskilled = True
+        if equipment[13] == 0:
+            for n in range(4):
+                if collision(Eel[n], Orangediver, 75):
+                    orangedead = True
+                    justdied = True
+                    eelskilled = True
+                    
+            for n in range(4):
+                if collision(Shark[n], Orangediver, 75):
+                    orangedead = True
+                    justdied = True
+                    sharkskilled = True
+                    
+            for n in range(4):
+                if collision(Jellyfish[n], Orangediver, 75) and equipment[8] == 0 and equipment[9] == 0: # Wetsuit protects against Jellyfish
+                    orangedead = True
+                    justdied = True
+                    jellyskilled = True
                 
         #for n in range(4):
         #    if collision(Lanturnfish[n], Orangediver, 75):
@@ -3392,35 +3470,41 @@ while done == False:
             deadfont = pygame.font.SysFont("monospace", 100, "bold")
             deadtext = deadfont.render('YOU DEAD!', 1, (255, 255, 0))
             screen.blit(deadtext, (250, 100))
-            
-        if equipment[0] == 1: 
-            if Orangediver[7]: ## Behind
-                rowdraw(Snorkel, 0)
-            if Greendiver[7]: ## Behind
-                rowdraw(Snorkel, 1)
+        if equipment[13] == 0:
+            if equipment[0] == 1: 
+                if Orangediver[7]: ## Behind
+                    rowdraw(Snorkel, 0)
+                if Greendiver[7]: ## Behind
+                    rowdraw(Snorkel, 1)
         animatedgreen()
         #movebubbles(Greendiver, 4, numnum/2)
         if greendownair:
-            newbubbles(Greendiver, greenBubbles)
-        if equipment[0] == 1:
-            if Greendiver[7] == False: ## In front
-                rowdraw(Snorkel, 1)
-        if equipment[1] == 1:
-            rowdraw(Goggles, 1)
-        if equipment[2] == 1:
-            rowdraw(BCD, 1)
-        #if equipment[3] == 1:
-           # rowdraw(Fins, 1)
-        if equipment[4] == 1:
-            rowdraw(Regulator, 1)
-        if equipment[5] == 1:
-            rowdraw(ExtraRegulator, 1)
-        if equipment[6] == 1:
-            rowdraw(AirTank, 1)
-        if equipment[7] == 1:
-            rowdraw(Gauges, 1)
-        if equipment[11] == 1:
-            rowdraw(Flashlight, 1)
+            if slowbubgreen > slowbubtime:
+                slowbubgreen = 0
+                bubblesound.play()
+                slowbubgreen = True
+                newbubbles(Greendiver, greenBubbles)
+            slowbubgreen = slowbubgreen + 1
+        if equipment[13] == 0:
+            if equipment[0] == 1:
+                if Greendiver[7] == False: ## In front
+                    rowdraw(Snorkel, 1)
+            if equipment[1] == 1:
+                rowdraw(Goggles, 1)
+            if equipment[2] == 1:
+                rowdraw(BCD, 1)
+            #if equipment[3] == 1:
+               # rowdraw(Fins, 1)
+            if equipment[4] == 1:
+                rowdraw(Regulator, 1)
+            if equipment[5] == 1:
+                rowdraw(ExtraRegulator, 1)
+            if equipment[6] == 1:
+                rowdraw(AirTank, 1)
+            if equipment[7] == 1:
+                rowdraw(Gauges, 1)
+            if equipment[11] == 1:
+                rowdraw(Flashlight, 1)
      
         #######################
         ### Draw Equipment ###
@@ -3435,32 +3519,41 @@ while done == False:
         if orangedead == False:
             #movebubbles(Orangediver, 0, 0)
             if downair:
-                newbubbles(Orangediver, orangeBubbles)
+                if slowbub > slowbubtime:
+                    slowbubgreen = 0
+                    breathesound.play()
+                    slowbub = True
+                    newbubbles(Orangediver, orangeBubbles)
+                slowbub = slowbub + 1
                 #newbubbles(Greendiver, greenBubbles)
-        if equipment[0] == 1:
-            if Orangediver[7] == False: ## In front
-                rowdraw(Snorkel, 0)
-        if equipment[1] == 1:
-            rowdraw(Goggles, 0)
-        if equipment[2] == 1:
-            rowdraw(BCD, 0)
-      #  if equipment[3] == 1:
-           # rowdraw(Fins, 0)
-        if equipment[4] == 1:
-            rowdraw(Regulator, 0)
-        if equipment[5] == 1:
-            rowdraw(ExtraRegulator, 0)
-        if equipment[6] == 1:
-            rowdraw(AirTank, 0)
-        if equipment[7] == 1:
-            rowdraw(Gauges, 0)
-        if equipment[11] == 1:
-            rowdraw(Flashlight, 0)
+        if equipment[13] == 0:
+            if equipment[0] == 1:
+                if Orangediver[7] == False: ## In front
+                    rowdraw(Snorkel, 0)
+            if equipment[1] == 1:
+                rowdraw(Goggles, 0)
+            if equipment[2] == 1:
+                rowdraw(BCD, 0)
+          #  if equipment[3] == 1:
+               # rowdraw(Fins, 0)
+            if equipment[4] == 1:
+                rowdraw(Regulator, 0)
+            if equipment[5] == 1:
+                rowdraw(ExtraRegulator, 0)
+            if equipment[6] == 1:
+                rowdraw(AirTank, 0)
+            if equipment[7] == 1:
+                rowdraw(Gauges, 0)
+            if equipment[11] == 1:
+                rowdraw(Flashlight, 0)
   
         if greenrise == False:
             binddiver()
-        
-        if Orangediver[6] < -17:
+        if equipment[13] == 0:
+            killspeed = -17
+        else:
+            killspeed = -100000
+        if Orangediver[6] < killspeed:
             orangedead = True
             justdied = True
             bubbleskilled = True
@@ -3477,6 +3570,17 @@ while done == False:
         
         
         ##### Equipment Consequences #####
+        if equipment[13]:
+            Scooterdiver[1][1] = Greendiver[1]
+            Scooterdiver[1][2] = Greendiver[2]
+            Scooterdiver[1][7] = Greendiver[7]
+            rowdraw(Scooterdiver, 1)
+            Scooterdiver[0][1] = Orangediver[1]
+            Scooterdiver[0][2] = Orangediver[2]
+            Scooterdiver[0][7] = Orangediver[7]
+            rowdraw(Scooterdiver, 0)
+            
+            
         if equipment[0] == 1 and depth < 10: #Snorkel lets conserve air at the surface
             aircap = aircap
         elif downair == True:
@@ -3492,6 +3596,9 @@ while done == False:
             accel = 0.5
         else:
             accel = 0.1
+        if equipment[13] == 1:
+            accel = 2
+        
         # Regulator and air tank are required for more air.  Up in level intialization
         # If not gauges, you cannot see your gauges
         
@@ -3510,7 +3617,7 @@ while done == False:
                 Bottle[0][8] = True
                 if greenrise == False:
                     Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
-                    Bottle[0][3] = 100
+                    Bottle[0][3] = 50
                     Bottle[0][4] = 100
                     if Orangediver[7]:
                         Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
@@ -3533,8 +3640,8 @@ while done == False:
                     if greenrise == False:
                         Clownfish[f][7] = Orangediver[7]
                         Clownfish[f][2] = Orangediver[2] + Orangediver[4]/2 - Clownfish[f][4]/2 + 50
-                        Clownfish[f][3] = 150
-                        Clownfish[f][4] = 100
+                        #Clownfish[f][3] = 150
+                        #Clownfish[f][4] = 100
                         if Orangediver[7]:
                             Clownfish[f][1] = Orangediver[1] + Orangediver[3]/2 - Clownfish[f][3]/2 + 25
                         else:
@@ -3563,7 +3670,7 @@ while done == False:
                 Bottle[0][8] = True
                 if greenrise == False:
                     Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
-                    Bottle[0][3] = 100
+                    Bottle[0][3] = 50
                     Bottle[0][4] = 100
                     if Orangediver[7]:
                         Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
@@ -3581,7 +3688,7 @@ while done == False:
                 Bottle[0][8] = True
                 if greenrise == False:
                     Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
-                    Bottle[0][3] = 100
+                    Bottle[0][3] = 50
                     Bottle[0][4] = 100
                     if Orangediver[7]:
                         Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
@@ -3599,7 +3706,7 @@ while done == False:
                 Bottle[0][8] = True
                 if greenrise == False:
                     Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
-                    Bottle[0][3] = 100
+                    Bottle[0][3] = 50
                     Bottle[0][4] = 100
                     if Orangediver[7]:
                         Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
@@ -3611,8 +3718,49 @@ while done == False:
                 level_complete = True  
                 levels[5] = 1
 ####################################################################
-################# Tokyo Level 6###############################
+################# Tokyo Level 6 ####################################
         if level == 6:
+            if equipment[14] == 0:
+                exreg = exreg + 1
+                if exreg > 30:
+                    screen.fill([0,0,0]) 
+                    darkfont = pygame.font.SysFont("monospace", 30, "bold")
+                    darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
+                    screen.blit(darktext, (250, 400))
+                    orangedead = True
+                    justdied = True
+                    exflashdeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                    exflashdeadtext = exflashdeadfont.render('Flashlight broke. No backup!', 1, (255, 255, 0))
+                    screen.blit(exflashdeadtext, (200, 300))
+            elif equipment[12] == 0:
+                exreg = exreg + 1
+                if exreg > 100:
+                    screen.fill([0,0,0]) 
+                    darkfont = pygame.font.SysFont("monospace", 30, "bold")
+                    darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
+                    screen.blit(darktext, (250, 400))
+                    orangedead = True
+                    justdied = True
+                    exflashdeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                    exflashdeadtext = exflashdeadfont.render('Both Lights broke. No glow stick!', 1, (255, 255, 0))
+                    screen.blit(exflashdeadtext, (200, 300))
+            elif equipment[5] == 0:
+                exreg = exreg + 1
+                if exreg > 30:
+                    orangedead = True
+                    justdied = True
+                    exregdeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                    exregdeadtext = exregdeadfont.render('Regulator broke. No backup!', 1, (255, 255, 0))
+                    screen.blit(exregdeadtext, (200, 250))
+            elif equipment[8] == 0 and equipment[9] == 0:
+                exreg = exreg + 1
+                if exreg > 30:
+                    orangedead = True
+                    justdied = True
+                    exregdeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                    exregdeadtext = exregdeadfont.render('Too cold!', 1, (255, 255, 0))
+                    screen.blit(exregdeadtext, (200, 350))
+                    
             if equipment[11] == 0:
                 screen.fill([0,0,0]) 
                 darkfont = pygame.font.SysFont("monospace", 30, "bold")
@@ -3627,8 +3775,8 @@ while done == False:
                     if greenrise == False:
                         Lanturnfish[f][7] = Orangediver[7]
                         Lanturnfish[f][2] = Orangediver[2] + Orangediver[4]/2 - Lanturnfish[f][4]/2 + 50
-                        Lanturnfish[f][3] = 150
-                        Lanturnfish[f][4] = 100
+                        #Lanturnfish[f][3] = 150
+                        #Lanturnfish[f][4] = 100
                         if Orangediver[7]:
                             Lanturnfish[f][1] = Orangediver[1] + Orangediver[3]/2 - Lanturnfish[f][3]/2 + 25
                         else:
@@ -3651,11 +3799,27 @@ while done == False:
 ####################################################################
 ################# CapeTown Level 7 ###############################
         if level == 7:
+            if equipment[5] == 0:
+                exreg = exreg + 1
+                if exreg > 30:
+                    orangedead = True
+                    justdied = True
+                    exregdeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                    exregdeadtext = exregdeadfont.render('Regulator broke. No backup!', 1, (255, 255, 0))
+                    screen.blit(exregdeadtext, (200, 250))
+            elif equipment[8] == 0 and equipment[9] == 0:
+                exreg = exreg + 1
+                if exreg > 30:
+                    orangedead = True
+                    justdied = True
+                    exregdeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                    exregdeadtext = exregdeadfont.render('Too cold!', 1, (255, 255, 0))
+                    screen.blit(exregdeadtext, (200, 350))
             if collision(Bottle[0], Orangediver, 50):
                 Bottle[0][8] = True
                 if greenrise == False:
                     Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
-                    Bottle[0][3] = 100
+                    Bottle[0][3] = 50
                     Bottle[0][4] = 100
                     if Orangediver[7]:
                         Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
@@ -3669,6 +3833,14 @@ while done == False:
 ####################################################################
 ################# Santiago Level 9 ###############################
         if level == 9:
+            if equipment[5] == 0:
+                exreg = exreg + 1
+                if exreg > 30:
+                    orangedead = True
+                    justdied = True
+                    exregdeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                    exregdeadtext = exregdeadfont.render('Regulator broke. No backup!', 1, (255, 255, 0))
+                    screen.blit(exregdeadtext, (200, 250))
             for f in range(4):
                 if collision(Dolphin[f], Orangediver, 50):
                     if holding_a_fish == False:
@@ -3678,8 +3850,8 @@ while done == False:
                     if greenrise == False:
                         Dolphin[f][7] = Orangediver[7]
                         Dolphin[f][2] = Orangediver[2] + Orangediver[4]/2 - Dolphin[f][4]/2 + 50
-                        Dolphin[f][3] = 150
-                        Dolphin[f][4] = 100
+                        #Dolphin[f][3] = 150
+                        #Dolphin[f][4] = 100
                         if Orangediver[7]:
                             Dolphin[f][1] = Orangediver[1] + Orangediver[3]/2 - Dolphin[f][3]/2 + 25
                         else:
@@ -3702,11 +3874,19 @@ while done == False:
 ####################################################################
 ################# Antarctica Level 10 ###############################
         if level == 10:
+            if equipment[9] == 0:
+                exreg = exreg + 1
+                if exreg > 30:
+                    orangedead = True
+                    justdied = True
+                    exregdeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                    exregdeadtext = exregdeadfont.render('Too cold!', 1, (255, 255, 0))
+                    screen.blit(exregdeadtext, (200, 350))
             if collision(Bottle[0], Orangediver, 50):
                 Bottle[0][8] = True
                 if greenrise == False:
                     Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
-                    Bottle[0][3] = 100
+                    Bottle[0][3] = 50
                     Bottle[0][4] = 100
                     if Orangediver[7]:
                         Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
@@ -3729,7 +3909,7 @@ while done == False:
                 Bottle[0][8] = True
                 if greenrise == False:
                     Bottle[0][2] = Orangediver[2] + Orangediver[4]/2 - Bottle[0][4]/2 + 50
-                    Bottle[0][3] = 100
+                    Bottle[0][3] = 50
                     Bottle[0][4] = 100
                     if Orangediver[7]:
                         Bottle[0][1] = Orangediver[1] + Orangediver[3]/2 - Bottle[0][3]/2 + 25
@@ -3743,12 +3923,24 @@ while done == False:
 ####################################################################
 ################# Unknown Level 12 ###############################
         if level == 12:
+            if equipment[14] == 0:
+                exreg = exreg + 1
+                if exreg > 30:
+                    screen.fill([0,0,0]) 
+                    darkfont = pygame.font.SysFont("monospace", 30, "bold")
+                    darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
+                    screen.blit(darktext, (250, 400))
+                    orangedead = True
+                    justdied = True
+                    exflashdeadfont = pygame.font.SysFont("monospace", 30, "bold")
+                    exflashdeadtext = exflashdeadfont.render('Flashlight broke. No backup!', 1, (255, 255, 0))
+                    screen.blit(exflashdeadtext, (200, 300))
             if equipment[11] == 0:
                 screen.fill([0,0,0]) 
                 darkfont = pygame.font.SysFont("monospace", 30, "bold")
                 darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
                 screen.blit(darktext, (250, 400))
-            if levels.count(1) > 3:
+            if levelsdone.count(1) > 2:
                 if collision(Treasurechest[0], Orangediver, 50):
                     Treasurechest[0][8] = True
                     if greenrise == False:
@@ -3768,6 +3960,7 @@ while done == False:
 
 ########################################################
         if orangedead and justdied:
+            wilhelm.play()
             justdied = False
             Snorkel[0][0] = pygame.transform.flip(Snorkel[1][0], False, True)
             Goggles[0][0] = pygame.transform.flip(Goggles[1][0], False, True)
