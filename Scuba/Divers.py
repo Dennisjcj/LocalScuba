@@ -890,7 +890,7 @@ def random_direction_move(pic, row, speed): # speed must be even
         sy = speed
     #if c == 12:
      #   sx = 0
-        #  sy = -speed
+      #  sy = -speed
     return [pic[row][0], pic[row][1], pic[row][2], pic[row][3], pic[row][4], sx, sy, pic[row][7], pic[row][8]]
 
 def outofbounds(pic, row, faroff):
