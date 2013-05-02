@@ -890,7 +890,7 @@ def random_direction_move(pic, row, speed): # speed must be even
         sy = speed
     #if c == 12:
      #   sx = 0
-      #  sy = -speed
+        #  sy = -speed
     return [pic[row][0], pic[row][1], pic[row][2], pic[row][3], pic[row][4], sx, sy, pic[row][7], pic[row][8]]
 
 def outofbounds(pic, row, faroff):
@@ -1192,7 +1192,7 @@ def Level0():
     if clicked(Controls):
         level = -2
     controlsfont = pygame.font.SysFont("monospace", 20, "bold")
-    controlstext = controlsfont.render('Controls', 1, (0, 0, 0))
+    controlstext = controlsfont.render('Help', 1, (0, 0, 0))
     screen.blit(controlstext, (10, 40))
     
     Story = [Islandbutton[0], 10, 75, 100, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
@@ -1607,7 +1607,7 @@ def Level50():
                 equipment[12] = 0
                 fakemoney = fakemoney + Glowstickprice
         if mouseover(ShopGlowstick):
-            Glowstickinfotext = infofont.render('Glow Sticks let you keep you buddy in sight on night dives', 1, (infocolor))
+            Glowstickinfotext = infofont.render('Glow Sticks let you keep your buddy in sight on night dives', 1, (infocolor))
             screen.blit(Glowstickinfotext, (infopos))  
         
     ### Scooter ###
@@ -1698,7 +1698,7 @@ def Level8():
 
     ### Goggles ###
     Gogglesprice = 20
-    Gogglestext = pricefont.render('Goggles: $' + str(Gogglesprice), 1, (pricecolor))
+    Gogglestext = pricefont.render('Mask: $' + str(Gogglesprice), 1, (pricecolor))
     screen.blit(Gogglestext, (480, 420))
     if boughtequipment[1] == 0 and everequipment[1] == 0:
         ShopGoggles = [pygame.image.load("Goggles.jpg"), 480, 320, 100, 75, 0, 0, True]
@@ -1873,7 +1873,7 @@ def Level8():
             boughtequipment[8] = 0
             MONEY = MONEY + Wetsuitprice
     if mouseover(ShopWetsuit):
-        Wetsuitinfotext = infofont.render('Wetsuits prevent cold and scratches', 1, (infocolor))
+        Wetsuitinfotext = infofont.render('Wetsuits prevent cold and stings', 1, (infocolor))
         screen.blit(Wetsuitinfotext, (infopos)) 
         
     ### Drysuit ###
