@@ -1124,6 +1124,7 @@ def Level0():
     global MONEY
     global levelsdone
     global Clueback
+    global delaytime
     
     ## Level Limit is the number of times the player can do the level and earn money ###
     levellimit = 1
@@ -1186,13 +1187,23 @@ def Level0():
             
     pygame.mouse.set_visible(1)
     draw(Treasuremap)
-    Controls = [Islandbutton[0], 10, 10, 100, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    Controls = [Islandbutton[0], 10, 15, 100, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
     draw(Controls)
     if clicked(Controls):
         level = -2
     controlsfont = pygame.font.SysFont("monospace", 20, "bold")
     controlstext = controlsfont.render('Controls', 1, (0, 0, 0))
     screen.blit(controlstext, (10, 40))
+    
+    Story = [Islandbutton[0], 10, 75, 100, 25, 0, 0, True] # list = [image, x pos, y pos, x size, y size, x speed, y speed, right]
+    draw(Story)
+    if clicked(Story):
+        level = 75
+        delaytime = 0
+    Storyfont = pygame.font.SysFont("monospace", 20, "bold")
+    Storytext = Storyfont.render('Story', 1, (0, 0, 0))
+    screen.blit(Storytext, (10, 100))
+  
   
     cluecolor = (0, 0, 0)
     if levelsdone.count(1) == 0:
@@ -1365,7 +1376,7 @@ def Level50():
                 equipment[1] = 0
                 fakemoney = fakemoney + Gogglesprice
         if mouseover(ShopGoggles):
-            Gogglesinfotext = infofont.render('You need goggles to see underwater', 1, (infocolor))
+            Gogglesinfotext = infofont.render('You need a mask to see underwater', 1, (infocolor))
             screen.blit(Gogglesinfotext, (infopos))  
             
     ### Flashlight ###
@@ -1702,7 +1713,7 @@ def Level8():
             boughtequipment[1] = 0
             MONEY = MONEY + Gogglesprice
     if mouseover(ShopGoggles):
-        Gogglesinfotext = infofont.render('You need goggles to see underwater', 1, (infocolor))
+        Gogglesinfotext = infofont.render('You need a mask to see underwater', 1, (infocolor))
         screen.blit(Gogglesinfotext, (infopos))  
         
     ### Flashlight ###
@@ -2004,13 +2015,13 @@ def nothing():
 #### Surface Variables #######################################################################
 # list = [image, x, y, x size, y size, x speed, y speed, right]
 ### Equipment #####
-#equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
-#boughtequipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
-#everequipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+equipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+boughtequipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
+everequipment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
 
-equipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]  
-boughtequipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]  
-everequipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]  
+#equipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]  
+#boughtequipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]  
+#everequipment = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]  
 
 
 # Snorkel, Goggles, BCD, Fins, Regulator, ExtraRegulator, AirTank, Gauges, Wetsuit, Drysuit, Slate, Flashlight, Glowstick, Scooter, ExtraFlashlight 
@@ -2308,6 +2319,7 @@ Shipwreck = [[pygame.image.load("Shipwreck.png"), -10000, -10000, 800, 500, 0, 0
 Boat = [[pygame.image.load("Boat.png"), 0, 0, 800, 500, 0, 0, True, False]]
 Bottle = [[pygame.image.load("Bottle.jpg"), -10000, -10000, 50, 100, 10, 10, True, False]]
 Treasurechest = [[pygame.image.load("Treasurechest.png"), -10000, -10000, 250, 200, 10, 10, True, False]]
+Anchor = [[pygame.image.load("Anchor.png"), -10000, -10000, 400, 350, 10, 10, True, False]]
 
 Wave = [[pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
         [pygame.image.load("Wave.gif"), 0, 0, 400, 100, 0, 0, True, False],
@@ -2587,6 +2599,8 @@ Bigback = [pygame.image.load("Bigback.png"), 0, 0, 6000, 6000, 10, 10, True]
 Treasuremap = [pygame.image.load("Treasuremap.png"), 0, 0, 1024, 768, 0, 0, True]
 Introscreen = [pygame.image.load("Introscreen.png"), 150, 0, 756, 791, 0, 0, True]
 Endscreen = [pygame.image.load("Endscreen.png"), 0, 0, 1024, 768, 0, 0, True]
+BackStory = [pygame.image.load("BackStory.png"), 0, 0, 1024, 768, 0, 0, True]
+
 
 Airgauge = [pygame.image.load("Airgauge.png"), 1024 - 200, 0, 200, 200, 0, 0, True]
 Depthgauge = [pygame.image.load("Depthgauge.png"), 1024 - 400, 0, 200, 200, 0, 0, True]
@@ -2607,7 +2621,7 @@ pygame.init()
 pygame.mixer.init()
 size=[1024,768]
 screen=pygame.display.set_mode(size)
-pygame.display.set_caption("Diver Test")
+pygame.display.set_caption("Dive Hard")
 clock=pygame.time.Clock()
 pygame.mouse.set_visible(1)
 
@@ -2685,7 +2699,7 @@ x_max_edge = False
 y_max_edge = False
 
 wintime = 0
-MONEY = 1000000000#1300
+MONEY = 1300
 accel = 0.5
 
 aircap = 200
@@ -2698,6 +2712,10 @@ depthdegrees = 0
 real_depth = 0
 exreg = 0
 
+justdied = False
+justgrabbed = False
+
+
 #edges = [0, 0, 2000, 1000]
 levels = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 levelsdone = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -2706,6 +2724,11 @@ windowoffset = 200
 bubblesound = pygame.mixer.Sound('bubblesound.wav')
 breathesound = pygame.mixer.Sound('breathesound.wav')
 wilhelm = pygame.mixer.Sound('wilhelm.wav')
+fishcrack = pygame.mixer.Sound('fishcrack.wav')
+triumph = pygame.mixer.Sound('triumph.wav')
+screamcounter = 0
+
+delaytime = 0
 
 #################################################################
 # -------- Main Program Loop -----------
@@ -2725,8 +2748,19 @@ while done == False:
         screen.fill(ocean)   
         draw(Introscreen)
         if clicked(Introscreen):
-            level = 0
+            level = 75
+    elif level == 75:
+        pygame.mouse.set_visible(1)
+        screen.fill(ocean)
+        draw(BackStory)
+        delaytime = delaytime + 1
+        if delaytime > 30:
+            if clicked(Endscreen):
+                level = 0
     elif level == 100:
+        if delaytime < 1:
+            triumph.play()
+        delaytime = delaytime + 1
         pygame.mouse.set_visible(1)
         screen.fill(ocean)   
         draw(Endscreen)
@@ -2752,7 +2786,7 @@ while done == False:
                 aircap = 30
             if equipment[13] == 1:
                 aircap = 5000
-            
+            screamcounter = 0
             x_min = 0
             y_min = 0
             
@@ -2905,6 +2939,7 @@ while done == False:
         else:
             screen.fill(ocean)   
         justdied = False
+        justgrabbed = False
         if orangedead == False:
             Orangediver = keyaccel(Orangediver)
             greenfollow()
@@ -2967,7 +3002,7 @@ while done == False:
                 Goggles[0][2] = Orangediver[2] + 8
             if equipment[2] == 1:
                 BCD[0][7] = Orangediver[7]
-                BCD[0][2] = Orangediver[2] + 50
+                BCD[0][2] = Orangediver[2] + 47
             if equipment[3] == 1:
                 Fins[0][7] = Orangediver[7]
                 Fins[0][2] = Orangediver[2] + 58
@@ -3020,7 +3055,10 @@ while done == False:
                     BCD[0][1] = Orangediver[1] + 51
                 if equipment[3] == 1:
                     Fins[0][1] = Orangediver[1] + 209
-                    Fins[1][1] = Orangediver[1] + 144 - 5
+                    if equipment[8] or equipment[9]:
+                        Fins[1][1] = Orangediver[1] + 144 - 5
+                    else:
+                        Fins[1][1] = Orangediver[1] + 144
                 if equipment[4] == 1:
                     Regulator[0][1] = Orangediver[1] + 27
                 if equipment[5] == 1:
@@ -3119,7 +3157,7 @@ while done == False:
             Goggles[1][2] = Greendiver[2] + 8
         if equipment[2] == 1:
             BCD[1][7] = Greendiver[7]
-            BCD[1][2] = Greendiver[2] + 50
+            BCD[1][2] = Greendiver[2] + 47
         if equipment[3] == 1:
             Fins[2][7] = Greendiver[7]
             Fins[2][2] = Greendiver[2] + 58
@@ -3172,7 +3210,10 @@ while done == False:
                 BCD[1][1] = Greendiver[1] + 51
             if equipment[3] == 1:
                 Fins[2][1] = Greendiver[1] + 209
-                Fins[3][1] = Greendiver[1] + 144 - 5
+                if equipment[8] or equipment[9]:
+                    Fins[3][1] = Greendiver[1] + 144 - 5
+                else:
+                    Fins[3][1] = Greendiver[1] + 144            
             if equipment[4] == 1:
                 Regulator[1][1] = Greendiver[1] + 27
             if equipment[5] == 1:
@@ -3209,6 +3250,7 @@ while done == False:
             Bottle[0] = rowmovebackground(Bottle, 0, Orangediver)
             Treasurechest[0] = rowmovebackground(Treasurechest, 0, Orangediver)
             Shipwreck[0] = rowmovebackground(Shipwreck, 0, Orangediver)
+            Anchor[0] = rowmovebackground(Anchor, 0, Orangediver)
 
         for b in range(8):
             if greenrise == False:
@@ -3233,7 +3275,7 @@ while done == False:
         if level == 1: # Outer Banks
             if level_1_initialized == False:
                 level_1_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), 2*x_max/3, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3245,6 +3287,7 @@ while done == False:
         if level == 2: # Singapore
             if level_2_initialized == False:
                 level_2_initialized = True
+                Anchor = [[pygame.image.load("Anchor.png"), x_max - 150, y_max, 400, 350, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral2[0]
                 for n in range(120):
@@ -3257,7 +3300,7 @@ while done == False:
         if level == 3: # Sydney
             if level_3_initialized == False:
                 level_3_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3269,7 +3312,7 @@ while done == False:
         if level == 4: # Panama
             if level_4_initialized == False:
                 level_4_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3281,7 +3324,7 @@ while done == False:
         if level == 5: # SanDiego
             if level_5_initialized == False:
                 level_5_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3293,7 +3336,7 @@ while done == False:
         if level == 6: # Tokyo
             if level_6_initialized == False:
                 level_6_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), 3*x_max/4, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3307,7 +3350,7 @@ while done == False:
         if level == 7: # CapeTown
             if level_7_initialized == False:
                 level_7_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), 3*x_max/4, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3319,7 +3362,8 @@ while done == False:
         if level == 9: # Santiago
             if level_9_initialized == False:
                 level_9_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Anchor = [[pygame.image.load("Anchor.png"), x_max - 700, y_max, 400, 350, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - 400, y_max + 120, 50, 100, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
                 for n in range(120):
@@ -3331,7 +3375,8 @@ while done == False:
         if level == 10: # Antarctica
             if level_10_initialized == False:
                 level_10_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Anchor = [[pygame.image.load("Anchor.png"), x_max/8, y_max, 400, 350, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/4, y_max + 120, 50, 100, 0, 0, True, False]]
                 Shipwreck = [[pygame.image.load("Shipwreck.png"), x_max - x_max/7, y_max - 400, 1200, 900, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
@@ -3345,7 +3390,7 @@ while done == False:
         if level == 11: # KeyWest
             if level_11_initialized == False:
                 level_11_initialized = True
-                Bottle = [[pygame.image.load("Bottle.jpg"), x_max - x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
+                Bottle = [[pygame.image.load("Bottle.jpg"), x_max/2, y_max + 120, 50, 100, 0, 0, True, False]]
                 Shipwreck = [[pygame.image.load("Shipwreck.png"), x_max/4, y_max - 400, 1200, 900, 0, 0, True, False]]
                 for n in range(33):
                     Coral0[n][0] = Coral1[0]
@@ -3359,7 +3404,8 @@ while done == False:
         if level == 12: # Unknown
             if level_12_initialized == False:
                 level_12_initialized = True
-                Treasurechest = [[pygame.image.load("Treasurechest.png"), x_max - x_max/2, y_max, 200, 150, 0, 0, True, False]]
+                Anchor = [[pygame.image.load("Anchor.png"), x_max/4, y_max, 400, 350, 0, 0, True, False]]
+                Treasurechest = [[pygame.image.load("Treasurechest.png"), 4*x_max/5, y_max, 200, 150, 0, 0, True, False]]
                 Shipwreck = [[pygame.image.load("Shipwreck.png"), x_max - x_max/3, y_max - 600, 1600, 1200, 0, 0, False, False]]
                 #Treasurechest = [[pygame.image.load("Treasurechest.png"), 500, 500, 200, 150, 0, 0, True, False]]
                 for n in range(33):
@@ -3447,6 +3493,8 @@ while done == False:
         #        lanturnskilled = True
 
         if level_complete == True and orangedead == False:
+            if wintime < 1:
+                triumph.play()
             winfont = pygame.font.SysFont("monospace", 100, "bold")
             wintext = winfont.render('YOU WIN!', 1, (255, 255, 0))
             screen.blit(wintext, (250, 100))
@@ -3468,8 +3516,8 @@ while done == False:
             
         if orangedead == True:
             deadfont = pygame.font.SysFont("monospace", 100, "bold")
-            deadtext = deadfont.render('YOU DEAD!', 1, (255, 255, 0))
-            screen.blit(deadtext, (250, 100))
+            deadtext = deadfont.render("YOU'RE DYING!", 1, (255, 255, 0))
+            screen.blit(deadtext, (50, 100))
         if equipment[13] == 0:
             if equipment[0] == 1: 
                 if Orangediver[7]: ## Behind
@@ -3587,7 +3635,7 @@ while done == False:
         if equipment[1] == 0: # No goggles and you cannot see
             screen.fill(ocean) 
             darkfont = pygame.font.SysFont("monospace", 30, "bold")
-            darktext = darkfont.render('Hard to see without goggles.', 1, (255, 255, 0))
+            darktext = darkfont.render('Hard to see without a mask.', 1, (255, 255, 0))
             screen.blit(darktext, (250, 450))    
         ### No BCD pulls player down.  See Key accell
         if equipment[3] == 1: # No fins and its hard to move
@@ -3600,7 +3648,7 @@ while done == False:
         # Regulator and air tank are required for more air.  Up in level intialization
         # If not gauges, you cannot see your gauges
         
-        if aircap < 0:
+        if aircap < 1:
             aircap = 0
             orangedead = True
             justdied = True
@@ -3633,7 +3681,8 @@ while done == False:
                 if collision(Clownfish[f], Orangediver, 50):
                     if holding_a_fish == False:
                         Clownfish[f][8] = True
-                        holding_a_fish = True              
+                        holding_a_fish = True     
+                        justgrabbed = True         
                 if Clownfish[f][8] == True:
                     if greenrise == False:
                         Clownfish[f][7] = Orangediver[7]
@@ -3718,7 +3767,7 @@ while done == False:
 ####################################################################
 ################# Tokyo Level 6 ####################################
         if level == 6:
-            if equipment[14] == 0:
+            if equipment[14] == 0 and equipment[11]:
                 exreg = exreg + 1
                 if exreg > 30:
                     screen.fill([0,0,0]) 
@@ -3730,7 +3779,7 @@ while done == False:
                     exflashdeadfont = pygame.font.SysFont("monospace", 30, "bold")
                     exflashdeadtext = exflashdeadfont.render('Flashlight broke. No backup!', 1, (255, 255, 0))
                     screen.blit(exflashdeadtext, (200, 300))
-            elif equipment[12] == 0:
+            elif equipment[12] == 0 and equipment[11]:
                 exreg = exreg + 1
                 if exreg > 100:
                     screen.fill([0,0,0]) 
@@ -3742,7 +3791,7 @@ while done == False:
                     exflashdeadfont = pygame.font.SysFont("monospace", 30, "bold")
                     exflashdeadtext = exflashdeadfont.render('Both Lights broke. No glow stick!', 1, (255, 255, 0))
                     screen.blit(exflashdeadtext, (200, 300))
-            elif equipment[5] == 0:
+            elif equipment[5] == 0 and equipment[4]:
                 exreg = exreg + 1
                 if exreg > 30:
                     orangedead = True
@@ -3768,7 +3817,8 @@ while done == False:
                 if collision(Lanturnfish[f], Orangediver, 50):
                     if holding_a_fish == False:
                         Lanturnfish[f][8] = True
-                        holding_a_fish = True              
+                        holding_a_fish = True  
+                        justgrabbed = True            
                 if Lanturnfish[f][8] == True:
                     if greenrise == False:
                         Lanturnfish[f][7] = Orangediver[7]
@@ -3797,7 +3847,7 @@ while done == False:
 ####################################################################
 ################# CapeTown Level 7 ###############################
         if level == 7:
-            if equipment[5] == 0:
+            if equipment[5] == 0 and equipment[4]:
                 exreg = exreg + 1
                 if exreg > 30:
                     orangedead = True
@@ -3831,7 +3881,7 @@ while done == False:
 ####################################################################
 ################# Santiago Level 9 ###############################
         if level == 9:
-            if equipment[5] == 0:
+            if equipment[5] == 0 and equipment[4]:
                 exreg = exreg + 1
                 if exreg > 30:
                     orangedead = True
@@ -3843,7 +3893,8 @@ while done == False:
                 if collision(Dolphin[f], Orangediver, 50):
                     if holding_a_fish == False:
                         Dolphin[f][8] = True
-                        holding_a_fish = True              
+                        holding_a_fish = True      
+                        justgrabbed = True        
                 if Dolphin[f][8] == True:
                     if greenrise == False:
                         Dolphin[f][7] = Orangediver[7]
@@ -3954,11 +4005,16 @@ while done == False:
                 if collision(Boat[0], Orangediver, 0) and Treasurechest[0][8] == True and levelsdone[12] == 0:
                         level_complete = True  
                         levels[12] = 1
+        rowdraw(Anchor, 0)
 ####################################################################
-
+        if holding_a_fish and justgrabbed:
+            fishcrack.play()
+            justgrabbed = False
 ########################################################
         if orangedead and justdied:
-            wilhelm.play()
+            if screamcounter < 1:
+                wilhelm.play()
+            screamcounter = screamcounter + 1
             justdied = False
             Snorkel[0][0] = pygame.transform.flip(Snorkel[1][0], False, True)
             Goggles[0][0] = pygame.transform.flip(Goggles[1][0], False, True)
