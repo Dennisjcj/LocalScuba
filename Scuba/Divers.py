@@ -2756,6 +2756,9 @@ while done == False:
         pygame.mouse.set_visible(1)
         screen.fill(ocean)   
         draw(Introscreen)
+        backspacefont = pygame.font.SysFont("monospace", 20, "bold")
+        backspacetext = backspacefont.render('Click to continue.', 1, (255, 255, 0))
+        screen.blit(backspacetext, (750, 740))  
         if clicked(Introscreen):
             level = 75
     elif level == 75:
@@ -2764,6 +2767,9 @@ while done == False:
         draw(BackStory)
         delaytime = delaytime + 1
         if delaytime > 30:
+            backspacefont = pygame.font.SysFont("monospace", 30, "bold")
+            backspacetext = backspacefont.render('Click to continue.', 1, (255, 255, 0))
+            screen.blit(backspacetext, (600, 700))  
             if clicked(Endscreen):
                 level = 0
     elif level == 100:
@@ -3527,6 +3533,9 @@ while done == False:
             deadfont = pygame.font.SysFont("monospace", 100, "bold")
             deadtext = deadfont.render("YOU'RE DYING!", 1, (255, 255, 0))
             screen.blit(deadtext, (50, 100))
+            backspacefont = pygame.font.SysFont("monospace", 30, "bold")
+            backspacetext = backspacefont.render('Spacebar to restart.', 1, (255, 255, 0))
+            screen.blit(backspacetext, (600, 600))  
         if equipment[13] == 0:
             if equipment[0] == 1: 
                 if Orangediver[7]: ## Behind
@@ -3646,6 +3655,10 @@ while done == False:
             darkfont = pygame.font.SysFont("monospace", 30, "bold")
             darktext = darkfont.render('Hard to see without a mask.', 1, (255, 255, 0))
             screen.blit(darktext, (250, 450))    
+            backspacefont = pygame.font.SysFont("monospace", 30, "bold")
+            backspacetext = backspacefont.render('Hit backspace.', 1, (255, 255, 0))
+            screen.blit(backspacetext, (600, 600))     
+
         ### No BCD pulls player down.  See Key accell
         if equipment[3] == 1: # No fins and its hard to move
             accel = 0.5
@@ -3783,6 +3796,9 @@ while done == False:
                     darkfont = pygame.font.SysFont("monospace", 30, "bold")
                     darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
                     screen.blit(darktext, (250, 400))
+                    backspacefont = pygame.font.SysFont("monospace", 30, "bold")
+                    backspacetext = backspacefont.render('Hit backspace.', 1, (255, 255, 0))
+                    screen.blit(backspacetext, (600, 600))  
                     orangedead = True
                     justdied = True
                     exflashdeadfont = pygame.font.SysFont("monospace", 30, "bold")
@@ -3795,6 +3811,9 @@ while done == False:
                     darkfont = pygame.font.SysFont("monospace", 30, "bold")
                     darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
                     screen.blit(darktext, (250, 400))
+                    backspacefont = pygame.font.SysFont("monospace", 30, "bold")
+                    backspacetext = backspacefont.render('Hit backspace.', 1, (255, 255, 0))
+                    screen.blit(backspacetext, (600, 600))  
                     orangedead = True
                     justdied = True
                     exflashdeadfont = pygame.font.SysFont("monospace", 30, "bold")
@@ -3822,6 +3841,9 @@ while done == False:
                 darkfont = pygame.font.SysFont("monospace", 30, "bold")
                 darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
                 screen.blit(darktext, (250, 400))
+                backspacefont = pygame.font.SysFont("monospace", 30, "bold")
+                backspacetext = backspacefont.render('Hit backspace.', 1, (255, 255, 0))
+                screen.blit(backspacetext, (600, 600))  
             for f in range(4):
                 if collision(Lanturnfish[f], Orangediver, 50):
                     if holding_a_fish == False:
@@ -3963,6 +3985,9 @@ while done == False:
                 darkfont = pygame.font.SysFont("monospace", 30, "bold")
                 darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
                 screen.blit(darktext, (250, 400))    
+                backspacefont = pygame.font.SysFont("monospace", 30, "bold")
+                backspacetext = backspacefont.render('Hit backspace.', 1, (255, 255, 0))
+                screen.blit(backspacetext, (600, 600))  
             if collision(Bottle[0], Orangediver, 50):
                 Bottle[0][8] = True
                 if greenrise == False:
@@ -3988,6 +4013,9 @@ while done == False:
                     darkfont = pygame.font.SysFont("monospace", 30, "bold")
                     darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
                     screen.blit(darktext, (250, 400))
+                    backspacefont = pygame.font.SysFont("monospace", 30, "bold")
+                    backspacetext = backspacefont.render('Hit backspace.', 1, (255, 255, 0))
+                    screen.blit(backspacetext, (600, 600))  
                     orangedead = True
                     justdied = True
                     exflashdeadfont = pygame.font.SysFont("monospace", 30, "bold")
@@ -3998,6 +4026,9 @@ while done == False:
                 darkfont = pygame.font.SysFont("monospace", 30, "bold")
                 darktext = darkfont.render('Wow, it is really dark.', 1, (255, 255, 0))
                 screen.blit(darktext, (250, 400))
+                backspacefont = pygame.font.SysFont("monospace", 30, "bold")
+                backspacetext = backspacefont.render('Hit backspace.', 1, (255, 255, 0))
+                screen.blit(backspacetext, (600, 600))  
             if levelsdone.count(1) > 2:
                 if collision(Treasurechest[0], Orangediver, 50):
                     Treasurechest[0][8] = True
