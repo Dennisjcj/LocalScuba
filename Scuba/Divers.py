@@ -384,7 +384,7 @@ def keyaccel(pic): # True is right;  Need to fix the coordinates of the diver wi
     
     ## NO BCD ##
     if equipment[2] == 0:
-        y_move_speed = y_move_speed + 0.3
+        y_move_speed = y_move_speed + 0.5
     
     if left == True and right == False and x_min_edge == False:
         x_move_speed = x_move_speed - accel
