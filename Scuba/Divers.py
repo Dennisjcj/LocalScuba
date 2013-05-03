@@ -186,8 +186,8 @@ def keys():
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                done = True
+            #if event.key == pygame.K_ESCAPE:
+            #    done = True
             if event.key == pygame.K_BACKSPACE:
                 level = 0
                 level_initialized = False
